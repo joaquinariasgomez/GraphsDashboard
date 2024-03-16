@@ -5,5 +5,5 @@ Instructions to run locally:
 Instructions for production:
 - npm install (if needed)
 - npm run build
-- npm run deploy -> Will deploy to GitHub pages (https://joaquinariasgomez.github.io/ChartJsService/)
+- npm run deploy -> Will deploy to GitHub pages (https://joaquinariasgomez.github.io/GraphsDashboard/)
 
