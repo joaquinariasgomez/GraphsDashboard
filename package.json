@@ -1,0 +1,17 @@
+{
+    "name": "chartjsservice",
+    "version": "1.0.0",
+    "license": "MIT",
+    "scripts": {
+        "start": "parcel ./src/index.html",
+        "build": "parcel build ./src/index.html --public-url ./",
+        "deploy": "push-dir --dir=dist --branch=gh-pages --cleanup --verbose"
+    },
+    "devDependencies": {
+        "gh-pages": "^6.1.1",
+        "parcel": "^2.6.2"
+    },
+    "dependencies": {
+        "chart.js": "^4.0.0"
+    }
+}
