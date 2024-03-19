@@ -2,25 +2,32 @@ import Chart from 'chart.js/auto'
 
 (async function() {
   const data = [
-    { year: 2010, count: 10 },
-    { year: 2011, count: 20 },
-    { year: 2012, count: 15 },
-    { year: 2013, count: 25 },
-    { year: 2014, count: 22 },
-    { year: 2015, count: 30 },
-    { year: 2016, count: 28 },
+    { day: '2024-03-07', sum: 14 },
+    { day: '2024-03-08', sum: 28 },
+    { day: '2024-03-09', sum: 16.5 }
   ];
 
   new Chart(
     document.getElementById('testgraph'),
     {
       type: 'bar',
+      options: {
+        animation: true,
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+            enabled: false
+          }
+        }
+      },
       data: {
-        labels: data.map(row => row.year),
+        labels: data.map(row => row.day),
         datasets: [
           {
             label: 'Acquisitions by year',
-            data: data.map(row => row.count)
+            data: data.map(row => row.sum)
           }
         ]
       }
