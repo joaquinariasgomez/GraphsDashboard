@@ -1,11 +1,46 @@
 import Chart from 'chart.js/auto'
 
 (async function() {
-  const data = [
-    { day: '2024-03-07', sum: 14 },
-    { day: '2024-03-08', sum: 28 },
-    { day: '2024-03-09', sum: 16.5 }
-  ];
+  const response = {
+    userId: "pepito",
+    tag: "DAILY",
+    type: "Gastos en los últimos 7 días por categoría",
+    data: [
+      {value: 11.87, category: "Supermarket", tag: "2024-03-14"},
+      {value: 0.0, category: "Bills & Subscriptions", tag: "2024-03-14"},
+      {value: 23.71, category: "Health and Personal Care", tag: "2024-03-15"},
+      {value: 17.25, category: "Gasoline", tag: "2024-03-15"},
+      {value: 5.55, category: "Supermarket", tag: "2024-03-16"},
+      {value: 1.2, category: "Food Out", tag: "2024-03-16"},
+      {value: 18.78, category: "Supermarket", tag: "2024-03-17"},
+      {value: 0.95, category: "Food Out", tag: "2024-03-17"},
+      {value: 10.0, category: "Bills & Subscriptions", tag: "2024-03-18"},
+      {value: 4.67, category: "Supermarket", tag: "2024-03-18"},
+      {value: 0.0, category: "Gasoline", tag: "2024-03-19"},
+      {value: 64.96, category: "Shopping", tag: "2024-03-20"}
+    ],
+    uniqueTags: [
+      "2024-03-14",
+      "2024-03-15",
+      "2024-03-16",
+      "2024-03-17",
+      "2024-03-18",
+      "2024-03-19",
+      "2024-03-20"
+    ]
+  }
+// For entry 2024-03-14 and category Supermarket we have this sum: 11.87
+// For entry 2024-03-14 and category Bills & Subscriptions we have this sum: 0.0
+// For entry 2024-03-15 and category Health and Personal Care we have this sum: 23.71
+// For entry 2024-03-15 and category Gasoline we have this sum: 17.25
+// For entry 2024-03-16 and category Supermarket we have this sum: 5.55
+// For entry 2024-03-16 and category Food Out we have this sum: 1.2
+// For entry 2024-03-17 and category Supermarket we have this sum: 18.78
+// For entry 2024-03-17 and category Food Out we have this sum: 0.95
+// For entry 2024-03-18 and category Bills & Subscriptions we have this sum: 10.0
+// For entry 2024-03-18 and category Supermarket we have this sum: 4.67
+// For entry 2024-03-19 and category Gasoline we have this sum: 0.0
+// For entry 2024-03-20 and category Shopping we have this sum: 64.96
 
   new Chart(
     document.getElementById('testgraph'),
@@ -18,18 +53,37 @@ import Chart from 'chart.js/auto'
             display: false
           },
           tooltip: {
-            enabled: false
+            enabled: true
+          },
+          title: {
+            display: true,
+            text: response.type
+          }
+        },
+        scales: {
+          x: {
+            stacked: true
+          },
+          y: {
+            stacked: true
           }
         }
       },
       data: {
-        labels: data.map(row => row.day),
+        //labels: response.data.map(row => row.tag),
+        labels: response.uniqueTags,
         datasets: [
           {
-            label: 'Acquisitions by year',
-            data: data.map(row => row.sum)
+            label: "Food Out",
+            data: [1 ,2]
           }
         ]
+        // datasets: [
+        //   {
+        //     label: 'Acquisitions by year',
+        //     data: response.data.map(row => row.value)
+        //   }
+        // ]
       }
     }
   );
