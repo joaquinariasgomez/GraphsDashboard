@@ -18,15 +18,6 @@ import Chart from 'chart.js/auto'
       {value: 4.67, category: "Supermarket", tag: "2024-03-18"},
       {value: 0.0, category: "Gasoline", tag: "2024-03-19"},
       {value: 64.96, category: "Shopping", tag: "2024-03-20"}
-    ],
-    uniqueTags: [
-      "2024-03-14",
-      "2024-03-15",
-      "2024-03-16",
-      "2024-03-17",
-      "2024-03-18",
-      "2024-03-19",
-      "2024-03-20"
     ]
   }
 // For entry 2024-03-14 and category Supermarket we have this sum: 11.87
@@ -70,8 +61,7 @@ import Chart from 'chart.js/auto'
         }
       },
       data: {
-        //labels: response.data.map(row => row.tag),
-        labels: response.uniqueTags,
+        labels: getUniqueTagsFromResponse(response),
         datasets: [
           {
             label: "Food Out",
@@ -88,3 +78,8 @@ import Chart from 'chart.js/auto'
     }
   );
 })();
+
+function getUniqueTagsFromResponse(response) {
+  let tags = response.data.map(row => row.tag)
+  return tags.filter((value, idx) => tags.indexOf(value) === idx);
+}
