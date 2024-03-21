@@ -19,11 +19,11 @@ function printMyShits() {
         ]
     };
 
-    let tags = response.data.map(row => row.tag)
-    let tagsWithoutDuplicates = tags.filter((value, idx) => tags.indexOf(value) === idx);
-
-    console.log("Debug joaquin "+tags);
-    console.log("Debug joaquin "+tagsWithoutDuplicates);
+    console.log("Debug joaquin tags without duplicates "+getUniqueTagsFromResponse(response));
+    console.log("Debug joaquin tags without duplicates "+getUniqueTagsFromResponse(response));
 }
 
-printMyShits();
+function getUniqueTagsFromResponse(response) {
+    let tags = response.data.map(row => row.tag)
+    return tags.filter((value, idx) => tags.indexOf(value) === idx);
+}

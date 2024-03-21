@@ -32,6 +32,7 @@ import Chart from 'chart.js/auto'
 // For entry 2024-03-18 and category Supermarket we have this sum: 4.67
 // For entry 2024-03-19 and category Gasoline we have this sum: 0.0
 // For entry 2024-03-20 and category Shopping we have this sum: 64.96
+getDatasetsFromResponse(response)
 
   new Chart(
     document.getElementById('testgraph'),
@@ -62,12 +63,13 @@ import Chart from 'chart.js/auto'
       },
       data: {
         labels: getUniqueTagsFromResponse(response),
-        datasets: [
-          {
-            label: "Food Out",
-            data: [1 ,2]
-          }
-        ]
+        datasets: getDatasetsFromResponse(response)
+        // [
+        //   {
+        //     label: "Food Out",
+        //     data: [1 ,2]
+        //   }
+        // ]
         // datasets: [
         //   {
         //     label: 'Acquisitions by year',
@@ -80,6 +82,45 @@ import Chart from 'chart.js/auto'
 })();
 
 function getUniqueTagsFromResponse(response) {
-  let tags = response.data.map(row => row.tag)
+  const tags = response.data.map(row => row.tag);
   return tags.filter((value, idx) => tags.indexOf(value) === idx);
+}
+
+function getUniqueCategoriesFromResponse(response) {
+  const categories = response.data.map(row => row.category);
+  return categories.filter((value, idx) => categories.indexOf(value) === idx);
+}
+
+function getDatasetsFromResponse(response) {
+  // Organizada la información por categoría
+  let datasets = [];
+  let uniqueCategories = getUniqueCategoriesFromResponse(response);
+
+  for(const category of uniqueCategories) {
+    console.log("Organizando categoría "+category)
+    let data = []
+    const dateSet = new Set();
+    for(const row of response.data) {
+      if(dateSet.has(row.tag)) {
+        if(row.category === category) { // Sobreescribir el 0 que hemos puesto anteriormente
+          data[data.length-1] = row.value
+        }
+      } else {
+        if(row.category === category) {
+          data.push(row.value)
+        } else {
+          data.push(0.0)
+        }
+        dateSet.add(row.tag)
+      }
+      
+    }
+    const dataset = {
+      label: category,
+      data: data
+    }
+    datasets.push(dataset);
+    console.log("Dataset me ha quedado así "+dataset.label+" and " +dataset.data);
+  }
+  return datasets;
 }
