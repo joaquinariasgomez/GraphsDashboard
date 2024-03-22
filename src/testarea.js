@@ -4,7 +4,7 @@ import Chart from 'chart.js/auto'
   const response = {
     userId: "pepito",
     tag: "MONTHLY",
-    type: "Ahorros desde Noviembre 2023",
+    type: "Ahorros acumulado desde Noviembre 2023",
     data: [
       {value: 144.90, tag: "11-2023"},
       {value: 2040.20, tag: "12-2023"},
