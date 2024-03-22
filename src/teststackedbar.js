@@ -32,10 +32,9 @@ import Chart from 'chart.js/auto'
 // For entry 2024-03-18 and category Supermarket we have this sum: 4.67
 // For entry 2024-03-19 and category Gasoline we have this sum: 0.0
 // For entry 2024-03-20 and category Shopping we have this sum: 64.96
-getDatasetsFromResponse(response)
 
   new Chart(
-    document.getElementById('testgraph'),
+    document.getElementById('teststackedbar'),
     {
       type: 'bar',
       options: {
@@ -64,18 +63,6 @@ getDatasetsFromResponse(response)
       data: {
         labels: getUniqueTagsFromResponse(response),
         datasets: getDatasetsFromResponse(response)
-        // [
-        //   {
-        //     label: "Food Out",
-        //     data: [1 ,2]
-        //   }
-        // ]
-        // datasets: [
-        //   {
-        //     label: 'Acquisitions by year',
-        //     data: response.data.map(row => row.value)
-        //   }
-        // ]
       }
     }
   );
@@ -97,7 +84,6 @@ function getDatasetsFromResponse(response) {
   let uniqueCategories = getUniqueCategoriesFromResponse(response);
 
   for(const category of uniqueCategories) {
-    console.log("Organizando categoría "+category)
     let data = []
     const dateSet = new Set();
     for(const row of response.data) {
@@ -120,7 +106,6 @@ function getDatasetsFromResponse(response) {
       data: data
     }
     datasets.push(dataset);
-    console.log("Dataset me ha quedado así "+dataset.label+" and " +dataset.data);
   }
   return datasets;
 }
