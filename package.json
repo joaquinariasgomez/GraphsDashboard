@@ -1,5 +1,6 @@
 {
     "name": "graphsdashboard",
+    "homepage": "https://joaquinariasgomez.github.io/GraphsDashboard/",
     "version": "1.0.0",
     "license": "MIT",
     "scripts": {
