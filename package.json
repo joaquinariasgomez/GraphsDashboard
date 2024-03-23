@@ -5,7 +5,7 @@
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",
-        "deploy": "push-dir --dir=build --branch=gh-pages --cleanup --verbose"
+        "deploy": "gh-pages -d build"
     },
     "devDependencies": {
         "gh-pages": "^6.1.1"
