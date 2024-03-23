@@ -1,1 +1,2 @@
 - Usar Tailwind CSS
+- Usar mi propio dominio en GitHub pages, más info aqui: https://blog.logrocket.com/deploying-react-apps-github-pages/
