@@ -31,7 +31,7 @@ export default function BarChart({response}) {
             },
             title: {
                 display: true,
-                text: "Esto tengo que cambiarlo"
+                text: response.type
             }
         }
     }
