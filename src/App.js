@@ -1,14 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { Chart } from "chart.js/auto";
-import BarChart from './charts/BarChart';
-import StackedBarChart from './charts/StackedBarChart';
-import { fetchUserGraphs } from './RequestUtils';
+import { getAllGraphsByUserId } from './RequestUtils';
+import EmptyGraphsDashboard from './EmptyGraphsDashboard';
+import GraphFactory from './charts/GraphFactory';
 
 function App() {
 
+    const [userGraphs, setUserGraphs] = useState([]);
+
     useEffect(() => {
         fetchUserGraphs();
-    });
+    }, []);
+
+    const fetchUserGraphs = async () => {
+        // Get session token from current logged in user
+    
+        // Perform request sending that Token
+        // Backend then should be able to retrieve the user from the token
+        const apiResponse = await getAllGraphsByUserId("joaquin");
+        if(apiResponse) {
+            setUserGraphs(apiResponse);
+        }
+    }
 
     const response = {
         userId: "pepito",
@@ -45,15 +58,41 @@ function App() {
         ]
     }
 
+    const renderUserGraphs = () => {
+        return (
+            <div className='usergraphsgrid__container'>
+                {userGraphs.map(userGraph => (
+                    <div className='usergraph__item' key={userGraph.id}>
+                        <GraphFactory
+                            graphData={userGraph}
+                        />
+                    </div>
+                ))}
+            </div>
+        )
+    }
+
+    const renderDashboardForUser = () => {
+        if(userGraphs.length > 0) {
+            {return renderUserGraphs()}
+        }
+        else {
+            return (
+                <EmptyGraphsDashboard />
+            )
+        }
+    }
+
     return (
         <div className="App">
-            <h1>Hello {response.userId}</h1>
+            {renderDashboardForUser()}
+            {/* <h1>Hello {response.userId}</h1>
             <BarChart
                 response={response}
             />
             <StackedBarChart
                 response={response2}
-            />
+            /> */}
         </div>
     );
 }

@@ -1,21 +1,21 @@
 import React from "react";
 import { Bar } from "react-chartjs-2";
 
-function getTagsFromResponse(response) {
-    return response.data.map(row => row.tag);
+function getTagsFromGraphData(graphData) {
+    return graphData.data.map(row => row.tag);
 }
 
-function getValuesFromResponse(response) {
-    return response.data.map(row => row.value);
+function getValuesFromGraphData(graphData) {
+    return graphData.data.map(row => row.value);
 }
 
-export default function BarChart({response}) {
+export default function BarChart({ graphData }) {
     const data = {
-        labels: getTagsFromResponse(response),
+        labels: getTagsFromGraphData(graphData),
         datasets: [
             {
                 label: 'Total gastado',
-                data: getValuesFromResponse(response)
+                data: getValuesFromGraphData(graphData)
             }
         ]
     }
@@ -31,7 +31,7 @@ export default function BarChart({response}) {
             },
             title: {
                 display: true,
-                text: response.type
+                text: graphData.type
             }
         }
     }

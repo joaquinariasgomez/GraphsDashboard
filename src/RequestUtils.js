@@ -10,17 +10,3 @@ export async function getAllGraphsByUserId(userId) {
         });
     return result;
 }
-
-export async function fetchUserGraphs() {
-    // Get session token from current logged in user
-
-    // Perform request sending that Token
-    // Backend then should be able to retrieve the user from the token
-    const apiResponse = await getAllGraphsByUserId("joaquin");
-    if(apiResponse) {
-        console.log("We have a response "+apiResponse);
-    }
-    else {
-        console.log("We dont have a response");
-    }
-}

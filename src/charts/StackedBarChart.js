@@ -1,25 +1,25 @@
 import React from "react";
 import { Bar } from "react-chartjs-2";
 
-function getUniqueTagsFromResponse(response) {
-    const tags = response.data.map(row => row.tag);
+function getUniqueTagsFromGraphData(graphData) {
+    const tags = graphData.data.map(row => row.tag);
     return tags.filter((value, idx) => tags.indexOf(value) === idx);
 }
 
-function getUniqueCategoriesFromResponse(response) {
-    const categories = response.data.map(row => row.category);
+function getUniqueCategoriesFromGraphData(graphData) {
+    const categories = graphData.data.map(row => row.category);
     return categories.filter((value, idx) => categories.indexOf(value) === idx);
 }
 
-function getDatasetsFromResponse(response) {
+function getDatasetsFromGraphData(graphData) {
     // Organizada la información por categoría
     let datasets = [];
-    let uniqueCategories = getUniqueCategoriesFromResponse(response);
+    let uniqueCategories = getUniqueCategoriesFromGraphData(graphData);
 
     for(const category of uniqueCategories) {
         let data = []
         const dateSet = new Set();
-        for(const row of response.data) {
+        for(const row of graphData.data) {
         if(dateSet.has(row.tag)) {
             if(row.category === category) { // Sobreescribir el 0 que hemos puesto anteriormente
                 data[data.length-1] = row.value
@@ -43,10 +43,10 @@ function getDatasetsFromResponse(response) {
     return datasets;
 }
 
-export default function StackedBarChart({response}) {
+export default function StackedBarChart({ graphData }) {
     const data = {
-        labels: getUniqueTagsFromResponse(response),
-        datasets: getDatasetsFromResponse(response)
+        labels: getUniqueTagsFromGraphData(graphData),
+        datasets: getDatasetsFromGraphData(graphData)
     }
 
     const options = {
@@ -60,7 +60,7 @@ export default function StackedBarChart({response}) {
             },
             title: {
                 display: true,
-                text: response.type
+                text: graphData.type
             }
         },
         scales: {
