@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { Chart } from "chart.js/auto";
 import BarChart from './charts/BarChart';
 import StackedBarChart from './charts/StackedBarChart';
+import { fetchUserGraphs } from './RequestUtils';
 
 function App() {
 
     useEffect(() => {
-        console.log("Esto sale una vez cada vez se carga la pagina");
+        fetchUserGraphs();
     });
 
     const response = {
