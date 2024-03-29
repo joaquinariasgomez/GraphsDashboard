@@ -48,7 +48,7 @@ function App() {
                     <div className='usergraph__item' key={userDesiredGraph.id}>
                         <div className='usergraph__firstrow'>
                             <button className='usergraph__delete' onClick={function () {
-                                deleteDesiredGraph(userDesiredGraph.id)
+                                deleteDesiredGraphAndState(userDesiredGraph.id)
                             }}>
                                 Eliminar
                             </button>
@@ -73,6 +73,12 @@ function App() {
                 <EmptyGraphsDashboard />
             )
         }
+    }
+
+    const deleteDesiredGraphAndState = (userDesiredGraphId) => {
+        deleteDesiredGraph(userDesiredGraphId)
+        const updatedUserDesiredGraphs = userDesiredGraphs.filter((userDesiredGraph) => userDesiredGraph.id !== userDesiredGraphId);
+        setUserDesiredGraphs(updatedUserDesiredGraphs);
     }
 
     const renderTimestamp = (userDesiredGraph) => {
