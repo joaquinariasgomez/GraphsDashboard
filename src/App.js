@@ -1,15 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { Chart } from "chart.js/auto";
-import { getAllGraphsByUserId } from './RequestUtils';
+import { deleteDesiredGraph, getAllDesiredGraphsByUserId, getAllGraphsByUserId } from './RequestUtils';
+import { getRelativeTimestamp, getUserGraphByType } from './Utils';
 import EmptyGraphsDashboard from './EmptyGraphsDashboard';
 import GraphFactory from './charts/GraphFactory';
+import ClipLoader from "react-spinners/ClipLoader";
 
 function App() {
 
     const [userGraphs, setUserGraphs] = useState([]);
+    const [userDesiredGraphs, setUserDesiredGraphs] = useState([]);
 
     useEffect(() => {
         fetchUserGraphs();
+    }, []);
+
+    useEffect(() => {
+        fetchUserDesiredGraphs();
     }, []);
 
     const fetchUserGraphs = async () => {
@@ -23,49 +30,34 @@ function App() {
         }
     }
 
-    const response = {
-        userId: "pepito",
-        tag: "DAILY",
-        type: "Gastos en los últimos 7 días",
-        data: [
-          {value: 11.87, tag: "2024-03-14"},
-          {value: 40.96, tag: "2024-03-15"},
-          {value: 5.75, tag: "2024-03-16"},
-          {value: 19.73, tag: "2024-03-17"},
-          {value: 14.67, tag: "2024-03-18"},
-          {value: 0.0, tag: "2024-03-19"},
-          {value: 64.96, tag: "2024-03-20"}
-        ]
-    }
-
-    const response2 = {
-        userId: "pepito",
-        tag: "DAILY",
-        type: "Gastos en los últimos 7 días por categoría",
-        data: [
-        {value: 11.87, category: "Supermarket", tag: "2024-03-14"},
-        {value: 0.0, category: "Bills & Subscriptions", tag: "2024-03-14"},
-        {value: 23.71, category: "Health and Personal Care", tag: "2024-03-15"},
-        {value: 17.25, category: "Gasoline", tag: "2024-03-15"},
-        {value: 5.55, category: "Supermarket", tag: "2024-03-16"},
-        {value: 1.2, category: "Food Out", tag: "2024-03-16"},
-        {value: 18.78, category: "Supermarket", tag: "2024-03-17"},
-        {value: 0.95, category: "Food Out", tag: "2024-03-17"},
-        {value: 10.0, category: "Bills & Subscriptions", tag: "2024-03-18"},
-        {value: 4.67, category: "Supermarket", tag: "2024-03-18"},
-        {value: 0.0, category: "Gasoline", tag: "2024-03-19"},
-        {value: 64.96, category: "Shopping", tag: "2024-03-20"}
-        ]
+    const fetchUserDesiredGraphs = async () => {
+        // Get session token from current logged in user
+    
+        // Perform request sending that Token
+        // Backend then should be able to retrieve the user from the token
+        const apiResponse = await getAllDesiredGraphsByUserId("joaquin");
+        if(apiResponse) {
+            setUserDesiredGraphs(apiResponse);
+        }
     }
 
     const renderUserGraphs = () => {
         return (
             <div className='usergraphsgrid__container'>
-                {userGraphs.map(userGraph => (
-                    <div className='usergraph__item' key={userGraph.id}>
-                        <GraphFactory
-                            graphData={userGraph}
-                        />
+                {userDesiredGraphs.map(userDesiredGraph => (
+                    <div className='usergraph__item' key={userDesiredGraph.id}>
+                        <div className='usergraph__firstrow'>
+                            <button className='usergraph__delete' onClick={function () {
+                                deleteDesiredGraph(userDesiredGraph.id)
+                            }}>
+                                Eliminar
+                            </button>
+                            {renderTimestamp(userDesiredGraph)}
+                            <button className='usergraph__reload'>
+
+                            </button>
+                        </div>
+                        {renderGraph(userDesiredGraph)}
                     </div>
                 ))}
             </div>
@@ -73,12 +65,35 @@ function App() {
     }
 
     const renderDashboardForUser = () => {
-        if(userGraphs.length > 0) {
+        if(userDesiredGraphs.length > 0) {
             {return renderUserGraphs()}
         }
         else {
             return (
                 <EmptyGraphsDashboard />
+            )
+        }
+    }
+
+    const renderTimestamp = (userDesiredGraph) => {
+        if(getUserGraphByType(userGraphs, userDesiredGraph.type) != null) {
+            return <div className='usergraph__timestamp'>{getRelativeTimestamp(getUserGraphByType(userGraphs, userDesiredGraph.type).lastUpdated)}</div>
+        }
+    }
+
+    const renderGraph = (userDesiredGraph) => {
+        if(getUserGraphByType(userGraphs, userDesiredGraph.type) != null) {
+            return (
+                <GraphFactory
+                    graphData={getUserGraphByType(userGraphs, userDesiredGraph.type)}
+                />
+            )
+        }
+        else {
+            return (
+                <div className='usergraph__loadinggraph'>
+                    <ClipLoader size={50}/>
+                </div>
             )
         }
     }

@@ -10,3 +10,23 @@ export async function getAllGraphsByUserId(userId) {
         });
     return result;
 }
+
+export async function getAllDesiredGraphsByUserId(userId) {
+    const result = await fetch(Config.BackendDesiredGraphsURL+"/userId/"+userId)
+        .then(response => {
+            if(!response.ok) {
+                throw new Error(response.statusText);
+            }
+            return response.json()
+        });
+    return result;
+}
+
+export async function deleteDesiredGraph(desiredGraphId) {
+    await fetch(Config.BackendDesiredGraphsURL+"/"+desiredGraphId, {method: 'DELETE'})
+        .then(response => {
+            if(!response.ok) {
+                throw new Error(response.statusText);
+            }
+        });
+}
