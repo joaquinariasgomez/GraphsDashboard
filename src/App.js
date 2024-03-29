@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Chart } from "chart.js/auto";
-import { deleteDesiredGraph, getAllDesiredGraphsByUserId, getAllGraphsByUserId } from './RequestUtils';
+import { deleteDesiredGraph, getAllDesiredGraphsByUserId, getAllGraphsByUserId, reloadDesiredGraph } from './RequestUtils';
 import { getRelativeTimestamp, getUserGraphByType } from './Utils';
 import EmptyGraphsDashboard from './EmptyGraphsDashboard';
 import GraphFactory from './charts/GraphFactory';
@@ -53,8 +53,10 @@ function App() {
                                 Eliminar
                             </button>
                             {renderTimestamp(userDesiredGraph)}
-                            <button className='usergraph__reload'>
-
+                            <button className='usergraph__reload' onClick={function () {
+                                reloadDesiredGraph(userDesiredGraph.userId, userDesiredGraph.type)
+                            }}>
+                                Reload
                             </button>
                         </div>
                         {renderGraph(userDesiredGraph)}

@@ -30,3 +30,13 @@ export async function deleteDesiredGraph(desiredGraphId) {
             }
         });
 }
+
+export async function reloadDesiredGraph(userId, type) {
+    console.log("Type que me llega "+type);
+    await fetch(Config.OnDemandGraphsURL+"/specific?userId="+userId+"&type="+type, {method: 'POST'})
+        .then(response => {
+            if(!response.ok) {
+                throw new Error(response.statusText);
+            }
+        });
+}
