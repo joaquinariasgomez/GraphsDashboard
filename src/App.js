@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Chart } from "chart.js/auto";
+import DeleteIcon from '@mui/icons-material/Delete';
+import CachedIcon from '@mui/icons-material/Cached';
 import { deleteDesiredGraph, deleteGraphByUserIdAndType, getAllDesiredGraphsByUserId, getAllGraphsByUserId, reloadDesiredGraph } from './RequestUtils';
-import { getRelativeTimestamp, getUserGraphByType } from './Utils';
+import { getRelativeTimeToUpdate, getRelativeTimestamp, getUserGraphByType } from './Utils';
 import EmptyGraphsDashboard from './EmptyGraphsDashboard';
 import GraphFactory from './charts/GraphFactory';
 import ClipLoader from "react-spinners/ClipLoader";
@@ -50,13 +52,15 @@ function App() {
                             <button className='usergraph__delete' onClick={function () {
                                 deleteDesiredGraphAndState(userDesiredGraph)
                             }}>
-                                Eliminar
+                                <DeleteIcon style={{ color: '#f14668' }} />
+                                <p>Eliminar</p>
                             </button>
                             {renderTimestamp(userDesiredGraph)}
                             <button className='usergraph__reload' onClick={function () {
                                 reloadDesiredGraph(userDesiredGraph.userId, userDesiredGraph.type)
                             }}>
-                                Reload
+                                <p>Actualizar</p>
+                                <CachedIcon />
                             </button>
                         </div>
                         {renderGraph(userDesiredGraph)}
@@ -109,7 +113,11 @@ function App() {
         else {
             return (
                 <div className='usergraph__loadinggraph'>
-                    <ClipLoader size={50}/>
+                    <p>
+                        {"Esta gráfica se actualizará en "+getRelativeTimeToUpdate(userDesiredGraph)}
+                    </p>
+                    <CachedIcon fontSize="large" style={{ color: '#6d6d6d' }} />
+                    {/* <ClipLoader size={50}/> */}
                 </div>
             )
         }

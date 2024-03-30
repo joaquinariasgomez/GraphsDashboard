@@ -44,6 +44,10 @@ export function getRelativeTimestamp(timestamp) {
     }
 }
 
+export function getRelativeTimeToUpdate(userDesiredGraph) {
+    
+}
+
 export function getUserGraphByType(userGraphs, type) {
     for(const userGraph of userGraphs) {
         if(userGraph.type === type) {

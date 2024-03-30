@@ -20,12 +20,11 @@
     /* align-items: center; */
     flex-direction: column;
     padding: 20px;
-    border-radius: 16px;
+    border-radius: 10px;
     border-width: 1px;
     border-color: lightgray;
     border-style: solid;
-    box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.25);   
-    /* border: 1px solid red; */
+    box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.25);
 }
 
 .usergraph__firstrow {
@@ -33,6 +32,70 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    border: 1px solid red;
     margin-bottom: 5px;
+    /* border: 1px solid red; */
+}
+
+.usergraph__delete {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 40px;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+}
+
+.usergraph__delete:hover {
+    cursor: pointer;
+    background-color: lightgray;
+}
+
+.usergraph__delete > p {
+    color: red;
+    margin-left: 5px;
+}
+
+.usergraph__reload {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 40px;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: rgb(233, 233, 233);
+}
+
+.usergraph__reload:hover {
+    cursor: pointer;
+    background-color: lightgray;
+}
+
+.usergraph__reload > p {
+    margin-right: 5px;
+}
+
+.usergraph__timestamp {
+    font-weight: bold;
+    font-size: 14px;
+    color: gray;
+    margin: 0px;
+}
+
+.usergraph__loadinggraph {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 558px;
+    height: 279px;
+    border-radius: 5px;
+    background-color: rgb(244, 244, 244);
+}
+
+.usergraph__loadinggraph > p {
+    font-weight: bold;
+    color: rgb(109, 109, 109);
+    margin-right: 10px;
 }
