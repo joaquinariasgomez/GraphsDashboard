@@ -62,6 +62,9 @@ function App() {
                         {renderGraph(userDesiredGraph)}
                     </div>
                 ))}
+                <div className='usergraph__item'>
+                    <p>Yoo</p>
+                </div>
             </div>
         )
     }
@@ -87,7 +90,11 @@ function App() {
 
     const renderTimestamp = (userDesiredGraph) => {
         if(getUserGraphByType(userGraphs, userDesiredGraph.type) != null) {
-            return <div className='usergraph__timestamp'>{getRelativeTimestamp(getUserGraphByType(userGraphs, userDesiredGraph.type).lastUpdated)}</div>
+            return (
+                <p className='usergraph__timestamp'>
+                    {"Actualizado hace "+getRelativeTimestamp(getUserGraphByType(userGraphs, userDesiredGraph.type).lastUpdated)}
+                </p>
+            )
         }
     }
 
@@ -111,13 +118,6 @@ function App() {
     return (
         <div className="App">
             {renderDashboardForUser()}
-            {/* <h1>Hello {response.userId}</h1>
-            <BarChart
-                response={response}
-            />
-            <StackedBarChart
-                response={response2}
-            /> */}
         </div>
     );
 }
