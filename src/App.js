@@ -2,16 +2,21 @@ import React, { useEffect, useState } from 'react';
 import { Chart } from "chart.js/auto";
 import DeleteIcon from '@mui/icons-material/Delete';
 import CachedIcon from '@mui/icons-material/Cached';
+import AddIcon from '@mui/icons-material/Add';
+import AddCircleOutlineSharpIcon from '@mui/icons-material/AddCircleOutlineSharp';
 import { deleteDesiredGraph, deleteGraphByUserIdAndType, getAllDesiredGraphsByUserId, getAllGraphsByUserId, reloadDesiredGraph } from './RequestUtils';
 import { getRelativeTimeToUpdate, getRelativeTimestamp, getUserGraphByType } from './Utils';
 import EmptyGraphsDashboard from './EmptyGraphsDashboard';
 import GraphFactory from './charts/GraphFactory';
+import Select from 'react-select';
 import ClipLoader from "react-spinners/ClipLoader";
 
 function App() {
 
     const [userGraphs, setUserGraphs] = useState([]);
     const [userDesiredGraphs, setUserDesiredGraphs] = useState([]);
+
+    // const [graphIsUpdating, setGraphIsUpdating] = useState(false);
 
     useEffect(() => {
         fetchUserGraphs();
@@ -58,16 +63,25 @@ function App() {
                             {renderTimestamp(userDesiredGraph)}
                             <button className='usergraph__reload' onClick={function () {
                                 reloadDesiredGraph(userDesiredGraph.userId, userDesiredGraph.type)
+                                // setGraphIsUpdating(true)
                             }}>
                                 <p>Actualizar</p>
                                 <CachedIcon />
+                                {/* {(graphIsUpdating) ? <ClipLoader size={20}/> : <CachedIcon />} */}
                             </button>
                         </div>
                         {renderGraph(userDesiredGraph)}
                     </div>
                 ))}
                 <div className='usergraph__item'>
-                    <p>Yoo</p>
+                    <button className='usergraph__create' onClick={function() {
+
+                    }}>
+                        <AddCircleOutlineSharpIcon style={{ width: 50, height: 50 }}/>
+                        <Select>
+                            
+                        </Select>
+                    </button>
                 </div>
             </div>
         )

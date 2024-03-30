@@ -1,7 +1,8 @@
 
 export function getRelativeTimestamp(timestamp) {
     const currentTimestamp = Date.now() / 1000;
-    const timePastInSeconds = Number(currentTimestamp) - Number(timestamp / 1000);
+    let timePastInSeconds = Number(currentTimestamp) - Number(timestamp / 1000);
+    if(timePastInSeconds < 0) timePastInSeconds = -timePastInSeconds;
 
     if (timePastInSeconds < 60) {
         if (Math.round(timePastInSeconds) > 1) {
@@ -45,7 +46,26 @@ export function getRelativeTimestamp(timestamp) {
 }
 
 export function getRelativeTimeToUpdate(userDesiredGraph) {
-    
+    switch (userDesiredGraph.tag) {
+        case "DAILY":
+            let tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1); // Set date to tomorrow
+            tomorrow.setHours(0);
+            tomorrow.setMinutes(0);
+            tomorrow.setSeconds(0);
+            return getRelativeTimestamp(tomorrow);
+        case "WEEKLY":
+            let monday = new Date();
+            monday.setDate(monday.getDate() + (1 + 7 - monday.getDay()) % 7);
+            monday.setHours(0);
+            monday.setMinutes(0);
+            monday.setSeconds(0);
+            return getRelativeTimestamp(monday);
+        case "MONTHLY":
+            let now = new Date();
+            let firstDayOfMonth = new Date(now.getFullYear(), now.getMonth()+1, 1);
+            return getRelativeTimestamp(firstDayOfMonth);
+    }
 }
 
 export function getUserGraphByType(userGraphs, type) {
