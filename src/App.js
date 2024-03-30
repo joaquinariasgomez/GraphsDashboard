@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Chart } from "chart.js/auto";
-import { deleteDesiredGraph, getAllDesiredGraphsByUserId, getAllGraphsByUserId, reloadDesiredGraph } from './RequestUtils';
+import { deleteDesiredGraph, deleteGraphByUserIdAndType, getAllDesiredGraphsByUserId, getAllGraphsByUserId, reloadDesiredGraph } from './RequestUtils';
 import { getRelativeTimestamp, getUserGraphByType } from './Utils';
 import EmptyGraphsDashboard from './EmptyGraphsDashboard';
 import GraphFactory from './charts/GraphFactory';
@@ -48,7 +48,7 @@ function App() {
                     <div className='usergraph__item' key={userDesiredGraph.id}>
                         <div className='usergraph__firstrow'>
                             <button className='usergraph__delete' onClick={function () {
-                                deleteDesiredGraphAndState(userDesiredGraph.id)
+                                deleteDesiredGraphAndState(userDesiredGraph)
                             }}>
                                 Eliminar
                             </button>
@@ -77,8 +77,10 @@ function App() {
         }
     }
 
-    const deleteDesiredGraphAndState = (userDesiredGraphId) => {
+    const deleteDesiredGraphAndState = (userDesiredGraph) => {
+        const userDesiredGraphId = userDesiredGraph.id
         deleteDesiredGraph(userDesiredGraphId)
+        deleteGraphByUserIdAndType(userDesiredGraph.userId, userDesiredGraph.type)
         const updatedUserDesiredGraphs = userDesiredGraphs.filter((userDesiredGraph) => userDesiredGraph.id !== userDesiredGraphId);
         setUserDesiredGraphs(updatedUserDesiredGraphs);
     }

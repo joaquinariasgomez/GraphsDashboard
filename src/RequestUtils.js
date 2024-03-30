@@ -11,6 +11,15 @@ export async function getAllGraphsByUserId(userId) {
     return result;
 }
 
+export async function deleteGraphByUserIdAndType(userId, type) {
+    await fetch(Config.BackendGraphsURL+"/specific?userId="+userId+"&type="+type, {method: 'DELETE'})
+        .then(response => {
+            if(!response.ok) {
+                throw new Error(response.statusText);
+            }
+        });
+}
+
 export async function getAllDesiredGraphsByUserId(userId) {
     const result = await fetch(Config.BackendDesiredGraphsURL+"/userId/"+userId)
         .then(response => {
@@ -32,7 +41,6 @@ export async function deleteDesiredGraph(desiredGraphId) {
 }
 
 export async function reloadDesiredGraph(userId, type) {
-    console.log("Type que me llega "+type);
     await fetch(Config.OnDemandGraphsURL+"/specific?userId="+userId+"&type="+type, {method: 'POST'})
         .then(response => {
             if(!response.ok) {
