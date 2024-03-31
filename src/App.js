@@ -4,7 +4,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import CachedIcon from '@mui/icons-material/Cached';
 import AddIcon from '@mui/icons-material/Add';
 import AddCircleOutlineSharpIcon from '@mui/icons-material/AddCircleOutlineSharp';
-import { deleteDesiredGraph, deleteGraphByUserIdAndType, getAllDesiredGraphsByUserId, getAllGraphsByUserId, reloadDesiredGraph } from './RequestUtils';
+import { deleteDesiredGraph, deleteGraphByUserIdAndType, getAllDesiredGraphsByUserId, getAllGraphsByUserId, reloadDesiredGraphAndReturnNewGraph, reloadDesiredGraphAndReturnUpdatedGraph } from './RequestUtils';
 import { getRelativeTimeToUpdate, getRelativeTimestamp, getUserGraphByType } from './Utils';
 import EmptyGraphsDashboard from './EmptyGraphsDashboard';
 import GraphFactory from './charts/GraphFactory';
@@ -63,16 +63,21 @@ function App() {
                             {renderTimestamp(userDesiredGraph)}
                             <button className='usergraph__reload' onClick={async function () {
                                 // setGraphIsUpdating(true)
-                                const updatedGraphResponse = await reloadDesiredGraph(userDesiredGraph.userId, userDesiredGraph.type, getUserGraphByType(userGraphs, userDesiredGraph.type))
+                                if(getUserGraphByType(userGraphs, userDesiredGraph.type) != null) {
+                                    const updatedGraphResponse = await reloadDesiredGraphAndReturnUpdatedGraph(userDesiredGraph.userId, userDesiredGraph.type, getUserGraphByType(userGraphs, userDesiredGraph.type))
+                                    const updatedUserGraphs = userGraphs.map((userGraph) => { // Just update this new userGraph
+                                        if(userGraph.id === updatedGraphResponse.id) {
+                                            return updatedGraphResponse;
+                                        }
+                                        return userGraph;
+                                    });
+                                    setUserGraphs(updatedUserGraphs);
+                                }
+                                else {
+                                    const newGraphResponse = await reloadDesiredGraphAndReturnNewGraph(userDesiredGraph.userId, userDesiredGraph.type);
+                                    setUserGraphs([...userGraphs, newGraphResponse]);
+                                }
                                 // setGraphIsUpdating(false)
-                                
-                                const updatedUserGraphs = userGraphs.map((userGraph) => { // Just update this new userGraph
-                                    if(userGraph.id === updatedGraphResponse.id) {
-                                        return updatedGraphResponse;
-                                    }
-                                    return userGraph;
-                                });
-                                setUserGraphs(updatedUserGraphs);
                             }}>
                                 <p>Actualizar</p>
                                 <CachedIcon />

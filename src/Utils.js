@@ -75,3 +75,7 @@ export function getUserGraphByType(userGraphs, type) {
         }
     }
 }
+
+export function delay(time) {
+    return new Promise(resolve => setTimeout(resolve, time));
+}
