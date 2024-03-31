@@ -45,8 +45,8 @@ export function getRelativeTimestamp(timestamp) {
     }
 }
 
-export function getRelativeTimeToUpdate(userDesiredGraph) {
-    switch (userDesiredGraph.tag) {
+export function getRelativeTimeToUpdate(userDesiredGraphTag) {
+    switch (userDesiredGraphTag) {
         case "DAILY":
             let tomorrow = new Date();
             tomorrow.setDate(tomorrow.getDate() + 1); // Set date to tomorrow

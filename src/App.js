@@ -16,7 +16,7 @@ function App() {
     const [userGraphs, setUserGraphs] = useState([]);
     const [userDesiredGraphs, setUserDesiredGraphs] = useState([]);
 
-    // const [graphIsUpdating, setGraphIsUpdating] = useState(false);
+    //const [graphIsUpdating, setGraphIsUpdating] = useState([]); // [{id: desiredGraphId, updating: false}]
 
     useEffect(() => {
         fetchUserGraphs();
@@ -61,9 +61,18 @@ function App() {
                                 <p>Eliminar</p>
                             </button>
                             {renderTimestamp(userDesiredGraph)}
-                            <button className='usergraph__reload' onClick={function () {
-                                reloadDesiredGraph(userDesiredGraph.userId, userDesiredGraph.type)
+                            <button className='usergraph__reload' onClick={async function () {
                                 // setGraphIsUpdating(true)
+                                const updatedGraphResponse = await reloadDesiredGraph(userDesiredGraph.userId, userDesiredGraph.type, getUserGraphByType(userGraphs, userDesiredGraph.type))
+                                // setGraphIsUpdating(false)
+                                
+                                const updatedUserGraphs = userGraphs.map((userGraph) => { // Just update this new userGraph
+                                    if(userGraph.id === updatedGraphResponse.id) {
+                                        return updatedGraphResponse;
+                                    }
+                                    return userGraph;
+                                });
+                                setUserGraphs(updatedUserGraphs);
                             }}>
                                 <p>Actualizar</p>
                                 <CachedIcon />
@@ -79,7 +88,7 @@ function App() {
                     }}>
                         <AddCircleOutlineSharpIcon style={{ width: 50, height: 50 }}/>
                         <Select>
-                            
+
                         </Select>
                     </button>
                 </div>
@@ -109,9 +118,14 @@ function App() {
     const renderTimestamp = (userDesiredGraph) => {
         if(getUserGraphByType(userGraphs, userDesiredGraph.type) != null) {
             return (
-                <p className='usergraph__timestamp'>
-                    {"Actualizado hace "+getRelativeTimestamp(getUserGraphByType(userGraphs, userDesiredGraph.type).lastUpdated)}
-                </p>
+                <div className='usergraph__middleinfo'>
+                    <p className='usergraph__timestamp'>
+                        {"Actualizado hace "+getRelativeTimestamp(getUserGraphByType(userGraphs, userDesiredGraph.type).lastUpdated)}
+                    </p>
+                    <p className='usergraph__timestamp'>
+                        {"Próxima actualización en "+getRelativeTimeToUpdate(userDesiredGraph.tag)}
+                    </p>
+                </div>
             )
         }
     }
@@ -128,7 +142,7 @@ function App() {
             return (
                 <div className='usergraph__loadinggraph'>
                     <p>
-                        {"Esta gráfica se actualizará en "+getRelativeTimeToUpdate(userDesiredGraph)}
+                        {"Esta gráfica se actualizará en "+getRelativeTimeToUpdate(userDesiredGraph.tag)}
                     </p>
                     <CachedIcon fontSize="large" style={{ color: '#6d6d6d' }} />
                     {/* <ClipLoader size={50}/> */}
