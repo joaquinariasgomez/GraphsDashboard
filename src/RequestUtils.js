@@ -63,6 +63,15 @@ export async function deleteDesiredGraph(desiredGraphId) {
         });
 }
 
+export async function updateDesiredGraph(desiredGraphId, desiredGraphBody) {
+    await fetch(Config.BackendDesiredGraphsURL+"/"+desiredGraphId, {method: 'PUT', body: desiredGraphBody})
+        .then(response => {
+            if(!response.ok) {
+                throw new Error(response.statusText);
+            }
+        });
+}
+
 export async function reloadDesiredGraph(userId, type) {
     await fetch(Config.OnDemandGraphsURL+"/specific?userId="+userId+"&type="+type, {method: 'POST'})
         .then(response => {
