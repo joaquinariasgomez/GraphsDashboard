@@ -56,10 +56,11 @@ export function getRelativeTimeToUpdate(userDesiredGraphTag) {
             return getRelativeTimestamp(tomorrow);
         case "WEEKLY":
             let monday = new Date();
-            monday.setDate(monday.getDate() + (1 + 7 - monday.getDay()) % 7);
+            monday.setDate(monday.getDate() + (((1 + 7 - monday.getDay()) % 7) || 7));
             monday.setHours(0);
             monday.setMinutes(0);
             monday.setSeconds(0);
+            console.log(monday);
             return getRelativeTimestamp(monday);
         case "MONTHLY":
             let now = new Date();

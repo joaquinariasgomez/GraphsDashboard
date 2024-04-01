@@ -32,8 +32,8 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 5px;
-    /* border: 1px solid red; */
+    margin-bottom: 10px;
+    border: 1px solid red;
 }
 
 .usergraph__delete {
@@ -54,6 +54,10 @@
 .usergraph__delete > p {
     color: red;
     margin-left: 5px;
+}
+
+.usergraph__selecttag {
+    width: 160px;
 }
 
 .usergraph__reload {
@@ -81,6 +85,7 @@
     font-size: 14px;
     color: gray;
     margin: 0px;
+    border: 1px solid red;
 }
 
 .usergraph__loadinggraph {

@@ -8,8 +8,8 @@ import { deleteDesiredGraph, deleteGraphByUserIdAndType, getAllDesiredGraphsByUs
 import { getRelativeTimeToUpdate, getRelativeTimestamp, getUserGraphByType } from './Utils';
 import EmptyGraphsDashboard from './EmptyGraphsDashboard';
 import GraphFactory from './charts/GraphFactory';
-import Select from 'react-select';
 import ClipLoader from "react-spinners/ClipLoader";
+import SelectGraphTag from './SelectGraphTag';
 
 function App() {
 
@@ -17,12 +17,6 @@ function App() {
     const [userDesiredGraphs, setUserDesiredGraphs] = useState([]);
 
     //const [graphIsUpdating, setGraphIsUpdating] = useState([]); // [{id: desiredGraphId, updating: false}]
-
-    const options = [
-        {value: 'DAILY', label: 'Diariamente'},
-        {value: 'WEEKLY', label: 'Semanalmente'},
-        {value: 'MONTHLY', label: 'Mensualmente'},
-    ]
 
     useEffect(() => {
         fetchUserGraphs();
@@ -67,14 +61,12 @@ function App() {
                                 <p>Eliminar</p>
                             </button>
                             {renderTimestamp(userDesiredGraph)}
-                            <div>
-                                {/* Usar mi propio dropdown? */}
-                                <Select
-                                    defaultValue={
-                                        options.filter((option) => option.value === userDesiredGraph.tag)
-                                    }
-                                    options={options}
-                                    // onChange={}
+                            <div className='usergraph__selecttag'>
+                                <SelectGraphTag
+                                    desiredGraphId={userDesiredGraph.id}
+                                    userId="joaquin"
+                                    graphType={userDesiredGraph.type}
+                                    defaultTag={userDesiredGraph.tag}
                                 />
                             </div>
                             <button className='usergraph__reload' onClick={async function () {
@@ -108,9 +100,9 @@ function App() {
 
                     }}>
                         <AddCircleOutlineSharpIcon style={{ width: 50, height: 50 }}/>
-                        <Select>
+                        {/* <Select>
 
-                        </Select>
+                        </Select> */}
                     </button>
                 </div>
             </div>

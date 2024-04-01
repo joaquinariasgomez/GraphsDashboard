@@ -64,7 +64,14 @@ export async function deleteDesiredGraph(desiredGraphId) {
 }
 
 export async function updateDesiredGraph(desiredGraphId, desiredGraphBody) {
-    await fetch(Config.BackendDesiredGraphsURL+"/"+desiredGraphId, {method: 'PUT', body: desiredGraphBody})
+    await fetch(Config.BackendDesiredGraphsURL+"/"+desiredGraphId, {
+        method: 'PUT',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: desiredGraphBody
+    })
         .then(response => {
             if(!response.ok) {
                 throw new Error(response.statusText);
