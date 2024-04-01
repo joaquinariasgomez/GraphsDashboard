@@ -3,13 +3,13 @@ import { Chart } from "chart.js/auto";
 import DeleteIcon from '@mui/icons-material/Delete';
 import CachedIcon from '@mui/icons-material/Cached';
 import AddIcon from '@mui/icons-material/Add';
-import AddCircleOutlineSharpIcon from '@mui/icons-material/AddCircleOutlineSharp';
 import { deleteDesiredGraph, deleteGraphByUserIdAndType, getAllDesiredGraphsByUserId, getAllGraphsByUserId, reloadDesiredGraphAndReturnNewGraph, reloadDesiredGraphAndReturnUpdatedGraph } from './RequestUtils';
 import { getRelativeTimeToUpdate, getRelativeTimestamp, getUserGraphByType } from './Utils';
 import EmptyGraphsDashboard from './EmptyGraphsDashboard';
 import GraphFactory from './charts/GraphFactory';
 import ClipLoader from "react-spinners/ClipLoader";
 import SelectGraphTag from './SelectGraphTag';
+import CreateGraph from './CreateGraph';
 
 function App() {
 
@@ -95,16 +95,10 @@ function App() {
                         {renderGraph(userDesiredGraph)}
                     </div>
                 ))}
-                <div className='usergraph__item'>
-                    <button className='usergraph__create' onClick={function() {
-
-                    }}>
-                        <AddCircleOutlineSharpIcon style={{ width: 50, height: 50 }}/>
-                        {/* <Select>
-
-                        </Select> */}
-                    </button>
-                </div>
+                <CreateGraph
+                    userId="joaquin"
+                    updateStateFunction={fetchUserDesiredGraphs}
+                />
             </div>
         )
     }

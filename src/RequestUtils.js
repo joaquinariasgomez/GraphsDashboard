@@ -63,6 +63,24 @@ export async function deleteDesiredGraph(desiredGraphId) {
         });
 }
 
+export async function createDesiredGraph(desiredGraphBody) {
+    const result = await fetch(Config.BackendDesiredGraphsURL, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: desiredGraphBody
+    })
+    .then(response => {
+        if(!response.ok) {
+            throw new Error(response.statusText);
+        }
+        return response.json()
+    });
+    return result;
+}
+
 export async function updateDesiredGraph(desiredGraphId, desiredGraphBody) {
     await fetch(Config.BackendDesiredGraphsURL+"/"+desiredGraphId, {
         method: 'PUT',
