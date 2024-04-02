@@ -1,7 +1,8 @@
 import Select from 'react-select';
 import { updateDesiredGraph } from './RequestUtils';
+import { delay } from './Utils';
 
-export default function SelectGraphTag({ desiredGraphId, userId, graphType, defaultTag }) {
+export default function SelectGraphTag({ desiredGraphId, userId, graphType, defaultTag, updateStateFunction }) {
 
     const options = [
         {value: 'DAILY', label: 'Diariamente'},
@@ -15,8 +16,8 @@ export default function SelectGraphTag({ desiredGraphId, userId, graphType, defa
                 options.filter((option) => option.value === defaultTag)
             }
             options={options}
-            onChange={function (newTag) {
-                updateDesiredGraph(
+            onChange={async function (newTag) {
+                const apiResponse = await updateDesiredGraph(
                     desiredGraphId,
                     JSON.stringify(
                         {
@@ -26,9 +27,10 @@ export default function SelectGraphTag({ desiredGraphId, userId, graphType, defa
                         }
                     )
                 )
+                if(apiResponse) {
+                    updateStateFunction()
+                }
             }}
         />
     )
 }
-// TODO: quizas hacer esto con un dispatcher (algo como el useGraphStateValue de GraphProject_Frontend)
-// Fijarme en SelectLineType de GraphProject_Frontend

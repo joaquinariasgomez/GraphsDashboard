@@ -3,7 +3,7 @@ import { Chart } from "chart.js/auto";
 import DeleteIcon from '@mui/icons-material/Delete';
 import CachedIcon from '@mui/icons-material/Cached';
 import AddIcon from '@mui/icons-material/Add';
-import { deleteDesiredGraph, deleteGraphByUserIdAndType, getAllDesiredGraphsByUserId, getAllGraphsByUserId, reloadDesiredGraphAndReturnNewGraph, reloadDesiredGraphAndReturnUpdatedGraph } from './RequestUtils';
+import { connectToNotion, deleteDesiredGraph, deleteGraphByUserIdAndType, getAllDesiredGraphsByUserId, getAllGraphsByUserId, reloadDesiredGraphAndReturnNewGraph, reloadDesiredGraphAndReturnUpdatedGraph } from './RequestUtils';
 import { getRelativeTimeToUpdate, getRelativeTimestamp, getUserGraphByType } from './Utils';
 import EmptyGraphsDashboard from './EmptyGraphsDashboard';
 import GraphFactory from './charts/GraphFactory';
@@ -15,6 +15,10 @@ function App() {
 
     const [userGraphs, setUserGraphs] = useState([]);
     const [userDesiredGraphs, setUserDesiredGraphs] = useState([]);
+
+    const [session, setSession] = useState([]);
+
+    const authorization_url = "https://api.notion.com/v1/oauth/authorize?client_id=7b3518ee-dfde-4748-b007-7cd1c3405e0d&response_type=code&owner=user&redirect_uri=http%3A%2F%2Flocalhost%3A3000"; // TODO: keep secret
 
     //const [graphIsUpdating, setGraphIsUpdating] = useState([]); // [{id: desiredGraphId, updating: false}]
 
@@ -67,6 +71,7 @@ function App() {
                                     userId="joaquin"
                                     graphType={userDesiredGraph.type}
                                     defaultTag={userDesiredGraph.tag}
+                                    updateStateFunction={fetchUserDesiredGraphs}
                                 />
                             </div>
                             <button className='usergraph__reload' onClick={async function () {
@@ -109,7 +114,12 @@ function App() {
         }
         else {
             return (
-                <EmptyGraphsDashboard />
+                <div className='login__container'>
+                    <a href={authorization_url}>
+                        Connect to Notion
+                    </a>
+                </div>
+                // <EmptyGraphsDashboard />
             )
         }
     }
@@ -118,8 +128,12 @@ function App() {
         const userDesiredGraphId = userDesiredGraph.id
         deleteDesiredGraph(userDesiredGraphId)
         deleteGraphByUserIdAndType(userDesiredGraph.userId, userDesiredGraph.type)
+
+        // Delete userDesiredGraph and userGraph for that type that is being deleted
         const updatedUserDesiredGraphs = userDesiredGraphs.filter((userDesiredGraph) => userDesiredGraph.id !== userDesiredGraphId);
         setUserDesiredGraphs(updatedUserDesiredGraphs);
+        const updatedUserGraphs = userGraphs.filter((userGraph) => userGraph.type !== userDesiredGraph.type);
+        setUserGraphs(updatedUserGraphs);
     }
 
     const renderTimestamp = (userDesiredGraph) => {

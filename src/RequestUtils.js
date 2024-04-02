@@ -82,7 +82,7 @@ export async function createDesiredGraph(desiredGraphBody) {
 }
 
 export async function updateDesiredGraph(desiredGraphId, desiredGraphBody) {
-    await fetch(Config.BackendDesiredGraphsURL+"/"+desiredGraphId, {
+    const result = await fetch(Config.BackendDesiredGraphsURL+"/"+desiredGraphId, {
         method: 'PUT',
         headers: {
             'Accept': 'application/json',
@@ -90,11 +90,13 @@ export async function updateDesiredGraph(desiredGraphId, desiredGraphBody) {
         },
         body: desiredGraphBody
     })
-        .then(response => {
-            if(!response.ok) {
-                throw new Error(response.statusText);
-            }
-        });
+    .then(response => {
+        if(!response.ok) {
+            throw new Error(response.statusText);
+        }
+        return response.json()
+    });
+    return result;
 }
 
 export async function reloadDesiredGraph(userId, type) {
