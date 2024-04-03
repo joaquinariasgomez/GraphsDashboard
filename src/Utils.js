@@ -80,3 +80,59 @@ export function getUserGraphByType(userGraphs, type) {
 export function delay(time) {
     return new Promise(resolve => setTimeout(resolve, time));
 }
+
+export const fakeGraphData = {
+    type: "Gastos en los últimos 7 días por categoría",
+    data: [
+        {
+            value: 39.95,
+            category: "Bills & Subscriptions",
+            tag: "2024-03-27"
+        },
+        {
+            value: 13.0,
+            category: "Supermarket",
+            tag: "2024-03-28"
+        },
+        {
+            value: 32.879999999999995,
+            category: "Supermarket",
+            tag: "2024-03-29"
+        },
+        {
+            value: 1.2,
+            category: "Food Out",
+            tag: "2024-03-29"
+        },
+        {
+            value: 28.25,
+            category: "Supermarket",
+            tag: "2024-03-30"
+        },
+        {
+            value: 12.18,
+            category: "Gasoline",
+            tag: "2024-03-31"
+        },
+        {
+            value: 0.75,
+            category: "Food Out",
+            tag: "2024-03-31"
+        },
+        {
+            value: 780.0,
+            category: "Bills & Subscriptions",
+            tag: "2024-04-01"
+        },
+        {
+            value: 6.18,
+            category: "Supermarket",
+            tag: "2024-04-01"
+        },
+        {
+            value: 2.99,
+            category: "Bills & Subscriptions",
+            tag: "2024-04-02"
+        }
+    ]
+}

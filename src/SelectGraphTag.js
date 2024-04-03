@@ -1,6 +1,5 @@
 import Select from 'react-select';
 import { updateDesiredGraph } from './RequestUtils';
-import { delay } from './Utils';
 
 export default function SelectGraphTag({ desiredGraphId, userId, graphType, defaultTag, updateStateFunction }) {
 

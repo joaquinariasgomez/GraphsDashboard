@@ -4,9 +4,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import CachedIcon from '@mui/icons-material/Cached';
 import AddIcon from '@mui/icons-material/Add';
 import { connectToNotion, deleteDesiredGraph, deleteGraphByUserIdAndType, getAllDesiredGraphsByUserId, getAllGraphsByUserId, reloadDesiredGraphAndReturnNewGraph, reloadDesiredGraphAndReturnUpdatedGraph } from './RequestUtils';
-import { getRelativeTimeToUpdate, getRelativeTimestamp, getUserGraphByType } from './Utils';
+import { fakeGraphData, getRelativeTimeToUpdate, getRelativeTimestamp, getUserGraphByType } from './Utils';
 import EmptyGraphsDashboard from './EmptyGraphsDashboard';
 import GraphFactory from './charts/GraphFactory';
+import LoginBox from './LoginBox';
 import ClipLoader from "react-spinners/ClipLoader";
 import SelectGraphTag from './SelectGraphTag';
 import CreateGraph from './CreateGraph';
@@ -16,9 +17,9 @@ function App() {
     const [userGraphs, setUserGraphs] = useState([]);
     const [userDesiredGraphs, setUserDesiredGraphs] = useState([]);
 
-    const [session, setSession] = useState([]);
+    const [isLoggedIn, setIsLoggedIn] = useState(true);
 
-    const authorization_url = "https://api.notion.com/v1/oauth/authorize?client_id=7b3518ee-dfde-4748-b007-7cd1c3405e0d&response_type=code&owner=user&redirect_uri=http%3A%2F%2Flocalhost%3A3000"; // TODO: keep secret
+    const [session, setSession] = useState([]);
 
     //const [graphIsUpdating, setGraphIsUpdating] = useState([]); // [{id: desiredGraphId, updating: false}]
 
@@ -108,19 +109,67 @@ function App() {
         )
     }
 
+    const renderFakeUserGraphs = () => {
+        return (
+            <div className='usergraphsgrid__container'>
+                <div className='usergraph__item' key="1">
+                    <div className='usergraph__firstrow'>
+                        <button className='usergraph__delete'>
+                            <DeleteIcon style={{ color: '#f14668' }} />
+                            <p>Eliminar</p>
+                        </button>
+                        <div className='usergraph__middleinfo'>
+                            <p className='usergraph__timestamp'>
+                                Actualizado hace 11 minutos
+                            </p>
+                            <p className='usergraph__timestamp'>
+                                Próxima actualización en 15 horas
+                            </p>
+                        </div>
+                        <div className='usergraph__selecttag'>
+                            <SelectGraphTag
+                                desiredGraphId="Mock"
+                                userId="Mock"
+                                graphType="Mock"
+                                defaultTag="DAILY"
+                                updateStateFunction={fetchUserDesiredGraphs}
+                            />
+                        </div>
+                        <button className='usergraph__reload'>
+                            <p>Actualizar</p>
+                            <CachedIcon />
+                        </button>
+                    </div>
+                    <GraphFactory
+                        graphData={fakeGraphData}
+                    />
+                </div>
+                {/* <CreateGraph
+                    userId="joaquin"
+                    updateStateFunction={fetchUserDesiredGraphs}
+                /> */}
+            </div>
+        )
+    }
+
     const renderDashboardForUser = () => {
-        if(userDesiredGraphs.length > 0) {
-            {return renderUserGraphs()}
+        if(!isLoggedIn) {
+            return (
+                <div className='loginandfakegraphs'>
+                    <LoginBox />
+                    {renderFakeUserGraphs()}
+                </div>
+            )
         }
         else {
-            return (
-                <div className='login__container'>
-                    <a href={authorization_url}>
-                        Connect to Notion
-                    </a>
-                </div>
-                // <EmptyGraphsDashboard />
-            )
+            if(userDesiredGraphs.length > 0) {
+                {return renderUserGraphs()}
+            }
+            else {
+                return (
+                    <EmptyGraphsDashboard />
+                )
+            }
         }
     }
 
