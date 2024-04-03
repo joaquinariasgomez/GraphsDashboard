@@ -17,18 +17,30 @@ function App() {
     const [userGraphs, setUserGraphs] = useState([]);
     const [userDesiredGraphs, setUserDesiredGraphs] = useState([]);
 
-    const [isLoggedIn, setIsLoggedIn] = useState(true);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const [session, setSession] = useState([]);
 
     //const [graphIsUpdating, setGraphIsUpdating] = useState([]); // [{id: desiredGraphId, updating: false}]
 
     useEffect(() => {
-        fetchUserGraphs();
+        const params = new URL(window.document.location).searchParams;
+        const notionCode = params.get("code");
+        if (!notionCode) return;
+        console.log("yoo notionCode: "+notionCode);
+        // Send code to our backend to authorize
     }, []);
 
     useEffect(() => {
-        fetchUserDesiredGraphs();
+        if(isLoggedIn) {
+            fetchUserGraphs();
+        }
+    }, []);
+
+    useEffect(() => {
+        if(isLoggedIn) {
+            fetchUserDesiredGraphs();
+        }
     }, []);
 
     const fetchUserGraphs = async () => {
