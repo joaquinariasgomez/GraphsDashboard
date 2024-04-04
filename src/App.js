@@ -3,7 +3,7 @@ import { Chart } from "chart.js/auto";
 import DeleteIcon from '@mui/icons-material/Delete';
 import CachedIcon from '@mui/icons-material/Cached';
 import AddIcon from '@mui/icons-material/Add';
-import { connectToNotion, deleteDesiredGraph, deleteGraphByUserIdAndType, getAllDesiredGraphsByUserId, getAllGraphsByUserId, reloadDesiredGraphAndReturnNewGraph, reloadDesiredGraphAndReturnUpdatedGraph } from './RequestUtils';
+import { connectToNotion, deleteDesiredGraph, deleteGraphByUserIdAndType, getAllDesiredGraphsByUserId, getAllGraphsByUserId, reloadDesiredGraphAndReturnNewGraph, reloadDesiredGraphAndReturnUpdatedGraph, loginToNotionWithCode } from './RequestUtils';
 import { fakeGraphData, getRelativeTimeToUpdate, getRelativeTimestamp, getUserGraphByType } from './Utils';
 import EmptyGraphsDashboard from './EmptyGraphsDashboard';
 import GraphFactory from './charts/GraphFactory';
@@ -27,21 +27,28 @@ function App() {
         const params = new URL(window.document.location).searchParams;
         const notionCode = params.get("code");
         if (!notionCode) return;
-        console.log("yoo notionCode: "+notionCode);
-        // Send code to our backend to authorize
+        getLoginDataFromNotion(notionCode);
     }, []);
 
-    useEffect(() => {
-        if(isLoggedIn) {
-            fetchUserGraphs();
-        }
-    }, []);
+    // useEffect(() => {
+    //     if(isLoggedIn) {
+    //         fetchUserGraphs();
+    //     }
+    // }, []);
 
-    useEffect(() => {
-        if(isLoggedIn) {
-            fetchUserDesiredGraphs();
+    // useEffect(() => {
+    //     if(isLoggedIn) {
+    //         fetchUserDesiredGraphs();
+    //     }
+    // }, []);
+
+    const getLoginDataFromNotion = async (code) => {
+        const apiResponse = await loginToNotionWithCode(code);
+        if(apiResponse) {
+            console.log("Respuesta bitch! "+apiResponse);
+            // Set logged in or something, as well as other login parameters
         }
-    }, []);
+    }
 
     const fetchUserGraphs = async () => {
         // Get session token from current logged in user

@@ -137,3 +137,19 @@ export async function reloadDesiredGraphAndReturnNewGraph(userId, type) {
     }
     return newGraphResponse;
 }
+
+export async function loginToNotionWithCode(code) {
+    const result = await fetch(Config.NotionGraphsURL+"/login/"+code, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => {
+        if(!response.ok) {
+            throw new Error(response.statusText);
+        }
+        return response.json()
+    });
+    return result;
+}
