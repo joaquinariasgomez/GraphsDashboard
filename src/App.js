@@ -23,7 +23,7 @@ function App() {
 
     const [session, setSession] = useState([]);
 
-    const history = useNavigate();
+    const navigate = useNavigate();
 
     //const [graphIsUpdating, setGraphIsUpdating] = useState([]); // [{id: desiredGraphId, updating: false}]
 
@@ -50,7 +50,7 @@ function App() {
         const apiResponse = await loginToNotionWithCode(code);
         if(apiResponse) {
             console.log("Respuesta bitch! "+apiResponse);
-            history.push("/home");
+            navigate("/GraphsDashboard");
             // Set logged in or something, as well as other login parameters
             // Set access token, to use in Header for next requests
         }
