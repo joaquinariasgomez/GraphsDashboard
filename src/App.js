@@ -8,7 +8,9 @@ import { fakeGraphData, getRelativeTimeToUpdate, getRelativeTimestamp, getUserGr
 import EmptyGraphsDashboard from './EmptyGraphsDashboard';
 import GraphFactory from './charts/GraphFactory';
 import LoginBox from './LoginBox';
+import { redirect } from 'react-router-dom';
 import ClipLoader from "react-spinners/ClipLoader";
+import { useNavigate } from "react-router-dom";
 import SelectGraphTag from './SelectGraphTag';
 import CreateGraph from './CreateGraph';
 
@@ -20,6 +22,8 @@ function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const [session, setSession] = useState([]);
+
+    const history = useNavigate();
 
     //const [graphIsUpdating, setGraphIsUpdating] = useState([]); // [{id: desiredGraphId, updating: false}]
 
@@ -46,7 +50,9 @@ function App() {
         const apiResponse = await loginToNotionWithCode(code);
         if(apiResponse) {
             console.log("Respuesta bitch! "+apiResponse);
+            history.push("/home");
             // Set logged in or something, as well as other login parameters
+            // Set access token, to use in Header for next requests
         }
     }
 

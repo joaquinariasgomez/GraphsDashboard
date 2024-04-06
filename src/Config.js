@@ -6,12 +6,13 @@ const OnDemandBackendAPIVersion = "v1";
 const NotionGraphsBackendAPIVersion = "v1";
 const GraphsResource = "graphs";
 const DesiredGraphsResource = "desiredgraphs";
+const AuthResource = "auth";
 
 const Config = {
     BackendGraphsURL: BackendBaseURl + "/" + BackendAPIVersion + "/" + GraphsResource,
     BackendDesiredGraphsURL: BackendBaseURl + "/" + BackendAPIVersion + "/" + DesiredGraphsResource,
     OnDemandGraphsURL: OnDemandBackendBaseURl + "/" + OnDemandBackendAPIVersion,
-    NotionGraphsURL: NotionGraphsBackendBaseURl + "/" + NotionGraphsBackendAPIVersion
+    NotionGraphsAuthURL: NotionGraphsBackendBaseURl + "/" + NotionGraphsBackendAPIVersion + "/" + AuthResource
 }
 
 export default Config;
