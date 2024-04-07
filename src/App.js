@@ -8,6 +8,7 @@ import { fakeGraphData, getRelativeTimeToUpdate, getRelativeTimestamp, getUserGr
 import EmptyGraphsDashboard from './EmptyGraphsDashboard';
 import GraphFactory from './charts/GraphFactory';
 import LoginBox from './LoginBox';
+import UserDetails from './UserDetails';
 import ClipLoader from "react-spinners/ClipLoader";
 import { useNavigate } from "react-router-dom";
 import SelectGraphTag from './SelectGraphTag';
@@ -181,6 +182,14 @@ function App() {
             )
         }
         else {
+            return (
+                <div className='userdetailsandfakegraphs'>
+                    <UserDetails
+                        session={session}
+                    />
+                    {renderUserGraphs()}
+                </div>
+            )
             return renderUserGraphs();
             // if(userDesiredGraphs.length > 0) {
             //     {return renderUserGraphs()}
