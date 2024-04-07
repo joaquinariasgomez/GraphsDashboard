@@ -1,16 +1,13 @@
 {
   "files": {
-    "main.css": "/GraphsDashboard/static/css/main.f855e6bc.css",
-    "main.js": "/GraphsDashboard/static/js/main.64b7a832.js",
-    "static/js/453.64879149.chunk.js": "/GraphsDashboard/static/js/453.64879149.chunk.js",
-    "static/media/logo.svg": "/GraphsDashboard/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "main.css": "/GraphsDashboard/static/css/main.ad438653.css",
+    "main.js": "/GraphsDashboard/static/js/main.0e81a2e9.js",
     "index.html": "/GraphsDashboard/index.html",
-    "main.f855e6bc.css.map": "/GraphsDashboard/static/css/main.f855e6bc.css.map",
-    "main.64b7a832.js.map": "/GraphsDashboard/static/js/main.64b7a832.js.map",
-    "453.64879149.chunk.js.map": "/GraphsDashboard/static/js/453.64879149.chunk.js.map"
+    "main.ad438653.css.map": "/GraphsDashboard/static/css/main.ad438653.css.map",
+    "main.0e81a2e9.js.map": "/GraphsDashboard/static/js/main.0e81a2e9.js.map"
   },
   "entrypoints": [
-    "static/css/main.f855e6bc.css",
-    "static/js/main.64b7a832.js"
+    "static/css/main.ad438653.css",
+    "static/js/main.0e81a2e9.js"
   ]
 }
