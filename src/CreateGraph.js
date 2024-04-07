@@ -3,7 +3,7 @@ import Select from 'react-select';
 import { createDesiredGraph } from './RequestUtils';
 import { useState } from 'react';
 
-export default function CreateGraph({ userId, updateStateFunction }) {
+export default function CreateGraph({ botId, updateStateFunction }) {
 
     const [selectedTag, setSelectedTag] = useState('DAILY');
     const [selectedType, setSelectedType] = useState('Gastos en los últimos 7 días');
@@ -30,7 +30,8 @@ export default function CreateGraph({ userId, updateStateFunction }) {
                 const apiResponse = await createDesiredGraph(
                     JSON.stringify(
                         {
-                            userId: userId,
+                            userId: "", // Will be filled up by backend
+                            botId: botId,
                             tag: selectedTag,
                             type: selectedType
                         }

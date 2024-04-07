@@ -1,7 +1,7 @@
 import Select from 'react-select';
 import { updateDesiredGraph } from './RequestUtils';
 
-export default function SelectGraphTag({ desiredGraphId, userId, graphType, defaultTag, updateStateFunction }) {
+export default function SelectGraphTag({ desiredGraphId, botId, graphType, defaultTag, updateStateFunction }) {
 
     const options = [
         {value: 'DAILY', label: 'Diariamente'},
@@ -20,7 +20,8 @@ export default function SelectGraphTag({ desiredGraphId, userId, graphType, defa
                     desiredGraphId,
                     JSON.stringify(
                         {
-                            userId: userId,
+                            botId: botId,
+                            userId: "", // Will be filled up by backend
                             tag: newTag.value,
                             type: graphType
                         }

@@ -8,7 +8,6 @@ import { fakeGraphData, getRelativeTimeToUpdate, getRelativeTimestamp, getUserGr
 import EmptyGraphsDashboard from './EmptyGraphsDashboard';
 import GraphFactory from './charts/GraphFactory';
 import LoginBox from './LoginBox';
-import { redirect } from 'react-router-dom';
 import ClipLoader from "react-spinners/ClipLoader";
 import { useNavigate } from "react-router-dom";
 import SelectGraphTag from './SelectGraphTag';
@@ -21,7 +20,7 @@ function App() {
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    const [session, setSession] = useState([]);
+    const [session, setSession] = useState({});
 
     const navigate = useNavigate();
 
@@ -34,47 +33,42 @@ function App() {
         getLoginDataFromNotion(notionCode);
     }, []);
 
-    // useEffect(() => {
-    //     if(isLoggedIn) {
-    //         fetchUserGraphs();
-    //     }
-    // }, []);
+    useEffect(() => {
+        fetchUserGraphs();
+    }, [session]);
 
-    // useEffect(() => {
-    //     if(isLoggedIn) {
-    //         fetchUserDesiredGraphs();
-    //     }
-    // }, []);
+    useEffect(() => {
+        fetchUserDesiredGraphs();
+    }, [session]);
 
     const getLoginDataFromNotion = async (code) => {
         const apiResponse = await loginToNotionWithCode(code);
         if(apiResponse) {
-            console.log("Respuesta bitch! "+apiResponse);
-            navigate("/GraphsDashboard");
+            setIsLoggedIn(true);
+            setSession(apiResponse);
             // Set logged in or something, as well as other login parameters
-            // Set access token, to use in Header for next requests
+            // Set bot id, to use in Header for next requests
         }
+        navigate("/");
     }
 
     const fetchUserGraphs = async () => {
-        // Get session token from current logged in user
-    
-        // Perform request sending that Token
-        // Backend then should be able to retrieve the user from the token
-        const apiResponse = await getAllGraphsByUserId("joaquin");
-        if(apiResponse) {
-            setUserGraphs(apiResponse);
+        // Comprobar que tenemos session antes de hacer la petición
+        if(Object.keys(session).length > 0) {
+            const apiResponse = await getAllGraphsByUserId(session.bot_id);
+            if(apiResponse) {
+                setUserGraphs(apiResponse);
+            }
         }
     }
 
     const fetchUserDesiredGraphs = async () => {
-        // Get session token from current logged in user
-    
-        // Perform request sending that Token
-        // Backend then should be able to retrieve the user from the token
-        const apiResponse = await getAllDesiredGraphsByUserId("joaquin");
-        if(apiResponse) {
-            setUserDesiredGraphs(apiResponse);
+        // Comprobar que tenemos session antes de hacer la petición
+        if(Object.keys(session).length > 0) {
+            const apiResponse = await getAllDesiredGraphsByUserId(session.bot_id);
+            if(apiResponse) {
+                setUserDesiredGraphs(apiResponse);
+            }
         }
     }
 
@@ -94,7 +88,7 @@ function App() {
                             <div className='usergraph__selecttag'>
                                 <SelectGraphTag
                                     desiredGraphId={userDesiredGraph.id}
-                                    userId="joaquin"
+                                    botId={userDesiredGraph.botId}
                                     graphType={userDesiredGraph.type}
                                     defaultTag={userDesiredGraph.tag}
                                     updateStateFunction={fetchUserDesiredGraphs}
@@ -103,7 +97,7 @@ function App() {
                             <button className='usergraph__reload' onClick={async function () {
                                 // setGraphIsUpdating(true)
                                 if(getUserGraphByType(userGraphs, userDesiredGraph.type) != null) {
-                                    const updatedGraphResponse = await reloadDesiredGraphAndReturnUpdatedGraph(userDesiredGraph.userId, userDesiredGraph.type, getUserGraphByType(userGraphs, userDesiredGraph.type))
+                                    const updatedGraphResponse = await reloadDesiredGraphAndReturnUpdatedGraph(userDesiredGraph.botId, userDesiredGraph.type, getUserGraphByType(userGraphs, userDesiredGraph.type))
                                     const updatedUserGraphs = userGraphs.map((userGraph) => { // Just update this new userGraph
                                         if(userGraph.id === updatedGraphResponse.id) {
                                             return updatedGraphResponse;
@@ -113,7 +107,7 @@ function App() {
                                     setUserGraphs(updatedUserGraphs);
                                 }
                                 else {
-                                    const newGraphResponse = await reloadDesiredGraphAndReturnNewGraph(userDesiredGraph.userId, userDesiredGraph.type);
+                                    const newGraphResponse = await reloadDesiredGraphAndReturnNewGraph(userDesiredGraph.botId, userDesiredGraph.type);
                                     setUserGraphs([...userGraphs, newGraphResponse]);
                                 }
                                 // setGraphIsUpdating(false)
@@ -127,7 +121,7 @@ function App() {
                     </div>
                 ))}
                 <CreateGraph
-                    userId="joaquin"
+                    botId={session.bot_id}
                     updateStateFunction={fetchUserDesiredGraphs}
                 />
             </div>
@@ -178,7 +172,7 @@ function App() {
     }
 
     const renderDashboardForUser = () => {
-        if(!isLoggedIn) {
+        if(!isLoggedIn || Object.keys(session).length <= 0) {   // Not logged in or no session
             return (
                 <div className='loginandfakegraphs'>
                     <LoginBox />
@@ -187,21 +181,22 @@ function App() {
             )
         }
         else {
-            if(userDesiredGraphs.length > 0) {
-                {return renderUserGraphs()}
-            }
-            else {
-                return (
-                    <EmptyGraphsDashboard />
-                )
-            }
+            return renderUserGraphs();
+            // if(userDesiredGraphs.length > 0) {
+            //     {return renderUserGraphs()}
+            // }
+            // else {
+            //     return (
+            //         <EmptyGraphsDashboard />
+            //     )
+            // }
         }
     }
 
     const deleteDesiredGraphAndState = (userDesiredGraph) => {
         const userDesiredGraphId = userDesiredGraph.id
         deleteDesiredGraph(userDesiredGraphId)
-        deleteGraphByUserIdAndType(userDesiredGraph.userId, userDesiredGraph.type)
+        deleteGraphByUserIdAndType(userDesiredGraph.botId, userDesiredGraph.type)
 
         // Delete userDesiredGraph and userGraph for that type that is being deleted
         const updatedUserDesiredGraphs = userDesiredGraphs.filter((userDesiredGraph) => userDesiredGraph.id !== userDesiredGraphId);

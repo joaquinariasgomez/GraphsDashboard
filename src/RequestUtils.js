@@ -1,8 +1,9 @@
 import Config from "./Config";
 import { delay } from "./Utils";
 
-export async function getAllGraphsByUserId(userId) {
-    const result = await fetch(Config.BackendGraphsURL+"/userId/"+userId)
+export async function getAllGraphsByUserId(botId) {
+    // Backend will need to retrieve userId based on botId that is passed through a header
+    const result = await fetch(Config.BackendGraphsURL+"/botId/"+botId)
         .then(response => {
             if(!response.ok) {
                 throw new Error(response.statusText);
@@ -23,8 +24,8 @@ export async function getGraphById(graphId) {
     return result;
 }
 
-export async function getGraphByUserIdAndType(userId, type) {
-    const result = await fetch(Config.BackendGraphsURL+"/specific?userId="+userId+"&type="+type)
+export async function getGraphByUserIdAndType(botId, type) {
+    const result = await fetch(Config.BackendGraphsURL+"/specific?botId="+botId+"&type="+type)
         .then(response => {
             if(!response.ok) {
                 throw new Error(response.statusText);
@@ -34,8 +35,8 @@ export async function getGraphByUserIdAndType(userId, type) {
     return result;
 }
 
-export async function deleteGraphByUserIdAndType(userId, type) {
-    await fetch(Config.BackendGraphsURL+"/specific?userId="+userId+"&type="+type, {method: 'DELETE'})
+export async function deleteGraphByUserIdAndType(botId, type) {
+    await fetch(Config.BackendGraphsURL+"/specific?botId="+botId+"&type="+type, {method: 'DELETE'})
         .then(response => {
             if(!response.ok) {
                 throw new Error(response.statusText);
@@ -43,8 +44,9 @@ export async function deleteGraphByUserIdAndType(userId, type) {
         });
 }
 
-export async function getAllDesiredGraphsByUserId(userId) {
-    const result = await fetch(Config.BackendDesiredGraphsURL+"/userId/"+userId)
+export async function getAllDesiredGraphsByUserId(botId) {
+    // Backend will need to retrieve userId based on botId that is passed through a header
+    const result = await fetch(Config.BackendDesiredGraphsURL+"/botId/"+botId)
         .then(response => {
             if(!response.ok) {
                 throw new Error(response.statusText);
@@ -99,8 +101,8 @@ export async function updateDesiredGraph(desiredGraphId, desiredGraphBody) {
     return result;
 }
 
-export async function reloadDesiredGraph(userId, type) {
-    await fetch(Config.OnDemandGraphsURL+"/specific?userId="+userId+"&type="+type, {method: 'POST'})
+export async function reloadDesiredGraph(botId, type) {
+    await fetch(Config.OnDemandGraphsURL+"/specific?botId="+botId+"&type="+type, {method: 'POST'})
         .then(response => {
             if(!response.ok) {
                 throw new Error(response.statusText);
@@ -108,8 +110,8 @@ export async function reloadDesiredGraph(userId, type) {
         });
 }
 
-export async function reloadDesiredGraphAndReturnUpdatedGraph(userId, type, userGraph) {
-    reloadDesiredGraph(userId, type);
+export async function reloadDesiredGraphAndReturnUpdatedGraph(botId, type, userGraph) {
+    reloadDesiredGraph(botId, type);
     // Ahora, hacer peticiones tipo exponential backoff al back hasta que lastUpdated haya cambiado
     const refLastUpdated = userGraph.lastUpdated;
     let updatedGraphResponse = await getGraphById(userGraph.id);
@@ -125,15 +127,15 @@ export async function reloadDesiredGraphAndReturnUpdatedGraph(userId, type, user
 
 }
 
-export async function reloadDesiredGraphAndReturnNewGraph(userId, type) {
-    reloadDesiredGraph(userId, type);
+export async function reloadDesiredGraphAndReturnNewGraph(botId, type) {
+    reloadDesiredGraph(botId, type);
     // Ahora, hacer peticiones tipo exponential backoff al back hasta que lastUpdated haya cambiado
-    let newGraphResponse = await getGraphByUserIdAndType(userId, type);
+    let newGraphResponse = await getGraphByUserIdAndType(botId, type);
     let time = 50;
     while(newGraphResponse == null) {
         await delay(time);
         time = time * 2;
-        newGraphResponse = await getGraphByUserIdAndType(userId, type);
+        newGraphResponse = await getGraphByUserIdAndType(botId, type);
     }
     return newGraphResponse;
 }
