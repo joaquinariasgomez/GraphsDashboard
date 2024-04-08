@@ -50,7 +50,7 @@ function App() {
             // Set logged in or something, as well as other login parameters
             // Set bot id, to use in Header for next requests
         }
-        navigate("/");
+        navigate("/GraphsDashboard");
     }
 
     const fetchUserGraphs = async () => {

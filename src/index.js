@@ -14,10 +14,10 @@ root.render(
     <>
         <BrowserRouter>
             <Routes>
-                {/* <Route
+                <Route
                     path="/"
                     element={<Navigate to="/GraphsDashboard" replace />}
-                /> */}
+                />
                 <Route
                     path="/GraphsDashboard"
                     element={<App />}
