@@ -19,7 +19,7 @@ root.render(
                     element={<Navigate to="/GraphsDashboard" replace />}
                 /> */}
                 <Route
-                    path="/"
+                    path="/GraphsDashboard"
                     element={<App />}
                 />
             </Routes>
