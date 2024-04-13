@@ -59,9 +59,9 @@ function App() {
     const getLoginDataFromNotion = async (code) => {
         const apiResponse = await loginToNotionWithCode(code);
         if(apiResponse) {
-            setSession(apiResponse);
-            navigate("/GraphsDashboard");
+            setSession(apiResponse);    // TODO: usar el context provider para settear cosas como: username, photo, etc. Y borrarlas cuando se haga logout
             setBotIdCookie(apiResponse.bot_id, 7);   // Set Cookie for next reloads, for 7 days
+            navigate("/GraphsDashboard");
         }
     }
 
@@ -77,7 +77,7 @@ function App() {
     }
 
     const fetchUserDesiredGraphs = async () => {
-        // Comprobar que tenemos session antes de hacer la petición
+        // Comprobar que tenemos la cookie antes de hacer la petición
         //if(Object.keys(session).length > 0) {
         if(botIdCookie !== "") {
             const apiResponse = await getAllDesiredGraphsByUserId(botIdCookie);
