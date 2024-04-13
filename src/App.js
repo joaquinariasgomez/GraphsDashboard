@@ -15,15 +15,18 @@ import { useNavigate } from "react-router-dom";
 import SelectGraphTag from './SelectGraphTag';
 import CreateGraph from './CreateGraph';
 import { useCookie } from './useCookie';
+import { useGlobalStateValue } from './context/GlobalStateProvider';
+import { actionTypes } from './context/globalReducer';
 
 function App() {
 
     const [userGraphs, setUserGraphs] = useState([]);
     const [userDesiredGraphs, setUserDesiredGraphs] = useState([]);
 
-    const [isLoggedIn, setIsLoggedIn] = useState(false);   // El hecho de log in o no dependerá de si el user elimina la cookie o no
     const [session, setSession] = useState({});
-    const [botIdCookie, setBotIdCookie, deleteBotIdCookie] = useCookie("bot_id");
+    const [cookieValue, setBotIdCookie, deleteBotIdCookie] = useCookie("bot_id");   // Value from actual cookie from browser application
+    // Context
+    const [{botIdCookie}, dispatch] = useGlobalStateValue();
 
     const navigate = useNavigate();
 
@@ -37,11 +40,16 @@ function App() {
     }, []);
 
     useEffect(() => {
-        fetchUserGraphs();
-    }, [botIdCookie]);
+        if(cookieValue !== "") {
+            dispatch({
+                type: actionTypes.SET_BOT_ID_COOKIE,
+                value: cookieValue
+            })
+        }
+    }, [cookieValue]);
 
     useEffect(() => {
-        console.log("Se ha actualizado la botIdCookie: "+botIdCookie);
+        fetchUserGraphs();
     }, [botIdCookie]);
 
     useEffect(() => {
@@ -51,7 +59,6 @@ function App() {
     const getLoginDataFromNotion = async (code) => {
         const apiResponse = await loginToNotionWithCode(code);
         if(apiResponse) {
-            setIsLoggedIn(true);
             setSession(apiResponse);
             navigate("/GraphsDashboard");
             setBotIdCookie(apiResponse.bot_id, 7);   // Set Cookie for next reloads, for 7 days
