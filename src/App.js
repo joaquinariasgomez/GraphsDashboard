@@ -8,20 +8,22 @@ import { fakeGraphData, getRelativeTimeToUpdate, getRelativeTimestamp, getUserGr
 import EmptyGraphsDashboard from './EmptyGraphsDashboard';
 import GraphFactory from './charts/GraphFactory';
 import LoginBox from './LoginBox';
+import LogoutBox from './LogoutBox';
 import UserDetails from './UserDetails';
 import ClipLoader from "react-spinners/ClipLoader";
 import { useNavigate } from "react-router-dom";
 import SelectGraphTag from './SelectGraphTag';
 import CreateGraph from './CreateGraph';
+import { useCookie } from './useCookie';
 
 function App() {
 
     const [userGraphs, setUserGraphs] = useState([]);
     const [userDesiredGraphs, setUserDesiredGraphs] = useState([]);
 
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+    const [isLoggedIn, setIsLoggedIn] = useState(false);   // El hecho de log in o no dependerá de si el user elimina la cookie o no
     const [session, setSession] = useState({});
+    const [botIdCookie, setBotIdCookie, deleteBotIdCookie] = useCookie("bot_id");
 
     const navigate = useNavigate();
 
@@ -36,27 +38,31 @@ function App() {
 
     useEffect(() => {
         fetchUserGraphs();
-    }, [session]);
+    }, [botIdCookie]);
+
+    useEffect(() => {
+        console.log("Se ha actualizado la botIdCookie: "+botIdCookie);
+    }, [botIdCookie]);
 
     useEffect(() => {
         fetchUserDesiredGraphs();
-    }, [session]);
+    }, [botIdCookie]);
 
     const getLoginDataFromNotion = async (code) => {
         const apiResponse = await loginToNotionWithCode(code);
         if(apiResponse) {
             setIsLoggedIn(true);
             setSession(apiResponse);
-            // Set logged in or something, as well as other login parameters
-            // Set bot id, to use in Header for next requests
+            navigate("/GraphsDashboard");
+            setBotIdCookie(apiResponse.bot_id, 7);   // Set Cookie for next reloads, for 7 days
         }
-        navigate("/GraphsDashboard");
     }
 
     const fetchUserGraphs = async () => {
-        // Comprobar que tenemos session antes de hacer la petición
-        if(Object.keys(session).length > 0) {
-            const apiResponse = await getAllGraphsByUserId(session.bot_id);
+        // Comprobar que tenemos la cookie antes de hacer la petición
+        //if(Object.keys(session).length > 0) {
+        if(botIdCookie !== "") {
+            const apiResponse = await getAllGraphsByUserId(botIdCookie);
             if(apiResponse) {
                 setUserGraphs(apiResponse);
             }
@@ -65,8 +71,9 @@ function App() {
 
     const fetchUserDesiredGraphs = async () => {
         // Comprobar que tenemos session antes de hacer la petición
-        if(Object.keys(session).length > 0) {
-            const apiResponse = await getAllDesiredGraphsByUserId(session.bot_id);
+        //if(Object.keys(session).length > 0) {
+        if(botIdCookie !== "") {
+            const apiResponse = await getAllDesiredGraphsByUserId(botIdCookie);
             if(apiResponse) {
                 setUserDesiredGraphs(apiResponse);
             }
@@ -122,7 +129,7 @@ function App() {
                     </div>
                 ))}
                 <CreateGraph
-                    botId={session.bot_id}
+                    botId={botIdCookie}
                     updateStateFunction={fetchUserDesiredGraphs}
                 />
             </div>
@@ -173,7 +180,7 @@ function App() {
     }
 
     const renderDashboardForUser = () => {
-        if(!isLoggedIn || Object.keys(session).length <= 0) {   // Not logged in or no session
+        if(botIdCookie === "") {   // Not logged in or no session
             return (
                 <div className='loginandfakegraphs'>
                     <LoginBox />
@@ -183,10 +190,11 @@ function App() {
         }
         else {
             return (
-                <div className='userdetailsandfakegraphs'>
-                    <UserDetails
+                <div className='userdetailsandgraphs'>
+                    <LogoutBox />
+                    {/* <UserDetails
                         session={session}
-                    />
+                    /> */}
                     {renderUserGraphs()}
                 </div>
             )

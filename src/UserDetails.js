@@ -21,6 +21,9 @@ export default function UserDetails({ session }) {
             <p>
                {session.notionOwner.name}
             </p>
+            <p>
+               {session.notionOwner.avatar_url}
+            </p>
         </div>
     )
 }
