@@ -8,13 +8,13 @@ import { fakeGraphData, getRelativeTimeToUpdate, getRelativeTimestamp, getUserGr
 import EmptyGraphsDashboard from './EmptyGraphsDashboard';
 import GraphFactory from './charts/GraphFactory';
 import LoginBox from './LoginBox';
-import LogoutBox from './LogoutBox';
-import UserDetails from './UserDetails';
+import UserBox from './UserBox';
 import ClipLoader from "react-spinners/ClipLoader";
 import { useNavigate } from "react-router-dom";
 import SelectGraphTag from './SelectGraphTag';
 import CreateGraph from './CreateGraph';
 import { useCookie } from './useCookie';
+import { useSessionStorage } from './useSessionStorage';
 import { useGlobalStateValue } from './context/GlobalStateProvider';
 import { actionTypes } from './context/globalReducer';
 
@@ -23,10 +23,10 @@ function App() {
     const [userGraphs, setUserGraphs] = useState([]);
     const [userDesiredGraphs, setUserDesiredGraphs] = useState([]);
 
-    const [session, setSession] = useState({});
     const [cookieValue, setBotIdCookie, deleteBotIdCookie] = useCookie("bot_id");   // Value from actual cookie from browser application
+    const [sessionValue, setSessionStorage, deleteSessionStorage] = useSessionStorage("bot_id");
     // Context
-    const [{botIdCookie}, dispatch] = useGlobalStateValue();
+    const [{botIdCookie, session}, dispatch] = useGlobalStateValue();
 
     const navigate = useNavigate();
 
@@ -49,6 +49,15 @@ function App() {
     }, [cookieValue]);
 
     useEffect(() => {
+        if(sessionValue != {}) {
+            dispatch({
+                type: actionTypes.SET_SESSION,
+                value: sessionValue
+            })
+        }
+    }, [sessionValue]);
+
+    useEffect(() => {
         fetchUserGraphs();
     }, [botIdCookie]);
 
@@ -59,8 +68,8 @@ function App() {
     const getLoginDataFromNotion = async (code) => {
         const apiResponse = await loginToNotionWithCode(code);
         if(apiResponse) {
-            setSession(apiResponse);    // TODO: usar el context provider para settear cosas como: username, photo, etc. Y borrarlas cuando se haga logout
             setBotIdCookie(apiResponse.bot_id, 7);   // Set Cookie for next reloads, for 7 days
+            setSessionStorage(apiResponse);
             navigate("/GraphsDashboard");
         }
     }
@@ -197,15 +206,11 @@ function App() {
         }
         else {
             return (
-                <div className='userdetailsandgraphs'>
-                    <LogoutBox />
-                    {/* <UserDetails
-                        session={session}
-                    /> */}
+                <div className='userboxandgraphs'>
+                    <UserBox />
                     {renderUserGraphs()}
                 </div>
             )
-            return renderUserGraphs();
             // if(userDesiredGraphs.length > 0) {
             //     {return renderUserGraphs()}
             // }

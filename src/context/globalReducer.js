@@ -1,10 +1,12 @@
 
 export const initialState = {
-    botIdCookie: ""
+    botIdCookie: "",
+    session: {}
 };
 
 export const actionTypes = {
-    SET_BOT_ID_COOKIE: "SET_BOT_ID_COOKIE"
+    SET_BOT_ID_COOKIE: "SET_BOT_ID_COOKIE",
+    SET_SESSION: "SET_SESSION"
 };
 
 const globalReducer = (state, action) => {
@@ -13,6 +15,12 @@ const globalReducer = (state, action) => {
             return {
                 ...state,
                 botIdCookie: action.value,
+            };
+
+        case actionTypes.SET_SESSION:
+            return {
+                ...state,
+                session: action.value,
             };
 
         default:
