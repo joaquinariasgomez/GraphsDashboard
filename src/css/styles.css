@@ -149,18 +149,28 @@
     align-items: center;
 }
 
+:root {
+    --login-card-height: 100px;
+    --login-card-width: 300px;
+}
+
+@property --rotate {
+    syntax: "<angle>";
+    initial-value: 132deg;
+    inherits: false;
+}
+
 .login__button {
     margin-top: 5vh;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    text-align: center;
+    /* text-align: center; */
     border-radius: 6px;
-    width: 300px;
-    height: 100px;
-    padding: 3px;
-    border: 1px solid white;
+    width: var(--login-card-width);
+    height: var(--login-card-height);
+    /* padding: 3px; */
     text-decoration: none;
     color: black;
     font-weight: 700;
@@ -174,3 +184,55 @@
     box-shadow: 0 20px 35px rgba(0, 0, 0, 0.3);
     transition: box-shadow 0.5s;
 }
+
+.login__button:hover:before, .login__button:hover:after {
+    animation: none;
+    opacity: 0;
+}
+
+/* .login__button::before {
+    content: "";
+    width: calc(var(--login-card-width) + 10px);
+    height: calc(var(--login-card-height) + 10px);
+    border-radius: 10px;
+    background-image: linear-gradient(
+        var(--rotate),
+        #5ddcff, 
+        #3c67e3 43%, 
+        #4e00c2);
+    position: absolute;
+    z-index: -1;
+    animation: spin 2.5s linear infinite;
+} */
+
+.login__button::after {
+    position: absolute;
+    content: "";
+    /* top: calc(var(--login-card-height) / 6); */
+    left: 0;
+    right: 0;
+    z-index: -1;
+    height: var(--login-card-height);
+    width: calc(var(--login-card-width) + 10px);
+    margin: 0 auto;
+    transform: scale(0.8);
+    filter: blur(calc(var(--login-card-height) / 2));
+    /* background-image: linear-gradient(
+    var(--rotate)
+    , #5ddcff, #3c67e3 43%, #4e00c2); */
+    background-image: linear-gradient(
+    var(--rotate)
+    , #fd004c, #fe9000, #fff020, #3edf4b, #3363ff, #b102b7, #fd004c);
+    opacity: 1;
+    transition: opacity .5s;
+    animation: spin 5s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+      --rotate: 0deg;
+    }
+    100% {
+      --rotate: 360deg;
+    }
+  }
