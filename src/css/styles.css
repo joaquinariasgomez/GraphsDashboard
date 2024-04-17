@@ -144,6 +144,7 @@
 }
 
 .loginandfakegraphs {
+    margin-top: 5vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -151,7 +152,7 @@
 
 :root {
     --login-card-height: 100px;
-    --login-card-width: 300px;
+    --login-card-width: 350px;
 }
 
 @property --rotate {
@@ -161,71 +162,77 @@
 }
 
 .login__button {
-    margin-top: 5vh;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    /* text-align: center; */
-    border-radius: 6px;
+    border-radius: 10px;
+    border: 3px solid black;
     width: var(--login-card-width);
     height: var(--login-card-height);
-    /* padding: 3px; */
+    font-family: "inter", sans-serif;
+    font-style: normal;
+    font-weight: 700 !important;
     text-decoration: none;
     color: black;
     font-weight: 700;
     font-size: 1.5em;
     background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
     transition: box-shadow 0.5s;
-    /* box-shadow: 0 20px 35px rgba(0, 0, 0, 0.3); */
+    /* transition: all 0.5s; */
+}
+
+.login__button > p {
+    margin-right: 10px;
+}
+
+.login__button > img {
+    height: 35px;
 }
 
 .login__button:hover {
-    box-shadow: 0 20px 35px rgba(0, 0, 0, 0.3);
+    /* box-shadow: 0 20px 35px rgba(0, 0, 0, 0.3); */
+    box-shadow: rgb(231, 231, 231) 0px 20px 30px -10px;
     transition: box-shadow 0.5s;
+    border: none;
+    margin: 3px;
+    /* transition: all 0.5s; */
+    /* border: 3.5px solid rgba(0, 0, 0, 0.5); */
+    /* padding: 3.5px; */
+    /* border: 3.5px solid white; */
 }
 
-.login__button:hover:before, .login__button:hover:after {
-    animation: none;
-    opacity: 0;
-}
-
-/* .login__button::before {
+.login__button:hover:before {
     content: "";
-    width: calc(var(--login-card-width) + 10px);
-    height: calc(var(--login-card-height) + 10px);
-    border-radius: 10px;
+    width: calc(var(--login-card-width) + 8px);
+    height: calc(var(--login-card-height) + 8px);
+    border-radius: 13px;
     background-image: linear-gradient(
-        var(--rotate),
-        #5ddcff, 
-        #3c67e3 43%, 
-        #4e00c2);
+        var(--rotate)
+        , #fd004c, #fe9000, #fff020, #3edf4b, #3363ff, #b102b7, #fd004c);
     position: absolute;
     z-index: -1;
-    animation: spin 2.5s linear infinite;
-} */
+    animation: spin 5s linear infinite;
+    transition: all 0.5s;
+}
 
-.login__button::after {
+.login__button:hover:after {
     position: absolute;
     content: "";
-    /* top: calc(var(--login-card-height) / 6); */
     left: 0;
     right: 0;
     z-index: -1;
-    height: var(--login-card-height);
-    width: calc(var(--login-card-width) + 10px);
+    height: calc(var(--login-card-height) - 50px);
+    width: calc(var(--login-card-width) + 40px);
     margin: 0 auto;
     transform: scale(0.8);
     filter: blur(calc(var(--login-card-height) / 2));
-    /* background-image: linear-gradient(
-    var(--rotate)
-    , #5ddcff, #3c67e3 43%, #4e00c2); */
     background-image: linear-gradient(
     var(--rotate)
     , #fd004c, #fe9000, #fff020, #3edf4b, #3363ff, #b102b7, #fd004c);
-    opacity: 1;
-    transition: opacity .5s;
     animation: spin 5s linear infinite;
+    transition: all 0.5s;
 }
 
 @keyframes spin {
@@ -235,4 +242,10 @@
     100% {
       --rotate: 360deg;
     }
-  }
+}
+
+.fakegraphs {
+    /* position: absolute; */
+    /* top: 18%; */
+    margin-top: 20px;
+}

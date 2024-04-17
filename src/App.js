@@ -187,6 +187,38 @@ function App() {
                         graphData={fakeGraphData}
                     />
                 </div>
+                <div className='usergraph__item' key="2">
+                    <div className='usergraph__firstrow'>
+                        <button className='usergraph__delete'>
+                            <DeleteIcon style={{ color: '#f14668' }} />
+                            <p>Eliminar</p>
+                        </button>
+                        <div className='usergraph__middleinfo'>
+                            <p className='usergraph__timestamp'>
+                                Actualizado hace 11 minutos
+                            </p>
+                            <p className='usergraph__timestamp'>
+                                Próxima actualización en 15 horas
+                            </p>
+                        </div>
+                        <div className='usergraph__selecttag'>
+                            <SelectGraphTag
+                                desiredGraphId="Mock"
+                                userId="Mock"
+                                graphType="Mock"
+                                defaultTag="DAILY"
+                                updateStateFunction={fetchUserDesiredGraphs}
+                            />
+                        </div>
+                        <button className='usergraph__reload'>
+                            <p>Actualizar</p>
+                            <CachedIcon />
+                        </button>
+                    </div>
+                    <GraphFactory
+                        graphData={fakeGraphData}
+                    />
+                </div>
                 {/* <CreateGraph
                     userId="joaquin"
                     updateStateFunction={fetchUserDesiredGraphs}
@@ -200,7 +232,9 @@ function App() {
             return (
                 <div className='loginandfakegraphs'>
                     <LoginBox />
-                    {renderFakeUserGraphs()}
+                    <div className='fakegraphs'>
+                        {renderFakeUserGraphs()}
+                    </div>
                 </div>
             )
         }
