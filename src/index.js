@@ -10,6 +10,7 @@ import {
 import App from './App';
 import { GlobalStateProvider } from './context/GlobalStateProvider';
 import globalReducer, { initialState } from './context/globalReducer';
+import BoxManager from './notification-boxes/BoxManager';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -18,6 +19,7 @@ root.render(
         globalReducer={globalReducer}
     >
         <BrowserRouter>
+            <BoxManager />
             <Routes>
                 <Route
                     path="/"

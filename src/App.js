@@ -17,6 +17,7 @@ import { useCookie } from './useCookie';
 import { useSessionStorage } from './useSessionStorage';
 import { useGlobalStateValue } from './context/GlobalStateProvider';
 import { actionTypes } from './context/globalReducer';
+import { ALERT_BOX_TYPES } from './notification-boxes/AlertBoxConstants';
 
 function App() {
 
@@ -66,11 +67,17 @@ function App() {
     }, [botIdCookie]);
 
     const getLoginDataFromNotion = async (code) => {
-        const apiResponse = await loginToNotionWithCode(code);
-        if(apiResponse) {
-            setBotIdCookie(apiResponse.bot_id, 7);   // Set Cookie for next reloads, for 7 days
-            setSessionStorage(apiResponse);
+        try {
+            const apiResponse = await loginToNotionWithCode(code);
+            if(apiResponse) {
+                setBotIdCookie(apiResponse.bot_id, 7);   // Set Cookie for next reloads, for 7 days
+                setSessionStorage(apiResponse);
+                navigate("/GraphsDashboard");
+            }
+        } catch(error) {
+            console.log("Error buddy: "+error);
             navigate("/GraphsDashboard");
+            showAlert("Máximo número de usuarios creados para el MVP. Inténtalo e nuevo más tarde :)");
         }
     }
 
@@ -94,6 +101,21 @@ function App() {
                 setUserDesiredGraphs(apiResponse);
             }
         }
+    }
+
+    const showAlert = (message) => {
+        dispatch({
+            type: actionTypes.SET_SHOW_ALERT_BOX,
+            value: true
+        })
+        dispatch({
+            type: actionTypes.SET_ALERT_BOX_MESSAGE,
+            value: message
+        })
+        dispatch({
+            type: actionTypes.SET_ALERT_BOX_TYPE,
+            value: ALERT_BOX_TYPES.ALERT
+        })
     }
 
     const renderUserGraphs = () => {

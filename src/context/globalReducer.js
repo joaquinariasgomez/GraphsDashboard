@@ -1,12 +1,18 @@
 
 export const initialState = {
     botIdCookie: "",
-    session: {}
+    session: {},
+    showAlertBox: false,
+    alertBoxMessage: '',
+    alertBoxType: null
 };
 
 export const actionTypes = {
     SET_BOT_ID_COOKIE: "SET_BOT_ID_COOKIE",
-    SET_SESSION: "SET_SESSION"
+    SET_SESSION: "SET_SESSION",
+    SET_SHOW_ALERT_BOX: "SET_SHOW_ALERT_BOX",
+    SET_ALERT_BOX_MESSAGE: "SET_ALERT_BOX_MESSAGE",
+    SET_ALERT_BOX_TYPE: "SET_ALERT_BOX_TYPE"
 };
 
 const globalReducer = (state, action) => {
@@ -21,6 +27,24 @@ const globalReducer = (state, action) => {
             return {
                 ...state,
                 session: action.value,
+            };
+
+        case actionTypes.SET_SHOW_ALERT_BOX:
+            return {
+                ...state,
+                showAlertBox: action.value,
+            };
+
+        case actionTypes.SET_ALERT_BOX_MESSAGE:
+            return {
+                ...state,
+                alertBoxMessage: action.value,
+            };
+        
+        case actionTypes.SET_ALERT_BOX_TYPE:
+            return {
+                ...state,
+                alertBoxType: action.value,
             };
 
         default:
