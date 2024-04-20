@@ -11,6 +11,17 @@ export default function SelectGraphTag({ desiredGraphId, botId, graphType, defau
 
     return (
         <Select
+            className='selectgraphtag'
+            theme={(theme) => ({
+                ...theme,
+                borderRadius: 5,
+                colors: {
+                    ...theme.colors,
+                    primary25: 'lightgray',
+                    primary50: 'gray',
+                    primary: 'black'
+                }
+            })}
             defaultValue={
                 options.filter((option) => option.value === defaultTag)
             }

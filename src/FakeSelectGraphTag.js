@@ -10,6 +10,16 @@ export default function FakeSelectGraphTag({ defaultTag }) {
 
     return (
         <Select
+            theme={(theme) => ({
+                ...theme,
+                borderRadius: 5,
+                colors: {
+                    ...theme.colors,
+                    primary25: 'lightgray',
+                    primary50: 'gray',
+                    primary: 'black'
+                }
+            })}
             defaultValue={
                 options.filter((option) => option.value === defaultTag)
             }

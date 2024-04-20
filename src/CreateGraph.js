@@ -41,19 +41,41 @@ export default function CreateGraph({ botId, updateStateFunction }) {
                     updateStateFunction()
                 }
             }}>
-                <p>Crear nueva gráfica</p>
+                <p>Nueva gráfica</p>
                 <AddCircleOutlineSharpIcon />
             </button>
             <div className='usergraph__createtagrow'>
                 <Select
+                    className='selectgraphtag'
                     defaultValue={typeoptions[0]}
+                    theme={(theme) => ({
+                        ...theme,
+                        borderRadius: 5,
+                        colors: {
+                            ...theme.colors,
+                            primary25: 'lightgray',
+                            primary50: 'gray',
+                            primary: 'black'
+                        }
+                    })}
                     options={typeoptions}
                     onChange={function (newType) {
                         setSelectedType(newType.value)
                     }}
                 />
                 <Select
+                    className='selectgraphtag'
                     defaultValue={tagoptions[0]}
+                    theme={(theme) => ({
+                        ...theme,
+                        borderRadius: 5,
+                        colors: {
+                            ...theme.colors,
+                            primary25: 'lightgray',
+                            primary50: 'gray',
+                            primary: 'black'
+                        }
+                    })}
                     options={tagoptions}
                     onChange={function (newTag) {
                         setSelectedTag(newTag.value)
