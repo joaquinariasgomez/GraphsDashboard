@@ -78,7 +78,7 @@ function App() {
         } catch(error) {
             navigate("/GraphsDashboard");
             if(error.message === "409") {
-                showAlert("Máximo número de usuarios creados para el MVP. Inténtalo e nuevo más tarde :)");
+                showAlert("Máximo número de usuarios creados para el MVP. Inténtalo e nuevo más tarde y perdona las molestias.");
             }
             else {
                 showAlert("Ha habido un problema con el servicio. Inténtalo de nuevo.");
@@ -312,7 +312,8 @@ function App() {
                 <div className='loginandfakegraphs'>
                     <LoginBox />
                     <div className='fakegraphs'>
-                        {renderFakeUserGraphs()}
+                        <img src={process.env.PUBLIC_URL+'/fakegraphs.png'} alt=''></img>
+                        {/* {renderFakeUserGraphs()} */}
                     </div>
                 </div>
             )
