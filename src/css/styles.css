@@ -15,6 +15,18 @@
     grid-template-columns: repeat(auto-fit, 600px); /* Los 600px definen el ancho de .usergraph__item */
 }
 
+.fakeusergraphsgrid__container {
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+    width: 90vw;
+    max-width: 1422px;
+    display: grid;
+    grid-auto-flow: row;
+    grid-gap: 25px;
+    justify-content: center;
+    grid-template-columns: repeat(auto-fit, 600px); /* Los 600px definen el ancho de .usergraph__item */
+}
+
 .usergraph__item {
     display: flex;
     flex-direction: column;
@@ -24,6 +36,13 @@
     border-color: lightgray;
     border-style: solid;
     box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.25);
+}
+
+.first_line {
+    opacity: 0.9;
+}
+.second_line {
+    opacity: 0.6;
 }
 
 .usergraph__createcontainer {
@@ -53,6 +72,16 @@
     border: none;
 }
 
+.fakeusergraph__delete {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 40px;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+}
+
 .usergraph__delete:hover {
     cursor: pointer;
     background-color: lightgray;
@@ -63,11 +92,32 @@
     margin-left: 5px;
 }
 
+.fakeusergraph__delete > p {
+    color: red;
+    margin-left: 5px;
+}
+
 .usergraph__selecttag {
     width: 160px;
 }
 
+.fakeusergraph__selecttag {
+    width: 160px;
+    pointer-events: none;
+}
+
 .usergraph__reload {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 40px;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: rgb(233, 233, 233);
+}
+
+.fakeusergraph__reload {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -87,6 +137,10 @@
     margin-right: 5px;
 }
 
+.fakeusergraph__reload > p {
+    margin-right: 5px;
+}
+
 .usergraph__timestamp {
     font-weight: bold;
     font-size: 14px;
@@ -97,16 +151,31 @@
 
 .usergraph__loadinggraph {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 558px;
     height: 279px;
     border-radius: 5px;
     background-color: rgb(244, 244, 244);
+    position: relative;
 }
 
-.usergraph__loadinggraph > p {
+.usergraph__loadinggraph__type {
+    font-weight: 900;
+    font-size: 14px;
+    color: rgb(94, 94, 94);
+    position: absolute;
+    top: 0px;
+}
+
+.usergraph__loadinggraph__info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.usergraph__loadinggraph__info > p {
     font-weight: bold;
     color: rgb(109, 109, 109);
     margin-right: 10px;
@@ -197,6 +266,8 @@
     transition: box-shadow 0.5s;
     border: none;
     margin: 3px;
+    /* animation: bubble 0.4s ease-out; */
+
     /* transition: all 0.5s; */
     /* border: 3.5px solid rgba(0, 0, 0, 0.5); */
     /* padding: 3.5px; */
@@ -248,4 +319,135 @@
     /* position: absolute; */
     /* top: 18%; */
     margin-top: 20px;
+}
+
+
+/* ======= ALERT BOXES ======= */
+.alertbox__backdrop {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    animation: opacity-bng 0.25s ease forwards;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.alertbox__alert__container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 5px;
+    padding: 25px 30px;
+    max-width: 500px;
+    background-color: white;
+    animation: zoom 0.25s ease forwards;
+    z-index: 999;
+}
+
+.alertbox__alert__container > h2 {
+    font-size: 18px;
+    font-weight: 500;
+    text-align: justify;
+}
+
+.alertbox__alerticon {
+    margin-bottom: 15px;
+}
+
+.alertbox__alertbutton {
+    margin-top: 20px;
+    padding: 12px;
+    width: 50%;
+    cursor: pointer;
+    color: white;
+    font-size: 16px;
+    border-width: 0;
+    border-style: solid;
+    border-radius: 8px;
+    background-color: rgb(20, 20, 23);
+}
+
+/* ===== ALERTBOX INFO ===== */
+.alertbox__info__container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 5px;
+    padding: 25px 30px;
+    max-width: 500px;
+    background-color: white;
+    animation: zoom 0.25s ease forwards;
+    z-index: 999;
+}
+
+.alertbox__info__container > h2 {
+    font-size: 16px;
+    font-weight: 500;
+    text-align: justify;
+}
+
+.alertbox__infoicon {
+    margin-bottom: 15px;
+}
+
+.alertbox__infobutton {
+    margin-top: 20px;
+    padding: 12px;
+    width: 50%;
+    cursor: pointer;
+    color: black;
+    font-size: 16px;
+    border-width: 1;
+    border-style: solid;
+    border-radius: 8px;
+    background-color: rgb(232, 255, 232);
+    border-color: green;
+}
+
+/* ======== Zoom effect ======== */
+@keyframes zoom {
+    0% {
+        opacity: 0.5;
+        transform: translate(-50%, -50%) scale(0.2, 0.2);
+    }
+    60% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.2, 1.2);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1, 1);
+    }
+}
+
+@keyframes opacity-bng {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes bubble {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
 }

@@ -18,6 +18,7 @@ import { useSessionStorage } from './useSessionStorage';
 import { useGlobalStateValue } from './context/GlobalStateProvider';
 import { actionTypes } from './context/globalReducer';
 import { ALERT_BOX_TYPES } from './notification-boxes/AlertBoxConstants';
+import FakeSelectGraphTag from './FakeSelectGraphTag';
 
 function App() {
 
@@ -75,9 +76,13 @@ function App() {
                 navigate("/GraphsDashboard");
             }
         } catch(error) {
-            console.log("Error buddy: "+error);
             navigate("/GraphsDashboard");
-            showAlert("Máximo número de usuarios creados para el MVP. Inténtalo e nuevo más tarde :)");
+            if(error.message === "409") {
+                showAlert("Máximo número de usuarios creados para el MVP. Inténtalo e nuevo más tarde :)");
+            }
+            else {
+                showAlert("Ha habido un problema con el servicio. Inténtalo de nuevo.");
+            }
         }
     }
 
@@ -143,18 +148,26 @@ function App() {
                             <button className='usergraph__reload' onClick={async function () {
                                 // setGraphIsUpdating(true)
                                 if(getUserGraphByType(userGraphs, userDesiredGraph.type) != null) {
-                                    const updatedGraphResponse = await reloadDesiredGraphAndReturnUpdatedGraph(userDesiredGraph.botId, userDesiredGraph.type, getUserGraphByType(userGraphs, userDesiredGraph.type))
-                                    const updatedUserGraphs = userGraphs.map((userGraph) => { // Just update this new userGraph
-                                        if(userGraph.id === updatedGraphResponse.id) {
-                                            return updatedGraphResponse;
-                                        }
-                                        return userGraph;
-                                    });
-                                    setUserGraphs(updatedUserGraphs);
+                                    try {
+                                        const updatedGraphResponse = await reloadDesiredGraphAndReturnUpdatedGraph(userDesiredGraph.botId, userDesiredGraph.type, getUserGraphByType(userGraphs, userDesiredGraph.type));
+                                        const updatedUserGraphs = userGraphs.map((userGraph) => { // Just update this new userGraph
+                                            if(userGraph.id === updatedGraphResponse.id) {
+                                                return updatedGraphResponse;
+                                            }
+                                            return userGraph;
+                                        });
+                                        setUserGraphs(updatedUserGraphs);
+                                    } catch(error) {
+                                        showAlert(error.message);
+                                    }   
                                 }
                                 else {
-                                    const newGraphResponse = await reloadDesiredGraphAndReturnNewGraph(userDesiredGraph.botId, userDesiredGraph.type);
-                                    setUserGraphs([...userGraphs, newGraphResponse]);
+                                    try {
+                                        const newGraphResponse = await reloadDesiredGraphAndReturnNewGraph(userDesiredGraph.botId, userDesiredGraph.type);
+                                        setUserGraphs([...userGraphs, newGraphResponse]);
+                                    } catch(error) {
+                                        showAlert(error.message);
+                                    }
                                 }
                                 // setGraphIsUpdating(false)
                             }}>
@@ -176,10 +189,10 @@ function App() {
 
     const renderFakeUserGraphs = () => {
         return (
-            <div className='usergraphsgrid__container'>
-                <div className='usergraph__item' key="1">
+            <div className='fakeusergraphsgrid__container'>
+                <div className='usergraph__item first_line' key="1">
                     <div className='usergraph__firstrow'>
-                        <button className='usergraph__delete'>
+                        <button className='fakeusergraph__delete'>
                             <DeleteIcon style={{ color: '#f14668' }} />
                             <p>Eliminar</p>
                         </button>
@@ -191,16 +204,12 @@ function App() {
                                 Próxima actualización en 15 horas
                             </p>
                         </div>
-                        <div className='usergraph__selecttag'>
-                            <SelectGraphTag
-                                desiredGraphId="Mock"
-                                userId="Mock"
-                                graphType="Mock"
+                        <div className='fakeusergraph__selecttag'>
+                            <FakeSelectGraphTag
                                 defaultTag="DAILY"
-                                updateStateFunction={fetchUserDesiredGraphs}
                             />
                         </div>
-                        <button className='usergraph__reload'>
+                        <button className='fakeusergraph__reload'>
                             <p>Actualizar</p>
                             <CachedIcon />
                         </button>
@@ -209,9 +218,37 @@ function App() {
                         graphData={fakeGraphData}
                     />
                 </div>
-                <div className='usergraph__item' key="2">
+                <div className='usergraph__item first_line' key="2">
                     <div className='usergraph__firstrow'>
-                        <button className='usergraph__delete'>
+                        <button className='fakeusergraph__delete'>
+                            <DeleteIcon style={{ color: '#f14668' }} />
+                            <p>Eliminar</p>
+                        </button>
+                        <div className='usergraph__middleinfo'>
+                            <p className='usergraph__timestamp'>
+                                Actualizado hace 14 días
+                            </p>
+                            <p className='usergraph__timestamp'>
+                                Próxima actualización en 16 días
+                            </p>
+                        </div>
+                        <div className='fakeusergraph__selecttag'>
+                            <FakeSelectGraphTag
+                                defaultTag="MONTHLY"
+                            />
+                        </div>
+                        <button className='fakeusergraph__reload'>
+                            <p>Actualizar</p>
+                            <CachedIcon />
+                        </button>
+                    </div>
+                    <GraphFactory
+                        graphData={fakeGraphData}
+                    />
+                </div>
+                <div className='usergraph__item second_line' key="3">
+                    <div className='usergraph__firstrow'>
+                        <button className='fakeusergraph__delete'>
                             <DeleteIcon style={{ color: '#f14668' }} />
                             <p>Eliminar</p>
                         </button>
@@ -223,16 +260,12 @@ function App() {
                                 Próxima actualización en 15 horas
                             </p>
                         </div>
-                        <div className='usergraph__selecttag'>
-                            <SelectGraphTag
-                                desiredGraphId="Mock"
-                                userId="Mock"
-                                graphType="Mock"
+                        <div className='fakeusergraph__selecttag'>
+                            <FakeSelectGraphTag
                                 defaultTag="DAILY"
-                                updateStateFunction={fetchUserDesiredGraphs}
                             />
                         </div>
-                        <button className='usergraph__reload'>
+                        <button className='fakeusergraph__reload'>
                             <p>Actualizar</p>
                             <CachedIcon />
                         </button>
@@ -241,10 +274,34 @@ function App() {
                         graphData={fakeGraphData}
                     />
                 </div>
-                {/* <CreateGraph
-                    userId="joaquin"
-                    updateStateFunction={fetchUserDesiredGraphs}
-                /> */}
+                <div className='usergraph__item second_line' key="4">
+                    <div className='usergraph__firstrow'>
+                        <button className='fakeusergraph__delete'>
+                            <DeleteIcon style={{ color: '#f14668' }} />
+                            <p>Eliminar</p>
+                        </button>
+                        <div className='usergraph__middleinfo'>
+                            <p className='usergraph__timestamp'>
+                                Actualizado hace 14 días
+                            </p>
+                            <p className='usergraph__timestamp'>
+                                Próxima actualización en 16 días
+                            </p>
+                        </div>
+                        <div className='fakeusergraph__selecttag'>
+                            <FakeSelectGraphTag
+                                defaultTag="MONTHLY"
+                            />
+                        </div>
+                        <button className='fakeusergraph__reload'>
+                            <p>Actualizar</p>
+                            <CachedIcon />
+                        </button>
+                    </div>
+                    <GraphFactory
+                        graphData={fakeGraphData}
+                    />
+                </div>
             </div>
         )
     }
@@ -316,11 +373,15 @@ function App() {
         else {
             return (
                 <div className='usergraph__loadinggraph'>
-                    <p>
-                        {"Esta gráfica se actualizará en "+getRelativeTimeToUpdate(userDesiredGraph.tag)}
+                    <p className='usergraph__loadinggraph__type'>
+                        {userDesiredGraph.type}
                     </p>
-                    <CachedIcon fontSize="large" style={{ color: '#6d6d6d' }} />
-                    {/* <ClipLoader size={50}/> */}
+                    <div className='usergraph__loadinggraph__info'>
+                        <p>
+                            {"Esta gráfica se actualizará en "+getRelativeTimeToUpdate(userDesiredGraph.tag)}
+                        </p>
+                        <CachedIcon fontSize="large" style={{ color: '#6d6d6d' }} />
+                    </div>
                 </div>
             )
         }

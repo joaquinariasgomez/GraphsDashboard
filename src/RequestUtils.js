@@ -117,14 +117,24 @@ export async function reloadDesiredGraphAndReturnUpdatedGraph(botId, type, userG
     let updatedGraphResponse = await getGraphById(userGraph.id);
     let newLastUpdated = updatedGraphResponse.lastUpdated;
     let time = 50;
+    let total_time_waited = time;
+    const MAX_WAIT_TIME = 20000;    // 20 seconds
     while(newLastUpdated === refLastUpdated) {
+        if(total_time_waited > MAX_WAIT_TIME) {
+            throw new Error("Error esperando a que se actualice la gráfica. Recarga la página o inténtalo de nuevo.");
+        }
         await delay(time);
-        time = time * 2;
+        if(time < 800) {
+            time = time * 2;
+        }
+        else {
+            time = 1000;    // One second as maximum wait time
+        }
+        total_time_waited = total_time_waited + time;
         updatedGraphResponse = await getGraphById(userGraph.id);
         newLastUpdated = updatedGraphResponse.lastUpdated;
     }
     return updatedGraphResponse;
-
 }
 
 export async function reloadDesiredGraphAndReturnNewGraph(botId, type) {
@@ -132,9 +142,20 @@ export async function reloadDesiredGraphAndReturnNewGraph(botId, type) {
     // Ahora, hacer peticiones tipo exponential backoff al back hasta que lastUpdated haya cambiado
     let newGraphResponse = await getGraphByUserIdAndType(botId, type);
     let time = 50;
+    let total_time_waited = time;
+    const MAX_WAIT_TIME = 20000;    // 20 seconds
     while(newGraphResponse == null) {
+        if(total_time_waited > MAX_WAIT_TIME) {
+            throw new Error("Error esperando a que se actualice la gráfica. Recarga la página o inténtalo de nuevo.");
+        }
         await delay(time);
-        time = time * 2;
+        if(time < 800) {
+            time = time * 2;
+        }
+        else {
+            time = 1000;    // One second as maximum wait time
+        }
+        total_time_waited = total_time_waited + time;
         newGraphResponse = await getGraphByUserIdAndType(botId, type);
     }
     return newGraphResponse;
