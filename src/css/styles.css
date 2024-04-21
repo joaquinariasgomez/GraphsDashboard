@@ -1,3 +1,10 @@
+:root {
+    --login-card-height: 100px;
+    --login-card-width: 350px;
+
+    --graph-width: 600px;
+}
+
 .App {
     display: flex;
     flex-direction: column;
@@ -12,7 +19,7 @@
     grid-auto-flow: row;
     grid-gap: 25px;
     justify-content: center;
-    grid-template-columns: repeat(auto-fit, 600px); /* Los 600px definen el ancho de .usergraph__item */
+    grid-template-columns: repeat(auto-fit, var(--graph-width)); /* Los 600px definen el ancho de .usergraph__item */
 }
 
 .fakeusergraphsgrid__container {
@@ -24,7 +31,7 @@
     grid-auto-flow: row;
     grid-gap: 25px;
     justify-content: center;
-    grid-template-columns: repeat(auto-fit, 600px); /* Los 600px definen el ancho de .usergraph__item */
+    grid-template-columns: repeat(auto-fit, var(--graph-width)); /* Los 600px definen el ancho de .usergraph__item */
 }
 
 .usergraph__item {
@@ -230,9 +237,8 @@
     align-items: center;
 }
 
-:root {
-    --login-card-height: 100px;
-    --login-card-width: 350px;
+.fakegraphs > img {
+    max-width: 90vw;
 }
 
 @property --rotate {
@@ -458,5 +464,32 @@
     }
     100% {
         transform: scale(1);
+    }
+}
+
+/* ============ MEDIA AND CSS REDUCTION ============ */
+
+/* For mobile phones */
+@media only screen and (max-width: 450px) {
+    :root {
+        --graph-width: 90vw;
+    }
+
+    .usergraphsgrid__container {
+        width: 95vw;
+    }
+    
+    .usergraph__item {
+        padding: 10px;
+    }
+
+    .usergraph__loadinggraph {
+        width: calc(var(--graph-width) - 22px);
+        height: calc((var(--graph-width) - 22px) / 2);
+    }
+    
+    .usergraph__loadinggraph__type {
+        font-weight: 900;
+        font-size: 12px;
     }
 }

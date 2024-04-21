@@ -1,7 +1,7 @@
 import AddCircleOutlineSharpIcon from '@mui/icons-material/AddCircleOutlineSharp';
 import Select from 'react-select';
 import { createDesiredGraph } from './RequestUtils';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function CreateGraph({ botId, updateStateFunction }) {
 
@@ -21,7 +21,18 @@ export default function CreateGraph({ botId, updateStateFunction }) {
         {value: 'Gastos en los últimos 30 días por categoría', label: 'Gastos en los últimos 30 días por categoría'},
         {value: 'Ingresos desde noviembre por categoría', label: 'Ingresos desde noviembre por categoría'},
         {value: 'Ahorros desde noviembre', label: 'Ahorros desde noviembre'},
+        {value: 'Ahorros desde noviembre acumulado', label: 'Ahorros desde noviembre acumulado'}
+    ]
+
+    const extratypeoptions = [
+        {value: 'Gastos en los últimos 7 días', label: 'Gastos en los últimos 7 días'},
+        {value: 'Gastos en los últimos 7 días por categoría', label: 'Gastos en los últimos 7 días por categoría'},
+        {value: 'Gastos en los últimos 30 días', label: 'Gastos en los últimos 30 días'},
+        {value: 'Gastos en los últimos 30 días por categoría', label: 'Gastos en los últimos 30 días por categoría'},
+        {value: 'Ingresos desde noviembre por categoría', label: 'Ingresos desde noviembre por categoría'},
+        {value: 'Ahorros desde noviembre', label: 'Ahorros desde noviembre'},
         {value: 'Ahorros desde noviembre acumulado', label: 'Ahorros desde noviembre acumulado'},
+        {value: 'Evolución de peso', label: 'Evolución de peso'},
     ]
 
     return (
@@ -58,7 +69,7 @@ export default function CreateGraph({ botId, updateStateFunction }) {
                             primary: 'black'
                         }
                     })}
-                    options={typeoptions}
+                    options={botId === "d948e9fa-cfd9-4ca7-bfec-b2cfa820364a" ? extratypeoptions : typeoptions}
                     onChange={function (newType) {
                         setSelectedType(newType.value)
                     }}

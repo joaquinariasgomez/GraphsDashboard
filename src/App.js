@@ -4,7 +4,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import CachedIcon from '@mui/icons-material/Cached';
 import AddIcon from '@mui/icons-material/Add';
 import { connectToNotion, deleteDesiredGraph, deleteGraphByUserIdAndType, getAllDesiredGraphsByUserId, getAllGraphsByUserId, reloadDesiredGraphAndReturnNewGraph, reloadDesiredGraphAndReturnUpdatedGraph, loginToNotionWithCode } from './RequestUtils';
-import { fakeGraphData, getRelativeTimeToUpdate, getRelativeTimestamp, getUserGraphByType } from './Utils';
+import { getRelativeTimeToUpdate, getRelativeTimestamp, getUserGraphByType } from './Utils';
 import EmptyGraphsDashboard from './EmptyGraphsDashboard';
 import GraphFactory from './charts/GraphFactory';
 import LoginBox from './LoginBox';
@@ -27,12 +27,15 @@ function App() {
 
     const [cookieValue, setBotIdCookie, deleteBotIdCookie] = useCookie("bot_id");   // Value from actual cookie from browser application
     const [sessionValue, setSessionStorage, deleteSessionStorage] = useSessionStorage("bot_id");
+
+    const [isLoggingIn, setIsLoggingIn] = useState(false);
+    //const [graphIsUpdating, setGraphIsUpdating] = useState([]); // [{id: desiredGraphId, updating: false}]
+
     // Context
     const [{botIdCookie, session}, dispatch] = useGlobalStateValue();
 
     const navigate = useNavigate();
 
-    //const [graphIsUpdating, setGraphIsUpdating] = useState([]); // [{id: desiredGraphId, updating: false}]
 
     useEffect(() => {
         const params = new URL(window.document.location).searchParams;
@@ -69,14 +72,17 @@ function App() {
 
     const getLoginDataFromNotion = async (code) => {
         try {
+            setIsLoggingIn(true);
             const apiResponse = await loginToNotionWithCode(code);
             if(apiResponse) {
                 setBotIdCookie(apiResponse.bot_id, 7);   // Set Cookie for next reloads, for 7 days
                 setSessionStorage(apiResponse);
+                setIsLoggingIn(false);
                 navigate("/GraphsDashboard");
             }
         } catch(error) {
             navigate("/GraphsDashboard");
+            setIsLoggingIn(false);
             if(error.message === "409") {
                 showAlert("Máximo número de usuarios creados para el MVP. Inténtalo e nuevo más tarde y perdona las molestias.");
             }
@@ -187,152 +193,31 @@ function App() {
         )
     }
 
-    const renderFakeUserGraphs = () => {
-        return (
-            <div className='fakeusergraphsgrid__container'>
-                <div className='usergraph__item first_line' key="1">
-                    <div className='usergraph__firstrow'>
-                        <button className='fakeusergraph__delete'>
-                            <DeleteIcon style={{ color: '#f14668' }} />
-                            <p>Eliminar</p>
-                        </button>
-                        <div className='usergraph__middleinfo'>
-                            <p className='usergraph__timestamp'>
-                                Actualizado hace 11 minutos
-                            </p>
-                            <p className='usergraph__timestamp'>
-                                Próxima actualización en 15 horas
-                            </p>
-                        </div>
-                        <div className='fakeusergraph__selecttag'>
-                            <FakeSelectGraphTag
-                                defaultTag="DAILY"
-                            />
-                        </div>
-                        <button className='fakeusergraph__reload'>
-                            <p>Actualizar</p>
-                            <CachedIcon />
-                        </button>
-                    </div>
-                    <GraphFactory
-                        graphData={fakeGraphData}
-                    />
-                </div>
-                <div className='usergraph__item first_line' key="2">
-                    <div className='usergraph__firstrow'>
-                        <button className='fakeusergraph__delete'>
-                            <DeleteIcon style={{ color: '#f14668' }} />
-                            <p>Eliminar</p>
-                        </button>
-                        <div className='usergraph__middleinfo'>
-                            <p className='usergraph__timestamp'>
-                                Actualizado hace 14 días
-                            </p>
-                            <p className='usergraph__timestamp'>
-                                Próxima actualización en 16 días
-                            </p>
-                        </div>
-                        <div className='fakeusergraph__selecttag'>
-                            <FakeSelectGraphTag
-                                defaultTag="MONTHLY"
-                            />
-                        </div>
-                        <button className='fakeusergraph__reload'>
-                            <p>Actualizar</p>
-                            <CachedIcon />
-                        </button>
-                    </div>
-                    <GraphFactory
-                        graphData={fakeGraphData}
-                    />
-                </div>
-                <div className='usergraph__item second_line' key="3">
-                    <div className='usergraph__firstrow'>
-                        <button className='fakeusergraph__delete'>
-                            <DeleteIcon style={{ color: '#f14668' }} />
-                            <p>Eliminar</p>
-                        </button>
-                        <div className='usergraph__middleinfo'>
-                            <p className='usergraph__timestamp'>
-                                Actualizado hace 11 minutos
-                            </p>
-                            <p className='usergraph__timestamp'>
-                                Próxima actualización en 15 horas
-                            </p>
-                        </div>
-                        <div className='fakeusergraph__selecttag'>
-                            <FakeSelectGraphTag
-                                defaultTag="DAILY"
-                            />
-                        </div>
-                        <button className='fakeusergraph__reload'>
-                            <p>Actualizar</p>
-                            <CachedIcon />
-                        </button>
-                    </div>
-                    <GraphFactory
-                        graphData={fakeGraphData}
-                    />
-                </div>
-                <div className='usergraph__item second_line' key="4">
-                    <div className='usergraph__firstrow'>
-                        <button className='fakeusergraph__delete'>
-                            <DeleteIcon style={{ color: '#f14668' }} />
-                            <p>Eliminar</p>
-                        </button>
-                        <div className='usergraph__middleinfo'>
-                            <p className='usergraph__timestamp'>
-                                Actualizado hace 14 días
-                            </p>
-                            <p className='usergraph__timestamp'>
-                                Próxima actualización en 16 días
-                            </p>
-                        </div>
-                        <div className='fakeusergraph__selecttag'>
-                            <FakeSelectGraphTag
-                                defaultTag="MONTHLY"
-                            />
-                        </div>
-                        <button className='fakeusergraph__reload'>
-                            <p>Actualizar</p>
-                            <CachedIcon />
-                        </button>
-                    </div>
-                    <GraphFactory
-                        graphData={fakeGraphData}
-                    />
-                </div>
-            </div>
-        )
-    }
-
     const renderDashboardForUser = () => {
-        if(botIdCookie === "") {   // Not logged in or no session
+        if(botIdCookie === "" && !isLoggingIn) {   // Not logged in or no session
             return (
                 <div className='loginandfakegraphs'>
                     <LoginBox />
                     <div className='fakegraphs'>
                         <img src={process.env.PUBLIC_URL+'/fakegraphs.png'} alt=''></img>
-                        {/* {renderFakeUserGraphs()} */}
                     </div>
                 </div>
             )
         }
         else {
-            return (
-                <div className='userboxandgraphs'>
-                    <UserBox />
-                    {renderUserGraphs()}
-                </div>
-            )
-            // if(userDesiredGraphs.length > 0) {
-            //     {return renderUserGraphs()}
-            // }
-            // else {
-            //     return (
-            //         <EmptyGraphsDashboard />
-            //     )
-            // }
+            if(isLoggingIn) {
+                return (
+                    <EmptyGraphsDashboard />
+                )
+            }
+            else {  // User has session
+                return (
+                    <div className='userboxandgraphs'>
+                        <UserBox />
+                        {renderUserGraphs()}
+                    </div>
+                )
+            }
         }
     }
 

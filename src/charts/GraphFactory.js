@@ -1,6 +1,7 @@
 import StackedBarChart from "./StackedBarChart";
 import BarChart from "./BarChart";
 import AreaChart from "./AreaChart";
+import MultiLineChart from "./MultiLineChart";
 
 export default function GraphFactory({ graphData }) {
 
@@ -45,6 +46,12 @@ export default function GraphFactory({ graphData }) {
             case "Ahorros desde noviembre acumulado":
                 return (
                     <AreaChart
+                        graphData={graphData}
+                    />
+                );
+            case "Evolución de peso":
+                return (
+                    <MultiLineChart
                         graphData={graphData}
                     />
                 );
