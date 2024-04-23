@@ -20,8 +20,14 @@ export default function CreateGraph({ botId, updateStateFunction }) {
         {value: 'Gastos en los últimos 30 días', label: 'Gastos en los últimos 30 días'},
         {value: 'Gastos en los últimos 30 días por categoría', label: 'Gastos en los últimos 30 días por categoría'},
         {value: 'Ingresos desde noviembre por categoría', label: 'Ingresos desde noviembre por categoría'},
+        {value: 'Ingresos por categoría', label: 'Ingresos por categoría'},
+        {value: 'Ingresos en 2024 por categoría', label: 'Ingresos en 2024 por categoría'},
         {value: 'Ahorros desde noviembre', label: 'Ahorros desde noviembre'},
-        {value: 'Ahorros desde noviembre acumulado', label: 'Ahorros desde noviembre acumulado'}
+        {value: 'Ahorros desde noviembre acumulado', label: 'Ahorros desde noviembre acumulado'},
+        {value: 'Ahorros', label: 'Ahorros'},
+        {value: 'Ahorros en 2024', label: 'Ahorros en 2024'},
+        {value: 'Ahorros acumulado', label: 'Ahorros acumulado'},
+        {value: 'Ahorros en 2024 acumulado', label: 'Ahorros en 2024 acumulado'},
     ]
 
     const extratypeoptions = [
@@ -30,8 +36,14 @@ export default function CreateGraph({ botId, updateStateFunction }) {
         {value: 'Gastos en los últimos 30 días', label: 'Gastos en los últimos 30 días'},
         {value: 'Gastos en los últimos 30 días por categoría', label: 'Gastos en los últimos 30 días por categoría'},
         {value: 'Ingresos desde noviembre por categoría', label: 'Ingresos desde noviembre por categoría'},
+        {value: 'Ingresos por categoría', label: 'Ingresos por categoría'},
+        {value: 'Ingresos en 2024 por categoría', label: 'Ingresos en 2024 por categoría'},
         {value: 'Ahorros desde noviembre', label: 'Ahorros desde noviembre'},
         {value: 'Ahorros desde noviembre acumulado', label: 'Ahorros desde noviembre acumulado'},
+        {value: 'Ahorros', label: 'Ahorros'},
+        {value: 'Ahorros en 2024', label: 'Ahorros en 2024'},
+        {value: 'Ahorros acumulado', label: 'Ahorros acumulado'},
+        {value: 'Ahorros en 2024 acumulado', label: 'Ahorros en 2024 acumulado'},
         {value: 'Evolución de peso', label: 'Evolución de peso'},
     ]
 

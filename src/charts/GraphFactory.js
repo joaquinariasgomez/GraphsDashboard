@@ -37,13 +37,49 @@ export default function GraphFactory({ graphData }) {
                         graphData={graphData}
                     />
                 );
+            case "Ingresos por categoría":
+                return (
+                    <StackedBarChart
+                        graphData={graphData}
+                    />
+                );
+            case "Ingresos en 2024 por categoría":
+                return (
+                    <StackedBarChart
+                        graphData={graphData}
+                    />
+                );
             case "Ahorros desde noviembre":
                 return (
                     <StackedBarChart
                         graphData={graphData}
                     />
                 );
+            case "Ahorros":
+                return (
+                    <StackedBarChart
+                        graphData={graphData}
+                    />
+                );
+            case "Ahorros en 2024":
+                return (
+                    <StackedBarChart
+                        graphData={graphData}
+                    />
+                );
             case "Ahorros desde noviembre acumulado":
+                return (
+                    <AreaChart
+                        graphData={graphData}
+                    />
+                );
+            case "Ahorros acumulado":
+                return (
+                    <AreaChart
+                        graphData={graphData}
+                    />
+                );
+            case "Ahorros en 2024 acumulado":
                 return (
                     <AreaChart
                         graphData={graphData}

@@ -22,18 +22,6 @@
     grid-template-columns: repeat(auto-fit, var(--graph-width)); /* Los 600px definen el ancho de .usergraph__item */
 }
 
-.fakeusergraphsgrid__container {
-    margin-top: 5vh;
-    margin-bottom: 5vh;
-    width: 90vw;
-    max-width: 1422px;
-    display: grid;
-    grid-auto-flow: row;
-    grid-gap: 25px;
-    justify-content: center;
-    grid-template-columns: repeat(auto-fit, var(--graph-width)); /* Los 600px definen el ancho de .usergraph__item */
-}
-
 .usergraph__item {
     display: flex;
     flex-direction: column;
@@ -78,16 +66,6 @@
     border: none;
 }
 
-.fakeusergraph__delete {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    height: 40px;
-    padding: 10px;
-    border-radius: 5px;
-    border: none;
-}
-
 .selectgraphtag {
     font-size: 14px;
     font-family: Georgia, serif;
@@ -98,12 +76,11 @@
     background-color: rgba(249, 24, 128, 0.1);
 }
 
-.usergraph__delete > p {
-    color: red;
-    margin-left: 5px;
+.usergraph__delete:active {
+    background-color: rgba(249, 24, 128, 0.2);
 }
 
-.fakeusergraph__delete > p {
+.usergraph__delete > p {
     color: red;
     margin-left: 5px;
 }
@@ -112,23 +89,7 @@
     width: 160px;
 }
 
-.fakeusergraph__selecttag {
-    width: 160px;
-    pointer-events: none;
-}
-
 .usergraph__reload {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    height: 40px;
-    padding: 10px;
-    border-radius: 5px;
-    border: none;
-    background-color: rgb(233, 233, 233);
-}
-
-.fakeusergraph__reload {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -144,11 +105,11 @@
     background-color: lightgray;
 }
 
-.usergraph__reload > p {
-    margin-right: 5px;
+.usergraph__reload:active {
+    background-color: rgb(223, 222, 222);
 }
 
-.fakeusergraph__reload > p {
+.usergraph__reload > p {
     margin-right: 5px;
 }
 
@@ -289,6 +250,10 @@
     /* border: 3.5px solid rgba(0, 0, 0, 0.5); */
     /* padding: 3.5px; */
     /* border: 3.5px solid white; */
+}
+
+.login__button:active {
+    background-color: rgb(238, 238, 238);
 }
 
 .login__button:hover:before {
