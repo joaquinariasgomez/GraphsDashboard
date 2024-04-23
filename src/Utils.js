@@ -6,10 +6,10 @@ export function getRelativeTimestamp(timestamp) {
 
     if (timePastInSeconds < 60) {
         if (Math.round(timePastInSeconds) > 1) {
-            return Math.round(timePastInSeconds) + " segs"
+            return Math.round(timePastInSeconds) + " secs"
         }
         else {
-            return Math.round(timePastInSeconds) + " seg"
+            return Math.round(timePastInSeconds) + " sec"
         }
     }
     else {
@@ -26,19 +26,19 @@ export function getRelativeTimestamp(timestamp) {
             const timePastInHours = timePastInMinutes / 60;
             if (timePastInHours < 24) {
                 if (Math.round(timePastInHours) > 1) {
-                    return Math.round(timePastInHours) + " horas"
+                    return Math.round(timePastInHours) + " hours"
                 }
                 else {
-                    return Math.round(timePastInHours) + " hora"
+                    return Math.round(timePastInHours) + " hour"
                 }
             }
             else {
                 const timePastInDays = timePastInHours / 24;
                 if (Math.round(timePastInDays) > 1) {
-                    return Math.round(timePastInDays) + " días"
+                    return Math.round(timePastInDays) + " days"
                 }
                 else {
-                    return Math.round(timePastInDays) + " día"
+                    return Math.round(timePastInDays) + " day"
                 }
             }
         }

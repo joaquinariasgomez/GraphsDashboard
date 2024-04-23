@@ -4,9 +4,9 @@ import { updateDesiredGraph } from './RequestUtils';
 export default function SelectGraphTag({ desiredGraphId, botId, graphType, defaultTag, updateStateFunction }) {
 
     const options = [
-        {value: 'DAILY', label: 'Diariamente'},
-        {value: 'WEEKLY', label: 'Semanalmente'},
-        {value: 'MONTHLY', label: 'Mensualmente'},
+        {value: 'DAILY', label: 'Daily'},
+        {value: 'WEEKLY', label: 'Weekly'},
+        {value: 'MONTHLY', label: 'Monthly'},
     ]
 
     return (

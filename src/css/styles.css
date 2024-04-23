@@ -86,7 +86,15 @@
 }
 
 .usergraph__selecttag {
-    width: 160px;
+    width: 120px;
+}
+
+.usergraph__createtag__left {
+    width: 250px;
+}
+
+.usergraph__createtag__right {
+    width: 120px;
 }
 
 .usergraph__reload {

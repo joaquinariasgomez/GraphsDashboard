@@ -238,10 +238,10 @@ function App() {
             return (
                 <div className='usergraph__middleinfo'>
                     <p className='usergraph__timestamp__first' title='Última actualización'>
-                        {"Hace "+getRelativeTimestamp(getUserGraphByType(userGraphs, userDesiredGraph.type).lastUpdated)+" ・"}
+                        {getRelativeTimestamp(getUserGraphByType(userGraphs, userDesiredGraph.type).lastUpdated)+" ago ・"}
                     </p>
                     <p className='usergraph__timestamp__second' title='Próxima actualización'>
-                        {"En "+getRelativeTimeToUpdate(userDesiredGraph.tag)}
+                        {"In "+getRelativeTimeToUpdate(userDesiredGraph.tag)}
                     </p>
                 </div>
             )
@@ -264,7 +264,7 @@ function App() {
                     </p>
                     <div className='usergraph__loadinggraph__info'>
                         <p>
-                            {"Esta gráfica se actualizará en "+getRelativeTimeToUpdate(userDesiredGraph.tag)}
+                            {"This graph will update in "+getRelativeTimeToUpdate(userDesiredGraph.tag)}
                         </p>
                         <CachedIcon fontSize="large" style={{ color: '#6d6d6d' }} />
                     </div>

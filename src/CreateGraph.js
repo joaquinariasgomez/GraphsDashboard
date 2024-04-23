@@ -9,9 +9,9 @@ export default function CreateGraph({ botId, updateStateFunction }) {
     const [selectedType, setSelectedType] = useState('Gastos en los últimos 7 días');
 
     const tagoptions = [
-        {value: 'DAILY', label: 'Diariamente'},
-        {value: 'WEEKLY', label: 'Semanalmente'},
-        {value: 'MONTHLY', label: 'Mensualmente'},
+        {value: 'DAILY', label: 'Daily'},
+        {value: 'WEEKLY', label: 'Weekly'},
+        {value: 'MONTHLY', label: 'Monthly'},
     ]
 
     const typeoptions = [
@@ -64,46 +64,50 @@ export default function CreateGraph({ botId, updateStateFunction }) {
                     updateStateFunction()
                 }
             }}>
-                <p>Nueva gráfica</p>
+                <p>New graph</p>
                 <AddCircleOutlineSharpIcon />
             </button>
             <div className='usergraph__createtagrow'>
-                <Select
-                    className='selectgraphtag'
-                    defaultValue={typeoptions[0]}
-                    theme={(theme) => ({
-                        ...theme,
-                        borderRadius: 5,
-                        colors: {
-                            ...theme.colors,
-                            primary25: 'lightgray',
-                            primary50: 'gray',
-                            primary: 'black'
-                        }
-                    })}
-                    options={botId === "d948e9fa-cfd9-4ca7-bfec-b2cfa820364a" ? extratypeoptions : typeoptions}
-                    onChange={function (newType) {
-                        setSelectedType(newType.value)
-                    }}
-                />
-                <Select
-                    className='selectgraphtag'
-                    defaultValue={tagoptions[0]}
-                    theme={(theme) => ({
-                        ...theme,
-                        borderRadius: 5,
-                        colors: {
-                            ...theme.colors,
-                            primary25: 'lightgray',
-                            primary50: 'gray',
-                            primary: 'black'
-                        }
-                    })}
-                    options={tagoptions}
-                    onChange={function (newTag) {
-                        setSelectedTag(newTag.value)
-                    }}
-                />
+                <div className='usergraph__createtag__left'>
+                    <Select
+                        className='selectgraphtag'
+                        defaultValue={typeoptions[0]}
+                        theme={(theme) => ({
+                            ...theme,
+                            borderRadius: 5,
+                            colors: {
+                                ...theme.colors,
+                                primary25: 'lightgray',
+                                primary50: 'gray',
+                                primary: 'black'
+                            }
+                        })}
+                        options={botId === "d948e9fa-cfd9-4ca7-bfec-b2cfa820364a" ? extratypeoptions : typeoptions}
+                        onChange={function (newType) {
+                            setSelectedType(newType.value)
+                        }}
+                    />
+                </div>
+                <div className='usergraph__createtag__right'>
+                    <Select
+                        className='selectgraphtag'
+                        defaultValue={tagoptions[0]}
+                        theme={(theme) => ({
+                            ...theme,
+                            borderRadius: 5,
+                            colors: {
+                                ...theme.colors,
+                                primary25: 'lightgray',
+                                primary50: 'gray',
+                                primary: 'black'
+                            }
+                        })}
+                        options={tagoptions}
+                        onChange={function (newTag) {
+                            setSelectedTag(newTag.value)
+                        }}
+                    />
+                </div>
             </div>
         </div>
     )
