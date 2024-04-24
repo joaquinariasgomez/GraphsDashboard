@@ -8,7 +8,7 @@ import { getRelativeTimeToUpdate, getRelativeTimestamp, getUserGraphByType } fro
 import EmptyGraphsDashboard from './EmptyGraphsDashboard';
 import GraphFactory from './charts/GraphFactory';
 import LoginBox from './LoginBox';
-import UserBox from './UserBox';
+import UserCircle from './UserCircle';
 import ClipLoader from "react-spinners/ClipLoader";
 import { useNavigate } from "react-router-dom";
 import SelectGraphTag from './SelectGraphTag';
@@ -18,7 +18,6 @@ import { useSessionStorage } from './useSessionStorage';
 import { useGlobalStateValue } from './context/GlobalStateProvider';
 import { actionTypes } from './context/globalReducer';
 import { ALERT_BOX_TYPES } from './notification-boxes/AlertBoxConstants';
-import FakeSelectGraphTag from './FakeSelectGraphTag';
 
 function App() {
 
@@ -206,14 +205,14 @@ function App() {
         }
         else {
             if(isLoggingIn) {
-                return (
+                return (    // TODO: change to loading graphs screen
                     <EmptyGraphsDashboard />
                 )
             }
             else {  // User has session
                 return (
-                    <div className='userboxandgraphs'>
-                        <UserBox />
+                    <div>
+                        <UserCircle />
                         {renderUserGraphs()}
                     </div>
                 )

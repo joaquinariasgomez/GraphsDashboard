@@ -311,6 +311,103 @@
 
 
 /* ======= ALERT BOXES ======= */
+/* ===== PROFILE BOX ===== */
+.profilebox__backdrop {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    animation: opacity-bng 0.25s ease forwards;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 998;
+}
+
+.profilebox__container {
+    position: absolute;
+    top: calc(50% - 20px);
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 300px;
+    /* padding: 25px 30px; */
+    border-radius: 10px;
+    background-color: white;
+    animation: drop 0.2s ease forwards;
+    z-index: 998;
+}
+
+.profilebox__title__row {
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-bottom: 1px solid lightgray;
+}
+
+.profilebox__title__row > h2 {
+    font-size: 24px;
+    font-weight: 700;
+    /* margin-left: 20px;
+    margin-right: 20px; */
+}
+
+.profilebox__options__row {
+    /* border: 1px solid red; */
+    padding-top: 15px;
+    padding-bottom: 15px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.profilebox__logoutbutton {
+    height: 44px;
+    border-style: solid;
+    border-radius: 12px;
+    border-width: 3px;
+    border-color: #28282B;
+    font-weight: 600;
+    font-size: 15px;
+    color: white;
+    background-color: #28282B;
+    padding-left: 17px;
+    padding-right: 17px;
+}
+
+.profilebox__logoutbutton:hover {
+    cursor: pointer;
+    animation: changecolor 0.25s ease forwards;
+}
+
+.profilebox__cancelbutton {
+    height: 44px;
+    border-style: solid;
+    border-radius: 12px;
+    border-width: 3px;
+    border-color: #f14668;
+    font-weight: 600;
+    font-size: 15px;
+    color: white;
+    background-color: #f14668;
+    padding-left: 17px;
+    padding-right: 17px;
+}
+
+.profilebox__cancelbutton:hover {
+    cursor: pointer;
+    animation: changecolorred 0.25s ease forwards;
+}
+
 .alertbox__backdrop {
     position: fixed;
     top: 0;
@@ -437,6 +534,44 @@
     }
     100% {
         transform: scale(1);
+    }
+}
+
+/* ======== Drop effect ======== */
+@keyframes drop {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+@keyframes changecolor {
+    0% {
+        color: white;
+        background-color: #28282B;
+    }
+
+    100% {
+        color: black;
+        background-color: white;
+    }
+}
+
+@keyframes changecolorred {
+    0% {
+        color: white;
+        background-color: #f14668;
+    }
+    
+    100% {
+        color: #f14668;
+        background-color: white;
     }
 }
 
