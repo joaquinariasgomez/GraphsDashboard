@@ -9,10 +9,41 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    font-family: "inter", sans-serif;
+}
+
+/* === User Circle === */
+.usercircle__button {
+    position: absolute;
+    right: 50px;
+    top: 20px;
+    width: 100px;
+    height: 100px;
+    margin: 0;
+    border-radius: 50%;
+    border-color: #28282B;
+    border-style: solid;
+    border-width: 5px;
+    background-color: white;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: bubble-out 0.4s ease forwards;
+}
+
+.usercircle__button:hover {
+    cursor: pointer;
+    animation: bubble-in 0.4s ease forwards;
+}
+
+.usercircle__button > img {
+    width: auto;
+    height: 120%;
 }
 
 .usergraphsgrid__container {
-    margin-top: 5vh;
+    margin-top: 110px;  /* think about this value */
     margin-bottom: 5vh;
     width: 90vw;
     display: grid;
@@ -20,6 +51,7 @@
     grid-gap: 25px;
     justify-content: center;
     grid-template-columns: repeat(auto-fit, var(--graph-width)); /* Los 600px definen el ancho de .usergraph__item */
+    /* font-family: "inter", sans-serif; */
 }
 
 .usergraph__item {
@@ -68,7 +100,7 @@
 
 .selectgraphtag {
     font-size: 14px;
-    font-family: Georgia, serif;
+    /* font-family: Georgia, serif; */
 }
 
 .usergraph__delete:hover {
@@ -127,7 +159,7 @@
     align-items: center;
     justify-content: center;
     font-weight: bold;
-    width: 180px;
+    width: 190px;
     font-size: 14px;
     color: gray;
 }
@@ -225,7 +257,7 @@
     border: 3px solid black;
     width: var(--login-card-width);
     height: var(--login-card-height);
-    font-family: "inter", sans-serif;
+    /* font-family: "inter", sans-serif; */
     font-style: normal;
     font-weight: 700 !important;
     text-decoration: none;
@@ -312,6 +344,10 @@
 
 /* ======= ALERT BOXES ======= */
 /* ===== PROFILE BOX ===== */
+.boxmanager {
+    font-family: "inter", sans-serif;
+}
+
 .profilebox__backdrop {
     position: fixed;
     top: 0;
@@ -537,6 +573,24 @@
     }
 }
 
+@keyframes bubble-in {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1.1);
+    }
+}
+
+@keyframes bubble-out {
+    100% {
+        transform: scale(1);
+    }
+    0% {
+        transform: scale(1.1);
+    }
+}
+
 /* ======== Drop effect ======== */
 @keyframes drop {
     0% {
@@ -558,7 +612,7 @@
     }
 
     100% {
-        color: black;
+        color: #28282B;
         background-color: white;
     }
 }

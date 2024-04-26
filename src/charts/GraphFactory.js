@@ -7,85 +7,85 @@ export default function GraphFactory({ graphData }) {
 
     const renderGraph = () => {
         switch (graphData.type) {
-            case "Gastos en los últimos 7 días":
+            case "Expenses in the last 7 days":
                 return (
                     <BarChart
                         graphData={graphData}
                     />
                 );
-            case "Gastos en los últimos 7 días por categoría":
+            case "Expenses in the last 7 days by category":
                 return (
                     <StackedBarChart
                         graphData={graphData}
                     />
                 );
-            case "Gastos en los últimos 30 días":
+            case "Expenses in the last 30 days":
                 return (
                     <BarChart
                         graphData={graphData}
                     />
                 );
-            case "Gastos en los últimos 30 días por categoría":
+            case "Expenses in the last 30 days by category":
                 return (
                     <StackedBarChart
                         graphData={graphData}
                     />
                 );
-            case "Ingresos desde noviembre por categoría":
+            case "Incomes since november by category":
                 return (
                     <StackedBarChart
                         graphData={graphData}
                     />
                 );
-            case "Ingresos por categoría":
+            case "Incomes by category":
                 return (
                     <StackedBarChart
                         graphData={graphData}
                     />
                 );
-            case "Ingresos en 2024 por categoría":
+            case "Incomes in 2024 by category":
                 return (
                     <StackedBarChart
                         graphData={graphData}
                     />
                 );
-            case "Ahorros desde noviembre":
+            case "Savings since november":
                 return (
                     <StackedBarChart
                         graphData={graphData}
                     />
                 );
-            case "Ahorros":
+            case "Savings":
                 return (
                     <StackedBarChart
                         graphData={graphData}
                     />
                 );
-            case "Ahorros en 2024":
+            case "Savings in 2024":
                 return (
                     <StackedBarChart
                         graphData={graphData}
                     />
                 );
-            case "Ahorros desde noviembre acumulado":
+            case "Cumulative savings since november":
                 return (
                     <AreaChart
                         graphData={graphData}
                     />
                 );
-            case "Ahorros acumulado":
+            case "Cumulative savings":
                 return (
                     <AreaChart
                         graphData={graphData}
                     />
                 );
-            case "Ahorros en 2024 acumulado":
+            case "Cumulative savings in 2024":
                 return (
                     <AreaChart
                         graphData={graphData}
                     />
                 );
-            case "Evolución de peso":
+            case "Weight and calories evolution":
                 return (
                     <MultiLineChart
                         graphData={graphData}

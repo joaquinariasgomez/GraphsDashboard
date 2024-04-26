@@ -134,11 +134,10 @@ function App() {
                 {userDesiredGraphs.map(userDesiredGraph => (
                     <div className='usergraph__item' key={userDesiredGraph.id}>
                         <div className='usergraph__firstrow'>
-                            <button className='usergraph__delete' title='Eliminar' onClick={function () {
+                            <button className='usergraph__delete' title='Delete' onClick={function () {
                                 deleteDesiredGraphAndState(userDesiredGraph)
                             }}>
                                 <DeleteIcon style={{ color: '#f14668' }} />
-                                {/* <p>Eliminar</p> */}
                             </button>
                             {renderTimestamp(userDesiredGraph)}
                             <div className='usergraph__selecttag'>
@@ -150,7 +149,7 @@ function App() {
                                     updateStateFunction={fetchUserDesiredGraphs}
                                 />
                             </div>
-                            <button className='usergraph__reload' title='Actualizar' onClick={async function () {
+                            <button className='usergraph__reload' title='Update' onClick={async function () {
                                 // setGraphIsUpdating(true)
                                 if(getUserGraphByType(userGraphs, userDesiredGraph.type) != null) {
                                     try {
@@ -176,7 +175,6 @@ function App() {
                                 }
                                 // setGraphIsUpdating(false)
                             }}>
-                                {/* <p>Actualizar</p> */}
                                 <CachedIcon />
                                 {/* {(graphIsUpdating) ? <ClipLoader size={20}/> : <CachedIcon />} */}
                             </button>
@@ -236,10 +234,10 @@ function App() {
         if(getUserGraphByType(userGraphs, userDesiredGraph.type) != null) {
             return (
                 <div className='usergraph__middleinfo'>
-                    <p className='usergraph__timestamp__first' title='Última actualización'>
+                    <p className='usergraph__timestamp__first' title='Last update'>
                         {getRelativeTimestamp(getUserGraphByType(userGraphs, userDesiredGraph.type).lastUpdated)+" ago ・"}
                     </p>
-                    <p className='usergraph__timestamp__second' title='Próxima actualización'>
+                    <p className='usergraph__timestamp__second' title='Next update'>
                         {"In "+getRelativeTimeToUpdate(userDesiredGraph.tag)}
                     </p>
                 </div>

@@ -34,7 +34,7 @@ export default function BoxManager() {
     }
 
     return (
-        <div>
+        <div className="boxmanager">
             { renderBox() }
         </div>
     )

@@ -13,16 +13,24 @@ export default function UserCircle({  }) {
         })
     }
 
+    const renderUserImageOrName = () => {
+        if(session.notionOwner.avatar_url === "") {   // Not logged in or no session
+            return (
+                <div className='usercircle__name'>
+                    <h2>Pepito</h2>
+                </div>
+            )
+        }
+        else {
+            return (
+                <img src={session.notionOwner.avatar_url} alt=''></img>
+            )
+        }
+    }
+
     return (
-        <div className="usercircle__container">
-            <button onClick={() => activateProfileBox()}>
-                <p>
-                    {session.notionOwner.name}
-                </p>
-                <p>
-                    {session.notionOwner.avatar_url}
-                </p>
-            </button>
-        </div>
+        <button className="usercircle__button" onClick={() => activateProfileBox()}>
+            {renderUserImageOrName()}
+        </button>
     )
 }

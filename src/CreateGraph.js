@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 export default function CreateGraph({ botId, updateStateFunction }) {
 
     const [selectedTag, setSelectedTag] = useState('DAILY');
-    const [selectedType, setSelectedType] = useState('Gastos en los últimos 7 días');
+    const [selectedType, setSelectedType] = useState('Expenses in the last 7 days');
 
     const tagoptions = [
         {value: 'DAILY', label: 'Daily'},
@@ -15,36 +15,33 @@ export default function CreateGraph({ botId, updateStateFunction }) {
     ]
 
     const typeoptions = [
-        {value: 'Gastos en los últimos 7 días', label: 'Gastos en los últimos 7 días'},
-        {value: 'Gastos en los últimos 7 días por categoría', label: 'Gastos en los últimos 7 días por categoría'},
-        {value: 'Gastos en los últimos 30 días', label: 'Gastos en los últimos 30 días'},
-        {value: 'Gastos en los últimos 30 días por categoría', label: 'Gastos en los últimos 30 días por categoría'},
-        {value: 'Ingresos desde noviembre por categoría', label: 'Ingresos desde noviembre por categoría'},
-        {value: 'Ingresos por categoría', label: 'Ingresos por categoría'},
-        {value: 'Ingresos en 2024 por categoría', label: 'Ingresos en 2024 por categoría'},
-        {value: 'Ahorros desde noviembre', label: 'Ahorros desde noviembre'},
-        {value: 'Ahorros desde noviembre acumulado', label: 'Ahorros desde noviembre acumulado'},
-        {value: 'Ahorros', label: 'Ahorros'},
-        {value: 'Ahorros en 2024', label: 'Ahorros en 2024'},
-        {value: 'Ahorros acumulado', label: 'Ahorros acumulado'},
-        {value: 'Ahorros en 2024 acumulado', label: 'Ahorros en 2024 acumulado'},
+        {value: 'Expenses in the last 7 days', label: 'Expenses in the last 7 days'},
+        {value: 'Expenses in the last 7 days by category', label: 'Expenses in the last 7 days by category'},
+        {value: 'Expenses in the last 30 days', label: 'Expenses in the last 30 days'},
+        {value: 'Expenses in the last 30 days by category', label: 'Expenses in the last 30 days by category'},
+        {value: 'Incomes by category', label: 'Incomes by category'},
+        {value: 'Incomes in 2024 by category', label: 'Incomes in 2024 by category'},
+        {value: 'Savings', label: 'Savings'},
+        {value: 'Savings in 2024', label: 'Savings in 2024'},
+        {value: 'Cumulative savings', label: 'Cumulative savings'},
+        {value: 'Cumulative savings in 2024', label: 'Cumulative savings in 2024'},
     ]
 
     const extratypeoptions = [
-        {value: 'Gastos en los últimos 7 días', label: 'Gastos en los últimos 7 días'},
-        {value: 'Gastos en los últimos 7 días por categoría', label: 'Gastos en los últimos 7 días por categoría'},
-        {value: 'Gastos en los últimos 30 días', label: 'Gastos en los últimos 30 días'},
-        {value: 'Gastos en los últimos 30 días por categoría', label: 'Gastos en los últimos 30 días por categoría'},
-        {value: 'Ingresos desde noviembre por categoría', label: 'Ingresos desde noviembre por categoría'},
-        {value: 'Ingresos por categoría', label: 'Ingresos por categoría'},
-        {value: 'Ingresos en 2024 por categoría', label: 'Ingresos en 2024 por categoría'},
-        {value: 'Ahorros desde noviembre', label: 'Ahorros desde noviembre'},
-        {value: 'Ahorros desde noviembre acumulado', label: 'Ahorros desde noviembre acumulado'},
-        {value: 'Ahorros', label: 'Ahorros'},
-        {value: 'Ahorros en 2024', label: 'Ahorros en 2024'},
-        {value: 'Ahorros acumulado', label: 'Ahorros acumulado'},
-        {value: 'Ahorros en 2024 acumulado', label: 'Ahorros en 2024 acumulado'},
-        {value: 'Evolución de peso', label: 'Evolución de peso'},
+        {value: 'Expenses in the last 7 days', label: 'Expenses in the last 7 days'},
+        {value: 'Expenses in the last 7 days by category', label: 'Expenses in the last 7 days by category'},
+        {value: 'Expenses in the last 30 days', label: 'Expenses in the last 30 days'},
+        {value: 'Expenses in the last 30 days by category', label: 'Expenses in the last 30 days by category'},
+        {value: 'Incomes since november by category', label: 'Incomes since november by category'},
+        {value: 'Incomes by category', label: 'Incomes by category'},
+        {value: 'Incomes in 2024 by category', label: 'Incomes in 2024 by category'},
+        {value: 'Savings since november', label: 'Savings since november'},
+        {value: 'Savings', label: 'Savings'},
+        {value: 'Savings in 2024', label: 'Savings in 2024'},
+        {value: 'Cumulative savings since november', label: 'Cumulative savings since november'},
+        {value: 'Cumulative savings', label: 'Cumulative savings'},
+        {value: 'Cumulative savings in 2024', label: 'Cumulative savings in 2024'},
+        {value: 'Weight and calories evolution', label: 'Weight and calories evolution'},
     ]
 
     return (
