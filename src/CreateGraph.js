@@ -15,10 +15,13 @@ export default function CreateGraph({ botId, updateStateFunction }) {
     ]
 
     const typeoptions = [
+        {value: 'Expenses', label: 'Expenses'},
+        {value: 'Expenses by category', label: 'Expenses by category'},
         {value: 'Expenses in the last 7 days', label: 'Expenses in the last 7 days'},
         {value: 'Expenses in the last 7 days by category', label: 'Expenses in the last 7 days by category'},
         {value: 'Expenses in the last 30 days', label: 'Expenses in the last 30 days'},
         {value: 'Expenses in the last 30 days by category', label: 'Expenses in the last 30 days by category'},
+        {value: 'Incomes', label: 'Incomes'},
         {value: 'Incomes by category', label: 'Incomes by category'},
         {value: 'Incomes in 2024 by category', label: 'Incomes in 2024 by category'},
         {value: 'Savings', label: 'Savings'},
@@ -28,10 +31,13 @@ export default function CreateGraph({ botId, updateStateFunction }) {
     ]
 
     const extratypeoptions = [
+        {value: 'Expenses', label: 'Expenses'},
+        {value: 'Expenses by category', label: 'Expenses by category'},
         {value: 'Expenses in the last 7 days', label: 'Expenses in the last 7 days'},
         {value: 'Expenses in the last 7 days by category', label: 'Expenses in the last 7 days by category'},
         {value: 'Expenses in the last 30 days', label: 'Expenses in the last 30 days'},
         {value: 'Expenses in the last 30 days by category', label: 'Expenses in the last 30 days by category'},
+        {value: 'Incomes', label: 'Incomes'},
         {value: 'Incomes since november by category', label: 'Incomes since november by category'},
         {value: 'Incomes by category', label: 'Incomes by category'},
         {value: 'Incomes in 2024 by category', label: 'Incomes in 2024 by category'},

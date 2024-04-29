@@ -6,6 +6,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { connectToNotion, deleteDesiredGraph, deleteGraphByUserIdAndType, getAllDesiredGraphsByUserId, getAllGraphsByUserId, reloadDesiredGraphAndReturnNewGraph, reloadDesiredGraphAndReturnUpdatedGraph, loginToNotionWithCode } from './RequestUtils';
 import { getRelativeTimeToUpdate, getRelativeTimestamp, getUserGraphByType } from './Utils';
 import EmptyGraphsDashboard from './EmptyGraphsDashboard';
+import LoadingGraphsScreen from './LoadingGraphsScreen';
 import GraphFactory from './charts/GraphFactory';
 import LoginBox from './LoginBox';
 import UserCircle from './UserCircle';
@@ -204,7 +205,8 @@ function App() {
         else {
             if(isLoggingIn) {
                 return (    // TODO: change to loading graphs screen
-                    <EmptyGraphsDashboard />
+                    // <EmptyGraphsDashboard />
+                    <LoadingGraphsScreen />
                 )
             }
             else {  // User has session

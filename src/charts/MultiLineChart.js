@@ -18,12 +18,12 @@ export default function MultiLineChart({ graphData }) {
         labels: getTagsFromGraphData(graphData),
         datasets: [
             {
-                label: 'Calorías consumidas',
+                label: 'Calories consumed',
                 data: getValuesFromGraphData(graphData),
                 yAxisID: 'c'
             },
             {
-                label: 'Peso',
+                label: 'Weight',
                 data: getValues2FromGraphData(graphData),
                 yAxisID: 'w'
             }

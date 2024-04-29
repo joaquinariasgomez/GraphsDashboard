@@ -31,6 +31,24 @@ export default function GraphFactory({ graphData }) {
                         graphData={graphData}
                     />
                 );
+            case "Expenses":
+                return (
+                    <BarChart
+                        graphData={graphData}
+                    />
+                );
+            case "Expenses by category":
+                return (
+                    <StackedBarChart
+                        graphData={graphData}
+                    />
+                );
+            case "Incomes":
+                return (
+                    <BarChart
+                        graphData={graphData}
+                    />
+                );
             case "Incomes since november by category":
                 return (
                     <StackedBarChart

@@ -14,7 +14,7 @@ export default function AreaChart({ graphData }) {
         labels: getTagsFromGraphData(graphData),
         datasets: [
             {
-                label: 'Total ahorrado',
+                label: 'Total saved',
                 data: getValuesFromGraphData(graphData),
                 fill: "origin"
             }

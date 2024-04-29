@@ -14,7 +14,7 @@ export default function BarChart({ graphData }) {
         labels: getTagsFromGraphData(graphData),
         datasets: [
             {
-                label: 'Total gastado',
+                label: 'Total',
                 data: getValuesFromGraphData(graphData)
             }
         ]
