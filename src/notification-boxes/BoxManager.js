@@ -1,6 +1,7 @@
 import { useGlobalStateValue } from "../context/GlobalStateProvider";
 import AlertBox from "./AlertBox";
 import ProfileBox from "./ProfileBox";
+import GetProBox from "./GetProBox";
 
 // Objective is to read state and prioritize boxes shown
 // depending on priority. AlertBox has more priority than ProfileBox,
@@ -8,7 +9,7 @@ import ProfileBox from "./ProfileBox";
 export default function BoxManager() {
 
     // Context
-    const [{ showAlertBox, showProfileBox }, dispatch] = useGlobalStateValue();
+    const [{ showAlertBox, showProfileBox, showProBox }, dispatch] = useGlobalStateValue();
 
     const renderBox = () => {
         if(showAlertBox && showProfileBox) {
@@ -28,6 +29,10 @@ export default function BoxManager() {
             else if(showProfileBox) {
                 return (
                     <ProfileBox />
+                )
+            } else if(showProBox) {
+                return (
+                    <GetProBox />
                 )
             }
         }

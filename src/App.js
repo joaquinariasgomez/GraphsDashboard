@@ -19,6 +19,7 @@ import { useSessionStorage } from './useSessionStorage';
 import { useGlobalStateValue } from './context/GlobalStateProvider';
 import { actionTypes } from './context/globalReducer';
 import { ALERT_BOX_TYPES } from './notification-boxes/AlertBoxConstants';
+import GetProButton from './GetProButton';
 
 function App() {
 
@@ -212,6 +213,7 @@ function App() {
             else {  // User has session
                 return (
                     <div>
+                        <GetProButton />
                         <UserCircle />
                         {renderUserGraphs()}
                     </div>

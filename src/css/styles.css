@@ -20,13 +20,49 @@
     );
 }
 
+/* === Get Pro Button === */
+.getpro__button {
+    position: absolute;
+    right: 150px;
+    top: 25px;
+    width: 100px;
+    height: 50px;
+    margin: 0;
+    border-radius: 15px;
+    border-style: solid;
+    border-width: 0;
+    background-color: #28282B;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: white;
+    justify-content: center;
+    animation: bubble-out 0.4s ease forwards;
+}
+
+.getpro__button:hover {
+    cursor: pointer;
+    animation: bubble-in 0.4s ease forwards;
+}
+
+.getpro__notbought {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.getpro__notbought > h2 {
+    margin-left: 4px;
+}
+
 /* === User Circle === */
 .usercircle__button {
     position: absolute;
     right: 50px;
     top: 20px;
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
     margin: 0;
     border-radius: 50%;
     border-color: #28282B;
@@ -351,6 +387,56 @@
 
 
 /* ======= ALERT BOXES ======= */
+/* ===== GET PRO BOX ===== */
+.getprobox__backdrop {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    animation: opacity-bng 0.4s ease forwards;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 998;
+}
+
+.getprobox__container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 300px;
+    border-radius: 10px;
+    background-color: white;
+    animation: bubble 0.4s ease-in-out;
+    z-index: 998;
+}
+
+.getprobox__text__row {
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-bottom: 1px solid lightgray;
+}
+
+.getprobox__options__row {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
 /* ===== PROFILE BOX ===== */
 .boxmanager {
     font-family: "inter", sans-serif;
@@ -379,7 +465,6 @@
     flex-direction: column;
     align-items: center;
     width: 300px;
-    /* padding: 25px 30px; */
     border-radius: 10px;
     background-color: white;
     animation: drop 0.2s ease forwards;
@@ -404,7 +489,6 @@
 }
 
 .profilebox__options__row {
-    /* border: 1px solid red; */
     padding-top: 15px;
     padding-bottom: 15px;
     width: 100%;
@@ -571,13 +655,13 @@
 
 @keyframes bubble {
     0% {
-        transform: scale(1);
+        transform: translate(-50%, -50%) scale(1);
     }
     50% {
-        transform: scale(1.1);
+        transform: translate(-50%, -50%) scale(1.1);
     }
     100% {
-        transform: scale(1);
+        transform: translate(-50%, -50%) scale(1);
     }
 }
 
