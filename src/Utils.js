@@ -46,24 +46,28 @@ export function getRelativeTimestamp(timestamp) {
 }
 
 export function getRelativeTimeToUpdate(userDesiredGraphTag) {
+    // Timezone for executions will be UTC
     switch (userDesiredGraphTag) {
-        case "DAILY":
-            let tomorrow = new Date();
+        case "DAILY":   // Every day at 7:00h UTC
+            let tomorrow = new Date();  // Date by default is UTC
             tomorrow.setDate(tomorrow.getDate() + 1); // Set date to tomorrow
-            tomorrow.setHours(0);
+            tomorrow.setHours(7);
             tomorrow.setMinutes(0);
             tomorrow.setSeconds(0);
             return getRelativeTimestamp(tomorrow);
-        case "WEEKLY":
+        case "WEEKLY":  // Every Monday at 7:00h UTC
             let monday = new Date();
             monday.setDate(monday.getDate() + (((1 + 7 - monday.getDay()) % 7) || 7));
-            monday.setHours(0);
+            monday.setHours(7);
             monday.setMinutes(0);
             monday.setSeconds(0);
             return getRelativeTimestamp(monday);
-        case "MONTHLY":
+        case "MONTHLY": // Every first day of month at 7:00h UTC
             let now = new Date();
             let firstDayOfMonth = new Date(now.getFullYear(), now.getMonth()+1, 1);
+            firstDayOfMonth.setHours(7);
+            firstDayOfMonth.setMinutes(0);
+            firstDayOfMonth.setSeconds(0);
             return getRelativeTimestamp(firstDayOfMonth);
     }
 }
