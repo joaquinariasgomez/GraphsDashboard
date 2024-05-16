@@ -20,6 +20,7 @@ import { useGlobalStateValue } from './context/GlobalStateProvider';
 import { actionTypes } from './context/globalReducer';
 import { ALERT_BOX_TYPES } from './notification-boxes/AlertBoxConstants';
 import GetProButton from './GetProButton';
+import LandingPageFooter from './LandingPageFooter';
 
 function App() {
 
@@ -200,6 +201,7 @@ function App() {
                     <div className='fakegraphs'>
                         <img src={process.env.PUBLIC_URL+'/fakegraphs.png'} alt=''></img>
                     </div>
+                    <LandingPageFooter />
                 </div>
             )
         }

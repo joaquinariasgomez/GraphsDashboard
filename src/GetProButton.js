@@ -18,7 +18,6 @@ export default function GetProButton({  }) {
         if(true) { // If user didnt buy pro yet
             return (
                 <div className='getpro__notbought'>
-                    {/* <LocalFireDepartmentIcon style={{ color: '#f14668' }} /> */}
                     <LocalFireDepartmentIcon style={{ color: '#fffff' }} />
                     <h2>Pro</h2>
                 </div>

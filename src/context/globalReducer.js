@@ -5,6 +5,8 @@ export const initialState = {
     showAlertBox: false,
     showProfileBox: false,  // We can have box profile and alert box enabled
     showProBox: false,
+    showPrivacyBox: false,
+    showTermsBox: false,
     alertBoxMessage: '',
     alertBoxType: null
 };
@@ -21,6 +23,8 @@ export const actionTypes = {
     SET_SHOW_ALERT_BOX: "SET_SHOW_ALERT_BOX",
     SET_SHOW_PROFILE_BOX: "SET_SHOW_PROFILE_BOX",
     SET_SHOW_PRO_BOX: "SET_SHOW_PRO_BOX",
+    SET_SHOW_PRIVACY_BOX: "SET_SHOW_PRIVACY_BOX",
+    SET_SHOW_TERMS_BOX: "SET_SHOW_TERMS_BOX",
     SET_ALERT_BOX_MESSAGE: "SET_ALERT_BOX_MESSAGE",
     SET_ALERT_BOX_TYPE: "SET_ALERT_BOX_TYPE"
 };
@@ -55,6 +59,18 @@ const globalReducer = (state, action) => {
             return {
                 ...state,
                 showProBox: action.value,
+            };
+
+        case actionTypes.SET_SHOW_PRIVACY_BOX:
+            return {
+                ...state,
+                showPrivacyBox: action.value,
+            };
+
+        case actionTypes.SET_SHOW_TERMS_BOX:
+            return {
+                ...state,
+                showTermsBox: action.value,
             };
 
         case actionTypes.SET_ALERT_BOX_MESSAGE:

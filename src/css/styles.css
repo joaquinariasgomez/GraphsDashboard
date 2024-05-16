@@ -9,6 +9,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    /* justify-content: center; */
     font-family: "inter", sans-serif;
 }
 
@@ -387,6 +388,66 @@
 
 
 /* ======= ALERT BOXES ======= */
+/* ===== PRIVACY BOX ===== */
+.privacybox__backdrop {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    animation: opacity-bng 0.4s ease forwards;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 998;
+}
+
+.privacybox__container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 300px;
+    border-radius: 10px;
+    background-color: white;
+    animation: bubble 0.4s ease-in-out;
+    z-index: 998;
+}
+
+/* ===== TERMS BOX ===== */
+.termsbox__backdrop {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    animation: opacity-bng 0.4s ease forwards;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 998;
+}
+
+.termsbox__container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 300px;
+    border-radius: 10px;
+    background-color: white;
+    animation: bubble 0.4s ease-in-out;
+    z-index: 998;
+}
+
 /* ===== GET PRO BOX ===== */
 .getprobox__backdrop {
     position: fixed;
