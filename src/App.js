@@ -196,13 +196,16 @@ function App() {
     const renderDashboardForUser = () => {
         if(botIdCookie === "" && !isLoggingIn) {   // Not logged in or no session
             return (
-                <div className='loginandfakegraphs'>
-                    <LoginBox />
-                    <div className='fakegraphs'>
-                        <img src={process.env.PUBLIC_URL+'/fakegraphs.png'} alt=''></img>
+                <div className='landingpagecontent'>
+                    <div className='loginandfakegraphs'>
+                        <LoginBox />
+                        <div className='fakegraphs'>
+                            <img src={process.env.PUBLIC_URL+'/fakegraphs.png'} alt=''></img>
+                        </div>
                     </div>
                     <LandingPageFooter />
                 </div>
+                
             )
         }
         else {
