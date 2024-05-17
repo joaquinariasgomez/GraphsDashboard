@@ -289,7 +289,8 @@ body {
 
 .loginandfakegraphs {
     width: 100%;
-    margin-top: 10vh;
+    margin-top: 8vh;
+    margin-bottom: 10vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -307,6 +308,35 @@ body {
     syntax: "<angle>";
     initial-value: 132deg;
     inherits: false;
+}
+
+.builtbyjoaquin__button {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 25px;
+    text-decoration: none;
+    color: rgb(105, 105, 105);
+}
+
+.builtbyjoaquin__button::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: rgb(105, 105, 105);
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+}
+
+.builtbyjoaquin__button:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
 }
 
 .login__button {
@@ -702,12 +732,35 @@ body {
 
 /* ===== LANDING PAGE FOOTER ===== */
 .landingpagefooter__container {
-    height: var(--footer-height);
+    padding-top: 100px;
+    padding-bottom: 50px;
+    /* height: var(--footer-height); */
     background-color: lightgray;
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: auto;   /* This is for sticking footer at bottom of landing page */
+}
+
+.landingpagefooter__icons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 5px;
+    justify-content: space-between;
+    width: 150px;
+}
+
+.landingpagefooter__text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.landingpagefooter__text > p {
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 /* ======== Zoom effect ======== */

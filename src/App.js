@@ -198,6 +198,9 @@ function App() {
             return (
                 <div className='landingpagecontent'>
                     <div className='loginandfakegraphs'>
+                        <a className='builtbyjoaquin__button' href='https://www.joaquinariasgomez.com/'>
+                            Built by Joaquín
+                        </a>
                         <LoginBox />
                         <div className='fakegraphs'>
                             <img src={process.env.PUBLIC_URL+'/fakegraphs.png'} alt=''></img>

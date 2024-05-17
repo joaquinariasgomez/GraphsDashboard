@@ -1,5 +1,8 @@
 import { useGlobalStateValue } from "./context/GlobalStateProvider"
 import { actionTypes } from "./context/globalReducer";
+import YouTubeIcon from '@mui/icons-material/YouTube';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
 
 
 export default function LandingPageFooter({}) {
@@ -24,11 +27,19 @@ export default function LandingPageFooter({}) {
     return (
         <div className="landingpagefooter__container">
             <div className="landingpagefooter__icons">
-
+                <a href="https://www.youtube.com/@joaquinariasgomez">
+                    <YouTubeIcon fontSize="medium" style={{ color: '#28282B' }} onClick={() => {console.log("dem")}} />
+                </a>
+                <a href="http://github.com/joaquinariasgomez">
+                    <GitHubIcon fontSize="medium" style={{ color: '#28282B' }}/>
+                </a>
+                <a href="http://linkedin.com/in/joaquinariasgomez">
+                    <LinkedInIcon fontSize="medium" style={{ color: '#28282B' }}/>
+                </a>
             </div>
             <div className="landingpagefooter__text">
-                <p>Copyright © 2024 pagename.com All rights reserved.</p>
                 <p>Contact: joaquinariasgomezcal@gmail.com</p>
+                <p>© 2024 Joaquín Arias</p>
             </div>
             <div className="landingpagefooter__privacyterms">
                 <button className="landingpagefooter__privacybutton" onClick={() => showPrivacyBox()}>
