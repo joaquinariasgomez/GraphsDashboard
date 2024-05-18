@@ -302,6 +302,7 @@ body {
 
 .fakegraphs > img {
     max-width: 90vw;
+    animation: 0.4s ease-out slideInUp;
 }
 
 @property --rotate {
@@ -586,8 +587,6 @@ body {
 .profilebox__title__row > h2 {
     font-size: 24px;
     font-weight: 700;
-    /* margin-left: 20px;
-    margin-right: 20px; */
 }
 
 .profilebox__options__row {
@@ -887,6 +886,18 @@ body {
     100% {
         color: #f14668;
         background-color: white;
+    }
+}
+
+/* Animations for text or images */
+@keyframes slideInUp {
+    0% {
+        transform: translateY(+40%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
     }
 }
 
