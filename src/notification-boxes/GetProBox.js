@@ -17,8 +17,8 @@ export default function GetProBox() {
         <div className='getprobox__backdrop' onClick={closeBox}>
             <div className="getprobox__container" onClick={e => {e.stopPropagation(); }}>
                 <div className="getprobox__text__row">
-                    <h1>Free plan (included by default)</h1>
-                    <p>- Unlimited graphs</p>
+                    <h1>Get Pro</h1>
+                    <p>Esto es un texto de ejemplo</p>
                 </div>
                 <div className="getprobox__options__row">
                     <button className="getprobox__cancelbutton" onClick={function() {

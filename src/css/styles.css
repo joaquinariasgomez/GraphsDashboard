@@ -594,6 +594,74 @@ body {
     justify-content: space-around;
 }
 
+.getprobox__getprobutton {
+    height: 44px;
+    border-style: solid;
+    border-radius: 12px;
+    border-width: 3px;
+    border-color: #28282B;
+    font-weight: 600;
+    font-size: 15px;
+    color: white;
+    background-color: #28282B;
+    padding-left: 17px;
+    padding-right: 17px;
+}
+
+.getprobox__getprobutton:hover {
+    cursor: pointer;
+    animation: changecolor 0.25s ease forwards;
+}
+
+.getprobox__cancelbutton {
+    height: 44px;
+    border-style: solid;
+    border-radius: 12px;
+    border-width: 3px;
+    border-color: #f14668;
+    font-weight: 600;
+    font-size: 15px;
+    color: white;
+    background-color: #f14668;
+    padding-left: 17px;
+    padding-right: 17px;
+}
+
+.getprobox__cancelbutton:hover {
+    cursor: pointer;
+    animation: changecolorred 0.25s ease forwards;
+}
+
+/* .profilebox__container {
+    position: absolute;
+    top: calc(50% - 20px);
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 300px;
+    border-radius: 10px;
+    background-color: white;
+    animation: drop 0.2s ease forwards;
+    z-index: 998;
+}
+
+.profilebox__title__row {
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-bottom: 1px solid lightgray;
+}
+
+.profilebox__title__row > h2 {
+    font-size: 24px;
+    font-weight: 700;
+} */
+
 /* ===== PROFILE BOX ===== */
 .boxmanager {
     font-family: "inter", sans-serif;
