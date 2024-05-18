@@ -42,12 +42,12 @@ body {
     align-items: center;
     color: white;
     justify-content: center;
-    animation: bubble-out 0.4s ease forwards;
+    animation: bubble-out 0.3s ease forwards;
 }
 
 .getpro__button:hover {
     cursor: pointer;
-    animation: bubble-in 0.4s ease forwards;
+    animation: bubble-in 0.3s ease forwards;
 }
 
 .getpro__notbought {
@@ -78,12 +78,12 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    animation: bubble-out 0.4s ease forwards;
+    animation: bubble-out 0.3s ease forwards;
 }
 
 .usercircle__button:hover {
     cursor: pointer;
-    animation: bubble-in 0.4s ease forwards;
+    animation: bubble-in 0.3s ease forwards;
 }
 
 .usercircle__button > img {
@@ -453,11 +453,38 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 300px;
+    width: 900px;
+    padding: 20px 20px;
+    max-width: calc(95vw - 40px);
+    max-height: calc(95vh - 40px);
+    overflow-y: auto;
     border-radius: 10px;
     background-color: white;
-    animation: bubble 0.4s ease-in-out;
+    animation: bubble 0.3s ease-in-out;
     z-index: 998;
+}
+
+.privacybox__text__row {
+    margin-bottom: 10px;
+}
+
+.privacybox__cancelbutton {
+    height: 44px;
+    border-style: solid;
+    border-radius: 12px;
+    border-width: 3px;
+    border-color: #f14668;
+    font-weight: 600;
+    font-size: 15px;
+    color: white;
+    background-color: #f14668;
+    padding-left: 17px;
+    padding-right: 17px;
+}
+
+.privacybox__cancelbutton:hover {
+    cursor: pointer;
+    animation: changecolorred 0.25s ease forwards;
 }
 
 /* ===== TERMS BOX ===== */
@@ -483,11 +510,38 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 300px;
+    width: 900px;
+    padding: 20px 20px;
+    max-width: calc(95vw - 40px);
+    max-height: calc(95vh - 40px);
+    overflow-y: auto;
     border-radius: 10px;
     background-color: white;
-    animation: bubble 0.4s ease-in-out;
+    animation: bubble 0.3s ease-in-out;
     z-index: 998;
+}
+
+.termsbox__text__row {
+    margin-bottom: 10px;
+} 
+
+.termsbox__cancelbutton {
+    height: 44px;
+    border-style: solid;
+    border-radius: 12px;
+    border-width: 3px;
+    border-color: #f14668;
+    font-weight: 600;
+    font-size: 15px;
+    color: white;
+    background-color: #f14668;
+    padding-left: 17px;
+    padding-right: 17px;
+}
+
+.termsbox__cancelbutton:hover {
+    cursor: pointer;
+    animation: changecolorred 0.25s ease forwards;
 }
 
 /* ===== GET PRO BOX ===== */
@@ -516,7 +570,7 @@ body {
     width: 300px;
     border-radius: 10px;
     background-color: white;
-    animation: bubble 0.4s ease-in-out;
+    animation: bubble 0.3s ease-in-out;
     z-index: 998;
 }
 

@@ -1,5 +1,6 @@
 import { useGlobalStateValue } from "./context/GlobalStateProvider";
 import { actionTypes } from "./context/globalReducer";
+import PersonIcon from '@mui/icons-material/Person';
 
 export default function UserCircle({  }) {
 
@@ -16,9 +17,7 @@ export default function UserCircle({  }) {
     const renderUserImageOrName = () => {
         if(session.notionOwner.avatar_url === "") {   // Not logged in or no session
             return (
-                <div className='usercircle__name'>
-                    <h2>Pepito</h2>
-                </div>
+                <PersonIcon fontSize="large" />
             )
         }
         else {
