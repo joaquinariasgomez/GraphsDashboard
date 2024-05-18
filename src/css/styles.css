@@ -734,8 +734,7 @@ body {
 .landingpagefooter__container {
     padding-top: 100px;
     padding-bottom: 50px;
-    /* height: var(--footer-height); */
-    background-color: lightgray;
+    background-color: rgb(233, 238, 243);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -755,12 +754,47 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 .landingpagefooter__text > p {
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+.landingpagefooter__privacyterms {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 120px;
+    justify-content: space-between;
+}
+
+.landingpagefooter__button {
+    position: relative;
+    color: rgb(98, 126, 255);
+}
+
+.landingpagefooter__button::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: rgb(98, 126, 255);
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+}
+
+.landingpagefooter__button:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+.landingpagefooter__button:hover {
+    cursor: pointer;
 }
 
 /* ======== Zoom effect ======== */

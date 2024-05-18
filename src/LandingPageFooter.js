@@ -42,12 +42,12 @@ export default function LandingPageFooter({}) {
                 <p>© 2024 Joaquín Arias</p>
             </div>
             <div className="landingpagefooter__privacyterms">
-                <button className="landingpagefooter__privacybutton" onClick={() => showPrivacyBox()}>
+                <a className="landingpagefooter__button" onClick={() => showPrivacyBox()}>
                     Privacy
-                </button>
-                <button className="landingpagefooter__termsbutton" onClick={() => showTermsBox()}>
+                </a>
+                <a className="landingpagefooter__button" onClick={() => showTermsBox()}>
                     Terms
-                </button>
+                </a>
             </div>
         </div>
     )
