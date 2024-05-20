@@ -3,6 +3,7 @@ import { delay } from "./Utils";
 
 export async function getAllGraphsByUserId(botId) {
     // Backend will need to retrieve userId based on botId that is passed through a header
+    console.log("DEBUG JOAQUIN ESTOY EN PROD");
     const result = await fetch(Config.BackendGraphsURL+"/botId/"+botId)
         .then(response => {
             if(!response.ok) {
