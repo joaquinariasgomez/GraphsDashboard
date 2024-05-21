@@ -43,8 +43,7 @@ function App() {
         const params = new URL(window.document.location).searchParams;
         const notionCode = params.get("code");
         if (!notionCode) return;
-        console.log("LAST VERSION BITCH");
-        //getLoginDataFromNotion(notionCode);
+        getLoginDataFromNotion(notionCode);
     }, []);
 
     useEffect(() => {
