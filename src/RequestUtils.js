@@ -197,12 +197,14 @@ export async function reloadDesiredGraphAndReturnNewGraph(botId, type) {
 }
 
 export async function loginToNotionWithCode(code) {
+    console.log("YE NIGGER");
     const result = await fetch(Config.NotionGraphsAuthURL+"/login/"+code, {
         method: 'POST',
         headers: {
             'Accept': 'application/json'
         },
         referrer: "",
+        referrerPolicy: "no-referrer",
         keepalive: true
     })
     .then(response => {
