@@ -201,7 +201,7 @@ export async function loginToNotionWithCode(code) {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
-            'testheader': 'adios'
+            'testheader': 'adios2'
         }
     })
     .then(response => {

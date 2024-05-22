@@ -4,7 +4,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import CachedIcon from '@mui/icons-material/Cached';
 import AddIcon from '@mui/icons-material/Add';
 import { connectToNotion, deleteDesiredGraph, deleteGraphByUserIdAndType, getAllDesiredGraphsByUserId, getAllGraphsByUserId, reloadDesiredGraphAndReturnNewGraph, reloadDesiredGraphAndReturnUpdatedGraph, loginToNotionWithCode } from './RequestUtils';
-import { getRelativeTimeToUpdate, getRelativeTimestamp, getUserGraphByType } from './Utils';
+import { delay, getRelativeTimeToUpdate, getRelativeTimestamp, getUserGraphByType } from './Utils';
 import EmptyGraphsDashboard from './EmptyGraphsDashboard';
 import LoadingGraphsScreen from './LoadingGraphsScreen';
 import GraphFactory from './charts/GraphFactory';
@@ -74,6 +74,7 @@ function App() {
     }, [botIdCookie]);
 
     const getLoginDataFromNotion = async (code) => {
+        await delay(2000);
         try {
             setIsLoggingIn(true);
             const apiResponse = await loginToNotionWithCode(code);
