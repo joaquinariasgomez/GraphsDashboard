@@ -201,8 +201,7 @@ export async function loginToNotionWithCode(code) {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
-            'Referer': 'https://joaquinariasgomez.github.io/GraphsDashboard',
-            'testheader': 'hola'
+            'testheader': 'adios'
         }
     })
     .then(response => {
