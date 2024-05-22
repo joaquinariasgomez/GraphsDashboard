@@ -301,7 +301,8 @@ body {
 }
 
 .fakegraphs > img {
-    max-width: 90vw;
+    width: 90vw;
+    max-width: 1400px;
     animation: 0.5s ease-out slideInUp;
 }
 

@@ -4,7 +4,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import CachedIcon from '@mui/icons-material/Cached';
 import AddIcon from '@mui/icons-material/Add';
 import { connectToNotion, deleteDesiredGraph, deleteGraphByUserIdAndType, getAllDesiredGraphsByUserId, getAllGraphsByUserId, reloadDesiredGraphAndReturnNewGraph, reloadDesiredGraphAndReturnUpdatedGraph, loginToNotionWithCode } from './RequestUtils';
-import { delay, getRelativeTimeToUpdate, getRelativeTimestamp, getUserGraphByType } from './Utils';
+import { getRelativeTimeToUpdate, getRelativeTimestamp, getUserGraphByType } from './Utils';
 import EmptyGraphsDashboard from './EmptyGraphsDashboard';
 import LoadingGraphsScreen from './LoadingGraphsScreen';
 import GraphFactory from './charts/GraphFactory';
@@ -43,7 +43,6 @@ function App() {
         const params = new URL(window.document.location).searchParams;
         const notionCode = params.get("code");
         if (!notionCode) return;
-        navigate("/GraphsDashboard");
         getLoginDataFromNotion(notionCode);
     }, []);
 
@@ -74,7 +73,6 @@ function App() {
     }, [botIdCookie]);
 
     const getLoginDataFromNotion = async (code) => {
-        await delay(2000);
         try {
             setIsLoggingIn(true);
             const apiResponse = await loginToNotionWithCode(code);
@@ -82,10 +80,10 @@ function App() {
                 setBotIdCookie(apiResponse.bot_id, 7);   // Set Cookie for next reloads, for 7 days
                 setSessionStorage(apiResponse);
                 setIsLoggingIn(false);
-                //navigate("/GraphsDashboard");
+                navigate("/GraphsDashboard");
             }
         } catch(error) {
-            //navigate("/GraphsDashboard");
+            navigate("/GraphsDashboard");
             setIsLoggingIn(false);
             if(error.message === "409") {
                 showAlert("Máximo número de usuarios creados para el MVP. Inténtalo e nuevo más tarde y perdona las molestias.");

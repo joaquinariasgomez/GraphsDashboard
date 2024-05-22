@@ -200,9 +200,9 @@ export async function loginToNotionWithCode(code) {
     const result = await fetch(Config.NotionGraphsAuthURL+"/login/"+code, {
         method: 'POST',
         headers: {
-            'Accept': 'application/json',
-            'testheader': 'adios2'
-        }
+            'Accept': 'application/json'
+        },
+        referrerPolicy: "unsafe-url"
     })
     .then(response => {
         if(!response.ok) {
