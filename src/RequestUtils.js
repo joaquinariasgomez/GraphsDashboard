@@ -200,9 +200,9 @@ export async function loginToNotionWithCode(code) {
     const result = await fetch(Config.NotionGraphsAuthURL+"/login/"+code, {
         method: 'POST',
         headers: {
-            'Accept': 'application/json'
-        },
-        referrerPolicy: "no-referrer-when-downgrade",
+            'Accept': 'application/json',
+            'Referer': 'https://joaquinariasgomez.github.io/GraphsDashboard'
+        }
     })
     .then(response => {
         if(!response.ok) {
