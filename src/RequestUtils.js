@@ -203,7 +203,6 @@ export async function loginToNotionWithCode(code) {
             'Accept': 'application/json'
         },
         referrerPolicy: "origin"
-        // referrerPolicy: "unsafe-url"
     })
     .then(response => {
         if(!response.ok) {
