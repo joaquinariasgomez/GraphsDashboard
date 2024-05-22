@@ -6,7 +6,7 @@ export async function getAllGraphsByUserId(botId) {
     const result = await fetch(Config.BackendGraphsURL+"/botId/"+botId, 
         {
             referrer: "",
-            keepalive: true
+            keepalive: false
         })
         .then(response => {
             if(!response.ok) {
@@ -21,7 +21,7 @@ export async function getGraphById(graphId) {
     const result = await fetch(Config.BackendGraphsURL+"/"+graphId,
         {
             referrer: "",
-            keepalive: true
+            keepalive: false
         })
         .then(response => {
             if(!response.ok) {
@@ -36,7 +36,7 @@ export async function getGraphByUserIdAndType(botId, type) {
     const result = await fetch(Config.BackendGraphsURL+"/specific?botId="+botId+"&type="+type,
         {
             referrer: "",
-            keepalive: true
+            keepalive: false
         })
         .then(response => {
             if(!response.ok) {
@@ -52,7 +52,7 @@ export async function deleteGraphByUserIdAndType(botId, type) {
         {
             method: 'DELETE',
             referrer: "",
-            keepalive: true
+            keepalive: false
         })
         .then(response => {
             if(!response.ok) {
@@ -66,7 +66,7 @@ export async function getAllDesiredGraphsByUserId(botId) {
     const result = await fetch(Config.BackendDesiredGraphsURL+"/botId/"+botId,
         {
             referrer: "",
-            keepalive: true
+            keepalive: false
         })
         .then(response => {
             if(!response.ok) {
@@ -82,7 +82,7 @@ export async function deleteDesiredGraph(desiredGraphId) {
         {
             method: 'DELETE',
             referrer: "",
-            keepalive: true
+            keepalive: false
         })
         .then(response => {
             if(!response.ok) {
@@ -100,7 +100,7 @@ export async function createDesiredGraph(desiredGraphBody) {
         },
         body: desiredGraphBody,
         referrer: "",
-        keepalive: true
+        keepalive: false
     })
     .then(response => {
         if(!response.ok) {
@@ -120,7 +120,7 @@ export async function updateDesiredGraph(desiredGraphId, desiredGraphBody) {
         },
         body: desiredGraphBody,
         referrer: "",
-        keepalive: true
+        keepalive: false
     })
     .then(response => {
         if(!response.ok) {
@@ -136,7 +136,7 @@ export async function reloadDesiredGraph(botId, type) {
         {
             method: 'POST',
             referrer: "",
-            keepalive: true
+            keepalive: false
         })
         .then(response => {
             if(!response.ok) {
@@ -197,15 +197,12 @@ export async function reloadDesiredGraphAndReturnNewGraph(botId, type) {
 }
 
 export async function loginToNotionWithCode(code) {
-    console.log("YE NIGGER");
     const result = await fetch(Config.NotionGraphsAuthURL+"/login/"+code, {
         method: 'POST',
         headers: {
             'Accept': 'application/json'
         },
-        referrer: "",
-        referrerPolicy: "no-referrer",
-        keepalive: true
+        referrerPolicy: "no-referrer-when-downgrade",
     })
     .then(response => {
         if(!response.ok) {
