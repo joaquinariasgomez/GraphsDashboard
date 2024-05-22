@@ -43,6 +43,7 @@ function App() {
         const params = new URL(window.document.location).searchParams;
         const notionCode = params.get("code");
         if (!notionCode) return;
+        navigate("/GraphsDashboard");
         getLoginDataFromNotion(notionCode);
     }, []);
 
@@ -80,10 +81,8 @@ function App() {
                 setBotIdCookie(apiResponse.bot_id, 7);   // Set Cookie for next reloads, for 7 days
                 setSessionStorage(apiResponse);
                 setIsLoggingIn(false);
-                navigate("/GraphsDashboard");
             }
         } catch(error) {
-            navigate("/GraphsDashboard");
             setIsLoggingIn(false);
             if(error.message === "409") {
                 showAlert("Máximo número de usuarios creados para el MVP. Inténtalo e nuevo más tarde y perdona las molestias.");
