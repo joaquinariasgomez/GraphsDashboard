@@ -1,4 +1,4 @@
-const BackendBaseURL = "http://empiremay.ddns.net";
+const BackendBaseURL = "https://empiremay.ddns.net";
 const GraphsFetcherService = "/graphsfetcher/api/v1";
 const NotionGraphsService = "/notiongraphs/api/v1";
 const OnDemandSenderService = "/ondemandsender/api/v1";

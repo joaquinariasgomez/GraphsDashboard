@@ -76,6 +76,7 @@ function App() {
     const getLoginDataFromNotion = async (code) => {
         try {
             setIsLoggingIn(true);
+            console.log("Estoy updated baby");
             const apiResponse = await loginToNotionWithCode(code);
             if(apiResponse) {
                 setBotIdCookie(apiResponse.bot_id, 7);   // Set Cookie for next reloads, for 7 days
