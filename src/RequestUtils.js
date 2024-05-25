@@ -1,10 +1,5 @@
 import Config from "./Config";
 import { delay } from "./Utils";
-const https = require('https');
-
-const httpsAgent = new https.Agent({
-    rejectUnauthorized: false
-});
 
 export async function getAllGraphsByUserId(botId) {
     // Backend will need to retrieve userId based on botId that is passed through a header
