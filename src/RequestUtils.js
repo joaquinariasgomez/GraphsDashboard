@@ -206,9 +206,8 @@ export async function loginToNotionWithCode(code) {
         method: 'POST',
         headers: {
             'Accept': 'application/json'
-        },
-        referrerPolicy: "origin",
-        agent: httpsAgent
+        }
+        //referrerPolicy: "origin"
     })
     .then(response => {
         if(!response.ok) {
