@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 export default function CreateGraph({ botId, updateStateFunction }) {
 
     const [selectedTag, setSelectedTag] = useState('DAILY');
-    const [selectedType, setSelectedType] = useState('Expenses in the last 7 days');
+    const [selectedType, setSelectedType] = useState('Expenses');
 
     const tagoptions = [
         {value: 'DAILY', label: 'Daily'},
