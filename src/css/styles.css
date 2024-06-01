@@ -103,6 +103,12 @@ body {
     /* font-family: "inter", sans-serif; */
 }
 
+.gettemplatewizard__container {
+    width: 90vw;
+    height: 200px;
+    background-color: yellow;
+}
+
 .usergraph__item {
     display: flex;
     flex-direction: column;

@@ -212,8 +212,7 @@ function App() {
         }
         else {
             if(isLoggingIn) {
-                return (    // TODO: change to loading graphs screen
-                    // <EmptyGraphsDashboard />
+                return (
                     <LoadingGraphsScreen />
                 )
             }
@@ -222,10 +221,21 @@ function App() {
                     <div>
                         <GetProButton />
                         <UserCircle />
+                        {renderGetTemplateWizard()}
                         {renderUserGraphs()}
                     </div>
                 )
             }
+        }
+    }
+
+    const renderGetTemplateWizard = () => {
+        if(true) {
+            return (
+                <div className='gettemplatewizard__container'>
+
+                </div>
+            )
         }
     }
 
