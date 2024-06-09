@@ -5,11 +5,14 @@
     "license": "MIT",
     "scripts": {
         "start": "react-scripts start",
-        "build": "react-scripts build",
-        "deploy": "gh-pages -d build"
+        "build:dev": "env-cmd -f .env.dev react-scripts build",
+        "build:prod": "env-cmd -f .env.prod react-scripts build",
+        "deploy": "env-cmd -f .env.prod gh-pages -d build"
     },
     "devDependencies": {
         "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+        "dotenv": "^16.4.5",
+        "env-cmd": "^10.1.0",
         "gh-pages": "^6.1.1"
     },
     "dependencies": {

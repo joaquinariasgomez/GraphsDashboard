@@ -197,12 +197,12 @@ export async function reloadDesiredGraphAndReturnNewGraph(botId, type) {
 }
 
 export async function loginToNotionWithCode(code) {
-    const result = await fetch(Config.NotionGraphsAuthURL+"/login/"+code, {
+    const auth_url = Config.NotionGraphsAuthURL+"/login/"+code;
+    const result = await fetch(auth_url, {
         method: 'POST',
         headers: {
             'Accept': 'application/json'
         }
-        //referrerPolicy: "origin"
     })
     .then(response => {
         if(!response.ok) {

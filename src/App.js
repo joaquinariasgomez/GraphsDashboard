@@ -207,7 +207,6 @@ function App() {
                     </div>
                     <LandingPageFooter />
                 </div>
-                
             )
         }
         else {
