@@ -3,8 +3,8 @@ import { Chart } from "chart.js/auto";
 import DeleteIcon from '@mui/icons-material/Delete';
 import CachedIcon from '@mui/icons-material/Cached';
 import AddIcon from '@mui/icons-material/Add';
-import { connectToNotion, deleteDesiredGraph, deleteGraphByUserIdAndType, getAllDesiredGraphsByUserId, getAllGraphsByUserId, reloadDesiredGraphAndReturnNewGraph, reloadDesiredGraphAndReturnUpdatedGraph, loginToNotionWithCode } from './RequestUtils';
-import { getRelativeTimeToUpdate, getRelativeTimestamp, getUserGraphByType } from './Utils';
+import { connectToNotion, deleteDesiredGraph, deleteGraphByUserIdAndType, getAllDesiredGraphsByUserId, getAllGraphsByUserId, reloadDesiredGraphAndReturnNewGraph, reloadDesiredGraphAndReturnUpdatedGraph, loginToNotionWithCode, getUsingNotionTemplates, createSessionsSearch } from './RequestUtils';
+import { delay, getRelativeTimeToUpdate, getRelativeTimestamp, getUserGraphByType } from './Utils';
 import EmptyGraphsDashboard from './EmptyGraphsDashboard';
 import LoadingGraphsScreen from './LoadingGraphsScreen';
 import GraphFactory from './charts/GraphFactory';
@@ -28,6 +28,8 @@ function App() {
 
     const [userGraphs, setUserGraphs] = useState([]);
     const [userDesiredGraphs, setUserDesiredGraphs] = useState([]);
+
+    const [usingNotionTemplates, setUsingNotionTemplates] = useState(true);
 
     const [cookieValue, setBotIdCookie, deleteBotIdCookie] = useCookie("bot_id");   // Value from actual cookie from browser application
     const [sessionValue, setSessionStorage, deleteSessionStorage] = useSessionStorage("bot_id");
@@ -75,6 +77,14 @@ function App() {
         fetchUserDesiredGraphs();
     }, [botIdCookie]);
 
+    useEffect(() => {
+        fetchUsingNotionTemplates();
+    }, [botIdCookie]);
+
+    useEffect(() => {
+        performSessionsSearch();
+    }, [botIdCookie]);
+
     const getLoginDataFromNotion = async (code) => {
         try {
             setIsLoggingIn(true);
@@ -114,6 +124,20 @@ function App() {
             if(apiResponse) {
                 setUserDesiredGraphs(apiResponse);
             }
+        }
+    }
+
+    const fetchUsingNotionTemplates = async () => {
+        if(botIdCookie !== "") {
+            await delay(1000);
+            const apiResponse = await getUsingNotionTemplates(botIdCookie);
+            setUsingNotionTemplates(apiResponse);
+        }
+    }
+
+    const performSessionsSearch = async () => {
+        if(botIdCookie !== "") {
+            createSessionsSearch(botIdCookie);
         }
     }
 
@@ -231,7 +255,7 @@ function App() {
     }
 
     const renderGetTemplateWizard = () => {
-        if(true) {
+        if(!usingNotionTemplates) {
             return (
                 <div className='gettemplatewizard__container'>
                     <WarningAmberRoundedIcon fontSize='large' className='wizardwarningicon'/>

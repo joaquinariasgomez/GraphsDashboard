@@ -3,11 +3,7 @@ import { delay } from "./Utils";
 
 export async function getAllGraphsByUserId(botId) {
     // Backend will need to retrieve userId based on botId that is passed through a header
-    const result = await fetch(Config.BackendGraphsURL+"/botId/"+botId, 
-        {
-            referrer: "",
-            keepalive: false
-        })
+    const result = await fetch(Config.BackendGraphsURL+"/botId/"+botId)
         .then(response => {
             if(!response.ok) {
                 throw new Error(response.statusText);
@@ -18,11 +14,7 @@ export async function getAllGraphsByUserId(botId) {
 }
 
 export async function getGraphById(graphId) {
-    const result = await fetch(Config.BackendGraphsURL+"/"+graphId,
-        {
-            referrer: "",
-            keepalive: false
-        })
+    const result = await fetch(Config.BackendGraphsURL+"/"+graphId)
         .then(response => {
             if(!response.ok) {
                 throw new Error(response.statusText);
@@ -33,11 +25,7 @@ export async function getGraphById(graphId) {
 }
 
 export async function getGraphByUserIdAndType(botId, type) {
-    const result = await fetch(Config.BackendGraphsURL+"/specific?botId="+botId+"&type="+type,
-        {
-            referrer: "",
-            keepalive: false
-        })
+    const result = await fetch(Config.BackendGraphsURL+"/specific?botId="+botId+"&type="+type)
         .then(response => {
             if(!response.ok) {
                 throw new Error(response.statusText);
@@ -50,9 +38,7 @@ export async function getGraphByUserIdAndType(botId, type) {
 export async function deleteGraphByUserIdAndType(botId, type) {
     await fetch(Config.BackendGraphsURL+"/specific?botId="+botId+"&type="+type,
         {
-            method: 'DELETE',
-            referrer: "",
-            keepalive: false
+            method: 'DELETE'
         })
         .then(response => {
             if(!response.ok) {
@@ -63,11 +49,7 @@ export async function deleteGraphByUserIdAndType(botId, type) {
 
 export async function getAllDesiredGraphsByUserId(botId) {
     // Backend will need to retrieve userId based on botId that is passed through a header
-    const result = await fetch(Config.BackendDesiredGraphsURL+"/botId/"+botId,
-        {
-            referrer: "",
-            keepalive: false
-        })
+    const result = await fetch(Config.BackendDesiredGraphsURL+"/botId/"+botId)
         .then(response => {
             if(!response.ok) {
                 throw new Error(response.statusText);
@@ -77,12 +59,33 @@ export async function getAllDesiredGraphsByUserId(botId) {
     return result;
 }
 
+export async function getUsingNotionTemplates(botId) {
+    const result = await fetch(Config.NotionGraphsAuthURL+"/has-notion-templates/botId/"+botId)
+        .then(response => {
+            if(!response.ok) {
+                throw new Error(response.statusText);
+            }
+            return response.json()
+        });
+    return result;
+}
+
+export async function createSessionsSearch(botId) {
+    await fetch(Config.NotionGraphsAuthURL+"/sessions-search/botId/"+botId,
+        {
+            method: 'POST'
+        })
+        .then(response => {
+            if(!response.ok) {
+                throw new Error(response.statusText);
+            }
+        });
+}
+
 export async function deleteDesiredGraph(desiredGraphId) {
     await fetch(Config.BackendDesiredGraphsURL+"/"+desiredGraphId,
         {
-            method: 'DELETE',
-            referrer: "",
-            keepalive: false
+            method: 'DELETE'
         })
         .then(response => {
             if(!response.ok) {
@@ -134,9 +137,7 @@ export async function updateDesiredGraph(desiredGraphId, desiredGraphBody) {
 export async function reloadDesiredGraph(botId, type) {
     await fetch(Config.OnDemandGraphsURL+"/specific?botId="+botId+"&type="+type,
         {
-            method: 'POST',
-            referrer: "",
-            keepalive: false
+            method: 'POST'
         })
         .then(response => {
             if(!response.ok) {
