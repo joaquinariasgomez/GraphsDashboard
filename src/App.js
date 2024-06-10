@@ -21,6 +21,8 @@ import { actionTypes } from './context/globalReducer';
 import { ALERT_BOX_TYPES } from './notification-boxes/AlertBoxConstants';
 import GetProButton from './GetProButton';
 import LandingPageFooter from './LandingPageFooter';
+import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 function App() {
 
@@ -232,7 +234,13 @@ function App() {
         if(true) {
             return (
                 <div className='gettemplatewizard__container'>
-
+                    <WarningAmberRoundedIcon fontSize='large' className='wizardwarningicon'/>
+                    <h2>You are not using my <a href='https://joaquinariasgomez.notion.site/Control-de-Gastos-e-Ingresos-60684847132e414188ac80e55001340d'>Notion Template</a> yet!</h2>
+                    <h3>Download instructions</h3>
+                    <ol>
+                        <li>Go to <a href='https://joaquinariasgomez.notion.site/Control-de-Gastos-e-Ingresos-60684847132e414188ac80e55001340d'>my Notion Template page</a>.</li>
+                        <li>Duplicate template into your workspace with <ContentCopyIcon fontSize='small'/> button.</li>
+                    </ol>
                 </div>
             )
         }

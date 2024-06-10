@@ -104,9 +104,39 @@ body {
 }
 
 .gettemplatewizard__container {
-    width: 90vw;
-    height: 200px;
-    background-color: yellow;
+    margin-top: 110px;
+    margin-bottom: -70px;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    width: calc(90vw - 40px);
+    padding: 20px;
+    max-width: 400px;
+    border-radius: 10px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #fff020;
+    background-color: rgb(255, 255, 149);
+    position: relative;
+}
+
+.gettemplatewizard__container > h2 > a {
+    text-decoration: underline;
+    color: rgb(71, 71, 71);
+}
+
+.gettemplatewizard__container > ol > li > a {
+    text-decoration: underline;
+    color: rgb(71, 71, 71);
+}
+
+.gettemplatewizard__container > ol {
+    line-height: 1.5;
+}
+
+.wizardwarningicon {
+    position: absolute;
+    right: 20px;
+    top: 20px;
 }
 
 .usergraph__item {
@@ -1035,11 +1065,21 @@ body {
 /* For mobile phones */
 @media only screen and (max-width: 450px) {
     :root {
-        --graph-width: 90vw;
+        --graph-width: 95vw;
     }
 
     .usergraphsgrid__container {
         width: 95vw;
+    }
+
+    .gettemplatewizard__container {
+        width: 95vw;
+        width: calc(95vw - 40px);
+    }
+
+    .wizardwarningicon {
+        right: 10px;
+        top: 10px;
     }
     
     .usergraph__item {
