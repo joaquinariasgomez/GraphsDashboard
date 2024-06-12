@@ -7,15 +7,10 @@ export const initialState = {
     showProBox: false,
     showPrivacyBox: false,
     showTermsBox: false,
+    showCreateGraphBox: false,
     alertBoxMessage: '',
     alertBoxType: null
 };
-
-// Free plan (included by default)
-// - Unlimited graphs
-// - blablabla
-// Pro
-// - blablabla
 
 export const actionTypes = {
     SET_BOT_ID_COOKIE: "SET_BOT_ID_COOKIE",
@@ -25,6 +20,7 @@ export const actionTypes = {
     SET_SHOW_PRO_BOX: "SET_SHOW_PRO_BOX",
     SET_SHOW_PRIVACY_BOX: "SET_SHOW_PRIVACY_BOX",
     SET_SHOW_TERMS_BOX: "SET_SHOW_TERMS_BOX",
+    SET_SHOW_CREATE_GRAPH_BOX: "SET_SHOW_CREATE_GRAPH_BOX",
     SET_ALERT_BOX_MESSAGE: "SET_ALERT_BOX_MESSAGE",
     SET_ALERT_BOX_TYPE: "SET_ALERT_BOX_TYPE"
 };
@@ -71,6 +67,12 @@ const globalReducer = (state, action) => {
             return {
                 ...state,
                 showTermsBox: action.value,
+            };
+
+        case actionTypes.SET_SHOW_CREATE_GRAPH_BOX:
+            return {
+                ...state,
+                showCreateGraphBox: action.value,
             };
 
         case actionTypes.SET_ALERT_BOX_MESSAGE:

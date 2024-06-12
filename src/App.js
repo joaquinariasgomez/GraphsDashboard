@@ -20,6 +20,7 @@ import { useGlobalStateValue } from './context/GlobalStateProvider';
 import { actionTypes } from './context/globalReducer';
 import { ALERT_BOX_TYPES } from './notification-boxes/AlertBoxConstants';
 import GetProButton from './GetProButton';
+import CreateGraphButton from './CreateGraphButton';
 import LandingPageFooter from './LandingPageFooter';
 import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
@@ -243,9 +244,12 @@ function App() {
             }
             else {  // User has session
                 return (
-                    <div>
-                        <GetProButton />
-                        <UserCircle />
+                    <div className='header_and_body'>
+                        <div className='header'>
+                            <CreateGraphButton />
+                            <GetProButton />
+                            <UserCircle />
+                        </div>
                         {renderGetTemplateWizard()}
                         {renderUserGraphs()}
                     </div>
@@ -256,6 +260,7 @@ function App() {
 
     const renderGetTemplateWizard = () => {
         if(!usingNotionTemplates) {
+        // if(true) {
             return (
                 <div className='gettemplatewizard__container'>
                     <WarningAmberRoundedIcon fontSize='large' className='wizardwarningicon'/>
