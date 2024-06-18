@@ -38,6 +38,8 @@ function App() {
     const [isLoggingIn, setIsLoggingIn] = useState(false);
     //const [graphIsUpdating, setGraphIsUpdating] = useState([]); // [{id: desiredGraphId, updating: false}]
 
+    const authorization_url = process.env.REACT_APP_NOTION_AUTH_URL;
+
     // Context
     const [{botIdCookie, session}, dispatch] = useGlobalStateValue();
 
@@ -221,20 +223,7 @@ function App() {
 
     const renderDashboardForUser = () => {
         if(botIdCookie === "" && !isLoggingIn) {   // Not logged in or no session
-            return (
-                <div className='landingpagecontent'>
-                    <div className='loginandfakegraphs'>
-                        <a className='builtbyjoaquin__button' href='https://www.joaquinariasgomez.com/'>
-                            Built by Joaquín
-                        </a>
-                        <LoginBox />
-                        <div className='fakegraphs'>
-                            <img src={process.env.PUBLIC_URL+'/fakegraphs.png'} alt=''></img>
-                        </div>
-                    </div>
-                    <LandingPageFooter />
-                </div>
-            )
+            return renderLandingPage()
         }
         else {
             if(isLoggingIn) {
@@ -258,18 +247,95 @@ function App() {
         }
     }
 
+    const renderLandingPage = () => {
+        return (
+            <div className='landingpage__backgroundwrapper'>
+                <div className='landingpagecontent'>
+                    <div className='loginandfakegraphs'>
+                        <a className='builtbyjoaquin__button' href='https://www.joaquinariasgomez.com/' target="_blank">
+                            Built by Joaquín
+                        </a>
+                        <h1 className='landingpage__title'>
+                            Turn your finance Notion databases
+                            <br></br>
+                            into insightful graphs
+                        </h1>
+                        <p className='landingpage__subtitle'>
+                            Create automatically-updating graphs from your Notion account with no code.
+                        </p>
+                        <LoginBox />
+                        <div className='landingpage__fakegraphs'>
+                            <img src={process.env.PUBLIC_URL+'/fakegraphs.png'} alt=''></img>
+                        </div>
+                        <div className='landingpage__templateshow'>
+                            <div className='landingpage__templatedescription'>
+                                <h2>
+                                    You don't need to create any databases.
+                                    <br/>
+                                    We provide them for you.
+                                </h2>
+                                <p>
+                                    We provide you beautiful templates already configured to add your expenses and incomes.
+                                </p>
+                                <p>
+                                    You can <a href='https://joaquinariasgomez.notion.site/Control-de-Gastos-e-Ingresos-60684847132e414188ac80e55001340d' target="_blank">get here</a> your Expense and Income Tracker Notion templates for free.
+                                </p>
+                                <p>
+                                    After loging in, your dashboard will be saved with your favorite graphs.
+                                </p>
+                            </div>
+                            <div className='landingpage__templateimagesstack'>
+                                <div className='templateimagestacksquare'></div>
+                                <img className="templateimage image1" src={process.env.PUBLIC_URL+'/ControlDeGastosTemplate.png'} alt=''></img>
+                                <img className="templateimage image2" src={process.env.PUBLIC_URL+'/ControlDeIngresosTemplate.png'} alt=''></img>
+                            </div>
+                        </div>
+                        <div className='landingpage__instructions__container'>
+                            <div className='landingpage__instructions'>
+                                <h2>Template setup instructions</h2>
+                                <p>
+                                    In order to create beautiful graphs, you must first use my Notion template.
+                                </p>
+                                <p>
+                                    To do that:
+                                </p>
+                                <ol>
+                                    <li>Go to <a href='https://joaquinariasgomez.notion.site/Control-de-Gastos-e-Ingresos-60684847132e414188ac80e55001340d' target="_blank">my Notion Template page</a>.</li>
+                                    <li>Duplicate the template into your workspace with <ContentCopyIcon fontSize='small'/> button.</li>
+                                    <li><a href={authorization_url}>Login with Notion</a> and connect your new (or existing) template to the Notion Graphs integration.</li>
+                                </ol>
+                            </div>
+                            <div className='landingpage__instructionsimage'>
+                                <div className='templateimagestackrectangle'></div>
+                                <img src={process.env.PUBLIC_URL+'/LoginWithNotion.png'} alt=''></img>
+                            </div>
+                        </div>
+                        {/* <div className='landingpage__dashboardshowoff'>
+                            <h2>
+                                Your own finance dashboard 
+                            </h2>
+                        </div> */}
+                    </div>
+                    <LandingPageFooter />
+                </div>
+            </div>
+        )
+    }
+
     const renderGetTemplateWizard = () => {
         if(!usingNotionTemplates) {
         // if(true) {
             return (
                 <div className='gettemplatewizard__container'>
                     <WarningAmberRoundedIcon fontSize='large' className='wizardwarningicon'/>
-                    <h2>You are not using my <a href='https://joaquinariasgomez.notion.site/Control-de-Gastos-e-Ingresos-60684847132e414188ac80e55001340d'>Notion Template</a> yet!</h2>
+                    <h2>You are not using my <a href='https://joaquinariasgomez.notion.site/Control-de-Gastos-e-Ingresos-60684847132e414188ac80e55001340d' target="_blank">Notion Template</a> yet!</h2>
                     <h3>Download instructions</h3>
                     <ol>
-                        <li>Go to <a href='https://joaquinariasgomez.notion.site/Control-de-Gastos-e-Ingresos-60684847132e414188ac80e55001340d'>my Notion Template page</a>.</li>
-                        <li>Duplicate template into your workspace with <ContentCopyIcon fontSize='small'/> button.</li>
+                        <li>Go to <a href='https://joaquinariasgomez.notion.site/Control-de-Gastos-e-Ingresos-60684847132e414188ac80e55001340d' target="_blank">my Notion Template page</a>.</li>
+                        <li>Duplicate the template into your workspace with <ContentCopyIcon fontSize='small'/> button.</li>
+                        <li><a href={authorization_url}>Login with Notion</a> and connect your new (or existing) template to the Notion Graphs integration.</li>
                     </ol>
+                    <p>If you did everything, try reloading!</p>
                 </div>
             )
         }
