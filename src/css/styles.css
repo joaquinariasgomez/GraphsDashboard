@@ -41,7 +41,7 @@ body {
     justify-content: end;
     width: 100%;
     height: 100px;
-    border: 1px solid red;
+    /* border: 1px solid red; */
 }
 
 /* === Get Pro Button === */
@@ -872,6 +872,124 @@ body {
     animation: changecolorred 0.25s ease forwards;
 }
 
+/* ===== CREATE GRAPH BOX ===== */
+.creategraphbox__backdrop {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    animation: opacity-bng 0.4s ease forwards;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 998;
+}
+
+.creategraphbox__container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 900px;
+    max-width: calc(95vw - 40px);
+    max-height: calc(95vh - 40px);
+    border-radius: 10px;
+    background-color: white;
+    animation: zoom_100 0.2s ease forwards;
+    z-index: 998;
+}
+
+.creategraphbox__container > h1 {
+    position: absolute;
+    top: 20px;
+    left: 25px;
+    margin: 0;
+    padding: 0;
+    font-size: 24px;
+    color: rgb(99, 99, 99);
+}
+
+.creategraphbox__cancelbutton {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    width: 35px;
+    height: 35px;
+    border-style: solid;
+    border-radius: 5px;
+    border-width: 0;
+    color: rgb(99, 99, 99);
+    padding: 0;
+    margin: 0;
+    background-color: white;
+    transition: background-color 0.25s ease-out;
+}
+
+.creategraphbox__cancelbutton:hover {
+    cursor: pointer;
+    background-color: rgb(236, 236, 236);
+}
+
+.creategraphbox__contentrow {
+    height: 200px;
+    width: calc(100% - 40px);
+    padding: 20px 20px; /* TODO: think about this */
+}
+
+.creategraphbox__nextprevrow {
+    width: calc(100% - 40px);
+    padding: 15px 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: end;
+}
+
+.creategraphbox__prevbutton {
+    margin-right: 15px;
+    height: 44px;
+    border-style: solid;
+    border-radius: 12px;
+    border-width: 3px;
+    border-color: #28282B;
+    font-weight: 600;
+    font-size: 15px;
+    color: #28282B;
+    background-color: white;
+    padding-left: 17px;
+    padding-right: 17px;
+}
+
+.creategraphbox__prevbutton:hover {
+    cursor: pointer;
+    animation: changecolor_oposite 0.25s ease forwards;
+}
+
+.creategraphbox__nextbutton {
+    margin: 0;
+    height: 44px;
+    border-style: solid;
+    border-radius: 12px;
+    border-width: 3px;
+    border-color: #28282B;
+    font-weight: 600;
+    font-size: 15px;
+    color: white;
+    background-color: #28282B;
+    padding-left: 17px;
+    padding-right: 17px;
+}
+
+.creategraphbox__nextbutton:hover {
+    cursor: pointer;
+    animation: changecolor 0.25s ease forwards;
+}
+
 /* ===== GET PRO BOX ===== */
 .getprobox__backdrop {
     position: fixed;
@@ -1262,6 +1380,17 @@ body {
     }
 }
 
+@keyframes zoom_100 {
+    0% {
+        opacity: 0.5;
+        transform: translate(-50%, -50%) scale(0.5, 0.5);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1, 1);
+    }
+}
+
 @keyframes opacity-bng {
     0% {
         opacity: 0;
@@ -1327,6 +1456,18 @@ body {
     }
 }
 
+@keyframes changecolor_oposite {
+    0% {
+        color: #28282B;
+        background-color: white;
+    }
+
+    100% {
+        color: white;
+        background-color: #28282B;
+    }
+}
+
 @keyframes changecolorred {
     0% {
         color: white;
@@ -1389,6 +1530,18 @@ body {
 @media only screen and (max-width: 600px) {
     :root {
         --graph-width: 95vw;
+    }
+
+    .creategraph__button {
+        margin-right: 10px;
+    }
+
+    .getpro__button {
+        margin-right: 10px;
+    }
+
+    .usercircle__button {
+        margin-right: 10px;
     }
 
     .loginandfakegraphs {
