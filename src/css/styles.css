@@ -44,6 +44,10 @@ body {
     /* border: 1px solid red; */
 }
 
+.header__item + .header__item {
+    margin-left: 50px;
+} 
+
 /* === Get Pro Button === */
 .getpro__button {
     /* position: absolute; */
@@ -51,7 +55,6 @@ body {
     /* top: 25px; */
     width: 100px;
     height: 50px;
-    margin-right: 50px;
     border-radius: 15px;
     border-style: solid;
     border-width: 0;
@@ -87,7 +90,6 @@ body {
     /* position: absolute; */
     /* right: 300px; */
     /* top: 25px; */
-    margin-right: 50px;
     width: 200px;
     height: 50px;
     border-radius: 15px;
@@ -911,7 +913,8 @@ body {
     margin: 0;
     padding: 0;
     font-size: 24px;
-    color: rgb(99, 99, 99);
+    /* color: rgb(99, 99, 99); */
+    color: #28282B;
 }
 
 .creategraphbox__cancelbutton {
@@ -941,7 +944,7 @@ body {
     padding: 20px 20px; /* TODO: think about this */
 }
 
-.creategraphbox__nextprevrow {
+.creategraphbox__nextbackrow {
     width: calc(100% - 40px);
     padding: 15px 20px;
     display: flex;
@@ -950,7 +953,7 @@ body {
     justify-content: end;
 }
 
-.creategraphbox__prevbutton {
+.creategraphbox__backbutton {
     margin-right: 15px;
     height: 44px;
     border-style: solid;
@@ -965,7 +968,7 @@ body {
     padding-right: 17px;
 }
 
-.creategraphbox__prevbutton:hover {
+.creategraphbox__backbutton:hover {
     cursor: pointer;
     animation: changecolor_oposite 0.25s ease forwards;
 }
@@ -1532,13 +1535,11 @@ body {
         --graph-width: 95vw;
     }
 
-    .creategraph__button {
-        margin-right: 10px;
+    .header__item + .header__item {
+        margin-left: 10px;
     }
 
-    .getpro__button {
-        margin-right: 10px;
-    }
+    /* TODO: make header items smaller */
 
     .usercircle__button {
         margin-right: 10px;

@@ -28,7 +28,7 @@ export default function UserCircle({  }) {
     }
 
     return (
-        <button className="usercircle__button" onClick={() => activateProfileBox()}>
+        <button className="usercircle__button header__item" onClick={() => activateProfileBox()}>
             {renderUserImageOrName()}
         </button>
     )

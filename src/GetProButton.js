@@ -32,7 +32,7 @@ export default function GetProButton({  }) {
 
     return (
         // TODO: remove disabled when it works
-        <button disabled={true} className="getpro__button" onClick={() => showProBox()}>
+        <button disabled={true} className="getpro__button header__item" onClick={() => showProBox()}>
             {renderGetProButton()}
         </button>
     )

@@ -1,6 +1,7 @@
 import { useGlobalStateValue } from "../context/GlobalStateProvider";
 import { actionTypes } from "../context/globalReducer";
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import CreateGraphStep1 from "../components/CreateGraphStep1";
 
 export default function CreateGraphBox() {
 
@@ -26,21 +27,12 @@ export default function CreateGraphBox() {
                 <div className="creategraphbox__contentrow">
 
                 </div>
-                <div className="creategraphbox__nextprevrow">
-                    <button className="creategraphbox__prevbutton">
-                        Previous
+                {/* <div className="creategraphbox__nextbackrow">
+                    <button className="creategraphbox__backbutton">
+                        Back
                     </button>
                     <button className="creategraphbox__nextbutton">
                         Next
-                    </button>
-                </div>
-                {/* <div className="getprobox__text__row">
-                    <h1>Get Pro</h1>
-                    <p>Esto es un texto de ejemplo</p>
-                </div>
-                <div className="getprobox__options__row">
-                    <button className="getprobox__getprobutton" onClick={function() {}}>
-                        Get Pro
                     </button>
                 </div> */}
             </div>

@@ -16,7 +16,7 @@ export default function CreateGraphButton({  }) {
     }
 
     return (
-        <button className="creategraph__button" onClick={() => showCreateGraphBox()}>
+        <button className="creategraph__button header__item" onClick={() => showCreateGraphBox()}>
             <div className="creategraphbutton__container">
                 <AddRoundedIcon sx={{ color: "#28282B" }} fontSize="medium" />
                 <h2>Create Graph</h2>
