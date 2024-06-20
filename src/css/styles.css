@@ -938,10 +938,21 @@ body {
     background-color: rgb(236, 236, 236);
 }
 
-.creategraphbox__contentrow {
-    height: 200px;
+.creategraphbox__contentandlow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: 68px;
+}
+
+.creategraphsstep__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: calc(100% - 40px);
-    padding: 20px 20px; /* TODO: think about this */
+    padding: 0 20px;
+    /* border: 1px solid red; */
 }
 
 .creategraphbox__nextbackrow {
@@ -951,6 +962,45 @@ body {
     flex-direction: row;
     align-items: center;
     justify-content: end;
+    /* border: 1px solid red; */
+}
+
+.creategraphsstep1__type {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: first;
+    background-color: rgb(198, 232, 244);
+    border-radius: 10px;
+}
+
+.creategraphsstep1__type > h2 {
+    font-size: 22px;
+    margin: 20px;
+}
+
+.creategraphsstep1__buttons {
+    margin: 20px;
+    margin-top: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    border: 1px solid red;
+}
+
+.creategraphsstep1__buttons > button {
+    height: 88px;
+    padding: 0 20px;
+    border-style: solid;
+    border-radius: 10px;
+    border-width: 3px;
+    border-color: aliceblue;
+    background-color: aliceblue;
+}
+
+.creategraphsstep1__buttons > button.selected {
+    border-color: blue;
 }
 
 .creategraphbox__backbutton {
