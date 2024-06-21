@@ -1,6 +1,6 @@
 import React, {useState, useEffect } from 'react';
 
-export default function CreateGraphStep3({ onPrev, onChange }) {
+export default function CreateGraphStep3({ onPrev, onCreateGraph, onChange }) {
 
     // State to manage form data
     const [graphOptions, setGraphOptions] = useState({
@@ -72,7 +72,7 @@ export default function CreateGraphStep3({ onPrev, onChange }) {
                 <button className="creategraphbox__backbutton" onClick={onPrev}>
                     Back
                 </button>
-                <button className="creategraphbox__nextbutton">
+                <button className="creategraphbox__nextbutton" onClick={onCreateGraph}>
                     Create Graph
                 </button>
             </div>

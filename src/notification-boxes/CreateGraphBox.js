@@ -5,6 +5,7 @@ import CreateGraphStep1 from "../components/CreateGraphStep1";
 import CreateGraphStep2 from "../components/CreateGraphStep2";
 import CreateGraphStep3 from "../components/CreateGraphStep3";
 import { useEffect, useState } from "react";
+import { KeyboardOptionKeySharp } from "@mui/icons-material";
 
 export default function CreateGraphBox() {
 
@@ -40,6 +41,11 @@ export default function CreateGraphBox() {
         setCreateGraphData({ ...createGraphData, ...data});
     }
 
+    const handleCreateGraph = () => {
+        // 1. Check that everything is setup okay
+        // 2. Send POST request to backend
+    }
+
     return (
         <div className='creategraphbox__backdrop' onClick={closeBox}>
             <div className="creategraphbox__container" onClick={e => {e.stopPropagation(); }}>
@@ -52,7 +58,7 @@ export default function CreateGraphBox() {
                 {/* TODO: add indicator of current step here */}
                 {step === 1 && <CreateGraphStep1 onNext={handleNextStep} onChange={handleDataChange} />}
                 {step === 2 && <CreateGraphStep2 onPrev={handlePrevStep} onNext={handleNextStep} onChange={handleDataChange} />}
-                {step === 3 && <CreateGraphStep3 onPrev={handlePrevStep} onChange={handleDataChange} />}
+                {step === 3 && <CreateGraphStep3 onPrev={handlePrevStep} onCreateGraph={handleCreateGraph} onChange={handleDataChange} />}
             </div>
         </div>
     );

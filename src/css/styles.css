@@ -897,8 +897,8 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 900px;
-    max-width: calc(95vw - 40px);
+    /* width: 700px; */
+    max-width: calc(95vw - 20px);
     max-height: calc(95vh - 40px);
     border-radius: 10px;
     background-color: white;
@@ -952,7 +952,6 @@ body {
     align-items: center;
     width: calc(100% - 40px);
     padding: 0 20px;
-    /* border: 1px solid red; */
 }
 
 .creategraphbox__nextbackrow {
@@ -962,7 +961,6 @@ body {
     flex-direction: row;
     align-items: center;
     justify-content: end;
-    /* border: 1px solid red; */
 }
 
 .creategraphsstep1__type {
@@ -970,37 +968,77 @@ body {
     display: flex;
     flex-direction: column;
     align-items: first;
-    background-color: rgb(198, 232, 244);
+    background-color: rgb(240, 240, 240);
     border-radius: 10px;
 }
 
 .creategraphsstep1__type > h2 {
     font-size: 22px;
-    margin: 20px;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.creategraphsstep1__type > p {
+    margin-left: 20px;
+    margin-top: 0;
+    color: rgb(105, 105, 105);
+}
+
+.creategraphsstep1__tag {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    align-items: first;
+    background-color: rgb(240, 240, 240);
+    border-radius: 10px;
+}
+
+.creategraphsstep1__tag > h2 {
+    font-size: 22px;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.creategraphsstep1__tag > p {
+    margin-left: 20px;
+    margin-top: 0;
+    color: rgb(105, 105, 105);
 }
 
 .creategraphsstep1__buttons {
     margin: 20px;
-    margin-top: 5px;
+    margin-top: 12px;
+    width: calc(165px * 3 + 40px * 2);  /* Spacing between each button: 40px */
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-around;
-    border: 1px solid red;
+    justify-content: space-between;
 }
 
 .creategraphsstep1__buttons > button {
-    height: 88px;
-    padding: 0 20px;
+    width: 165px;
+    height: 150px;
+    padding: 20px;
     border-style: solid;
     border-radius: 10px;
     border-width: 3px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     border-color: aliceblue;
-    background-color: aliceblue;
+    /* background-color: aliceblue; */
+    background-color: white;
 }
 
 .creategraphsstep1__buttons > button.selected {
     border-color: blue;
+}
+
+.creategraphsstep1__buttons > button > p {
+    font-size: 16px;
+    margin-top: 10px;
 }
 
 .creategraphbox__backbutton {

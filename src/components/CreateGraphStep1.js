@@ -1,4 +1,7 @@
 import React, {useState, useEffect } from 'react';
+import TrendingDownRoundedIcon from '@mui/icons-material/TrendingDownRounded';
+import TrendingUpRoundedIcon from '@mui/icons-material/TrendingUpRounded';
+import AttachMoneyRoundedIcon from '@mui/icons-material/AttachMoneyRounded';
 
 export default function CreateGraphStep1({ onNext, onChange }) {
 
@@ -29,46 +32,54 @@ export default function CreateGraphStep1({ onNext, onChange }) {
             <div className='creategraphsstep__content'>
                 <div className='creategraphsstep1__type'>
                     <h2>Type</h2>
+                    <p>What aspect of your finances would you like to see.</p>
                     <div className='creategraphsstep1__buttons'>
                         <button
                             className={graphOptions.graphType === 'EXPENSES' ? 'selected' : 'not_selected'}
                             onClick={() => handleSelectedType('EXPENSES')}
                         >
-                            Expenses
+                            <TrendingDownRoundedIcon fontSize='large'/>
+                            <p>Expenses</p>
                         </button>
                         <button
                             className={graphOptions.graphType === 'INCOMES' ? 'selected' : 'not_selected'}
                             onClick={() => handleSelectedType('INCOMES')}
                         >
-                            Incomes
+                            <AttachMoneyRoundedIcon fontSize='large'/>
+                            <p>Incomes</p>
                         </button>
                         <button
                             className={graphOptions.graphType === 'SAVINGS' ? 'selected' : 'not_selected'}
                             onClick={() => handleSelectedType('SAVINGS')}
                         >
-                            Savings
+                            <TrendingUpRoundedIcon fontSize='large'/>
+                            <p>Savings</p>
                         </button>
                     </div>
                 </div>
                 <div className='creategraphsstep1__tag'>
-                    <button
-                        className={graphOptions.graphType === 'DAILY' ? 'selected' : 'not_selected'}
-                        onClick={() => handleSelectedTag('DAILY')}
-                    >
-                        Daily
-                    </button>
-                    <button
-                        className={graphOptions.graphType === 'WEEKLY' ? 'selected' : 'not_selected'}
-                        onClick={() => handleSelectedTag('WEEKLY')}
-                    >
-                        Weekly
-                    </button>
-                    <button
-                        className={graphOptions.graphType === 'MONTHLY' ? 'selected' : 'not_selected'}
-                        onClick={() => handleSelectedTag('MONTHLY')}
-                    >
-                        Monthly
-                    </button>
+                    <h2>Frequency</h2>
+                    <p>How often your graph will update automatically in your dashboard.</p>
+                    <div className='creategraphsstep1__buttons'>
+                        <button
+                            className={graphOptions.graphType === 'DAILY' ? 'selected' : 'not_selected'}
+                            onClick={() => handleSelectedTag('DAILY')}
+                        >
+                            Daily
+                        </button>
+                        <button
+                            className={graphOptions.graphType === 'WEEKLY' ? 'selected' : 'not_selected'}
+                            onClick={() => handleSelectedTag('WEEKLY')}
+                        >
+                            Weekly
+                        </button>
+                        <button
+                            className={graphOptions.graphType === 'MONTHLY' ? 'selected' : 'not_selected'}
+                            onClick={() => handleSelectedTag('MONTHLY')}
+                        >
+                            Monthly
+                        </button>
+                    </div>
                 </div>
             </div>
             <div className="creategraphbox__nextbackrow">
