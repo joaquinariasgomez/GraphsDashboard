@@ -4,26 +4,14 @@ import TrendingUpRoundedIcon from '@mui/icons-material/TrendingUpRounded';
 import AttachMoneyRoundedIcon from '@mui/icons-material/AttachMoneyRounded';
 import SyncLoader from "react-spinners/SyncLoader";
 
-export default function CreateGraphStep1({ onNext, onChange, dataLoading, graphTypeAccess }) {
-
-    // State to manage form data
-    const [graphOptions, setGraphOptions] = useState({
-        graphType: 'EXPENSES',
-        graphTag: 'DAILY'
-    });
-
-    // useEffect(() => {
-    //     console.log("graphOptions data: ", graphOptions);
-    // }, [graphOptions]);
+export default function CreateGraphStep1({ graphOptions, onNext, onChange, dataLoading, graphTypeAccess }) {
 
     const handleSelectedType = (type) => {
-        setGraphOptions({ ...graphOptions, graphType: type});
         // Update data in parent, to send all together
         onChange({ graphType: type });
     }
 
     const handleSelectedTag = (tag) => {
-        setGraphOptions({ ...graphOptions, graphTag: tag});
         // Update data in parent, to send all together
         onChange({ graphTag: tag });
     }

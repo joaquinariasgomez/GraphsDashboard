@@ -74,8 +74,8 @@ export default function CreateGraphBox() {
                 </button>
                 <h1>New Graph</h1>
                 {/* TODO: add indicator of current step here */}
-                {step === 1 && <CreateGraphStep1 onNext={handleNextStep} onChange={handleDataChange} dataLoading={graphTypeAccessLoading} graphTypeAccess={graphTypeAccess} />}
-                {step === 2 && <CreateGraphStep2 onPrev={handlePrevStep} onNext={handleNextStep} onChange={handleDataChange} />}
+                {step === 1 && <CreateGraphStep1 graphOptions={createGraphData} onNext={handleNextStep} onChange={handleDataChange} dataLoading={graphTypeAccessLoading} graphTypeAccess={graphTypeAccess} />}
+                {step === 2 && <CreateGraphStep2 graphOptions={createGraphData} onPrev={handlePrevStep} onNext={handleNextStep} onChange={handleDataChange} />}
                 {step === 3 && <CreateGraphStep3 onPrev={handlePrevStep} onCreateGraph={handleCreateGraph} onChange={handleDataChange} />}
             </div>
         </div>
