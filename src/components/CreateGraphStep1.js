@@ -1,10 +1,19 @@
-import React, {useState } from 'react';
+import React, {useEffect, useState } from 'react';
 import TrendingDownRoundedIcon from '@mui/icons-material/TrendingDownRounded';
 import TrendingUpRoundedIcon from '@mui/icons-material/TrendingUpRounded';
 import AttachMoneyRoundedIcon from '@mui/icons-material/AttachMoneyRounded';
 import SyncLoader from "react-spinners/SyncLoader";
 
 export default function CreateGraphStep1({ graphOptions, onNext, onChange, dataLoading, graphTypeAccess }) {
+
+    useEffect(() => {
+        // If Expenses is not available, it cannot be selected and "INCOMES" will be
+        if(graphTypeAccess === "ONLY_INCOMES" && graphOptions.graphType === "EXPENSES") {
+            handleSelectedType("INCOMES");
+        } else if(graphTypeAccess === "ONLY_EXPENSES" && graphOptions.graphType === "INCOMES") {
+            handleSelectedType("EXPENSES");
+        }
+    }, [graphTypeAccess]);
 
     const handleSelectedType = (type) => {
         // Update data in parent, to send all together
