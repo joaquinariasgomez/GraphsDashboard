@@ -70,6 +70,17 @@ export async function getUsingNotionTemplates(botId) {
     return result;
 }
 
+export async function getGraphTypeAccess(botId) {
+    const result = await fetch(Config.NotionGraphsAuthURL+"/notion-templates-access/botId/"+botId)
+        .then(response => {
+            if(!response.ok) {
+                throw new Error(response.statusText);
+            }
+            return response.json()
+        });
+    return result;
+}
+
 export async function createSessionsSearch(botId) {
     await fetch(Config.NotionGraphsAuthURL+"/sessions-search/botId/"+botId,
         {

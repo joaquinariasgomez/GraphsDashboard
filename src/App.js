@@ -84,10 +84,6 @@ function App() {
         fetchUsingNotionTemplates();
     }, [botIdCookie]);
 
-    useEffect(() => {
-        performSessionsSearch();
-    }, [botIdCookie]);
-
     const getLoginDataFromNotion = async (code) => {
         try {
             setIsLoggingIn(true);
@@ -132,15 +128,8 @@ function App() {
 
     const fetchUsingNotionTemplates = async () => {
         if(botIdCookie !== "") {
-            await delay(1000);
             const apiResponse = await getUsingNotionTemplates(botIdCookie);
             setUsingNotionTemplates(apiResponse);
-        }
-    }
-
-    const performSessionsSearch = async () => {
-        if(botIdCookie !== "") {
-            createSessionsSearch(botIdCookie);
         }
     }
 
@@ -371,9 +360,11 @@ function App() {
     const renderGraph = (userDesiredGraph) => {
         if(getUserGraphByType(userGraphs, userDesiredGraph.type) != null) {
             return (
-                <GraphFactory
-                    graphData={getUserGraphByType(userGraphs, userDesiredGraph.type)}
-                />
+                <div className='usergraph__graphcontainer'>
+                    <GraphFactory
+                        graphData={getUserGraphByType(userGraphs, userDesiredGraph.type)}
+                    />
+                </div>
             )
         }
         else {

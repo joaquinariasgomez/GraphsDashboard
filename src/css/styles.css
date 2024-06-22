@@ -162,9 +162,16 @@ body {
     /* font-family: "inter", sans-serif; */
 }
 
+.usergraph__graphcontainer {
+    border: 1px solid red;
+    /* max-height: 300px; */
+    /* height: 300px; */
+    /* position: relative; */
+}
+
 .gettemplatewizard__container {
-    margin-top: 110px;
-    margin-bottom: -70px;
+    margin-top: 10px;
+    margin-bottom: 30px;
     padding: 20px;
     max-width: 400px;
     border-radius: 10px;
@@ -1010,6 +1017,7 @@ body {
     margin: 20px;
     margin-top: 12px;
     width: calc(165px * 3 + 40px * 2);  /* Spacing between each button: 40px */
+    max-width: calc(100% - 40px);
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -1018,7 +1026,7 @@ body {
 
 .creategraphsstep1__buttons > button {
     width: 165px;
-    height: 150px;
+    height: 145px;
     padding: 20px;
     border-style: solid;
     border-radius: 10px;
@@ -1027,17 +1035,41 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border-color: aliceblue;
-    /* background-color: aliceblue; */
+    border-color: white;
     background-color: white;
+    color: rgb(144, 144, 144);
+}
+
+.creategraphsstep1__buttons > button.tags {
+    height: 80px;
 }
 
 .creategraphsstep1__buttons > button.selected {
-    border-color: blue;
+    border-color: #28282B;
+    color: #28282B;
+    transition: color 0.25s ease;
+}
+
+.creategraphsstep1__buttons > button:hover {
+    cursor: pointer;
+    background-color: rgb(250, 250, 250);
+    border-color: rgb(250, 250, 250);
+    /* transition: background-color 0.25s ease; */
+    /* transition: color 1s ease; */
+}
+
+.creategraphsstep1__buttons > button:active {
+    background-color: rgb(222, 222, 222);
+    border-color: rgb(222, 222, 222);;
+}
+
+.creategraphsstep1__buttons > button.selected:hover {
+    border-color: #28282B;
 }
 
 .creategraphsstep1__buttons > button > p {
     font-size: 16px;
+    font-weight: 600;
     margin-top: 10px;
 }
 
