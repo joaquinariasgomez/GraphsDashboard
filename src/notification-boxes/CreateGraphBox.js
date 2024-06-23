@@ -5,7 +5,7 @@ import CreateGraphStep1 from "../components/CreateGraphStep1";
 import CreateGraphStep2 from "../components/CreateGraphStep2";
 import CreateGraphStep3 from "../components/CreateGraphStep3";
 import { useEffect, useState } from "react";
-import { getGraphTypeAccess } from "../RequestUtils";
+import { getExpensesCategories, getGraphTypeAccess, getIncomesBankAccounts, getIncomesSources } from "../RequestUtils";
 
 export default function CreateGraphBox() {
 
@@ -16,10 +16,25 @@ export default function CreateGraphBox() {
     const [step, setStep] = useState(1);
     const [createGraphData, setCreateGraphData] = useState({
         graphType: 'EXPENSES',
-        graphTag: 'DAILY'
+        graphTag: 'DAILY',
+        filterCategories: {  // 'SUM',    // 'SUM', 'BY CATEGORY', 'BY BANKACCOUNT', 'BY INCOMESOURCE', 
+            type: 'SIMPLE', // 'SIMPLE' for all expenses/incomes/savings or groupings by category/bankacount/incomesource
+                            // 'SPECIFIC' for specific category/bankaccount/incomesource
+            category: 'ALL' // 'SUM'
+        }
+
     });
     const [graphTypeAccessLoading, setGraphTypeAccessLoading] = useState(true);
     const [graphTypeAccess, setGraphTypeAccess] = useState("");
+
+    const [expensesCategoriesLoading, setExpensesCategoriesLoading] = useState(true);
+    const [expensesCategories, setExpensesCategories] = useState([]);
+
+    const [incomesBankAccountsLoading, setIncomesBankAccountsLoading] = useState(true);
+    const [incomesBankAccounts, setIncomesBankAccounts] = useState([]);
+
+    const [incomesSourcesLoading, setIncomesSourcesLoading] = useState(true);
+    const [incomesSources, setIncomesSources] = useState([]);
     
     useEffect(() => {
         console.log("createGraphData data: ", createGraphData);
@@ -28,6 +43,9 @@ export default function CreateGraphBox() {
     // Do all the necessary requests at the beginning of the form
     useEffect(() => {
         fetchGraphTypeAccess();
+        fetchExpensesCategories();
+        fetchIncomesBankAccounts();
+        fetchIncomesSources();
     }, [botIdCookie]);
 
     const closeBox = () => {
@@ -43,6 +61,36 @@ export default function CreateGraphBox() {
             if(apiResponse) {
                 setGraphTypeAccess(apiResponse);
                 setGraphTypeAccessLoading(false);
+            }
+        }
+    }
+
+    const fetchExpensesCategories = async () => {
+        if(botIdCookie !== "") {
+            const apiResponse = await getExpensesCategories(botIdCookie);
+            if(apiResponse) {
+                setExpensesCategories(apiResponse);
+                setExpensesCategoriesLoading(false);
+            }
+        }
+    }
+
+    const fetchIncomesBankAccounts = async () => {
+        if(botIdCookie !== "") {
+            const apiResponse = await getIncomesBankAccounts(botIdCookie);
+            if(apiResponse) {
+                setIncomesBankAccounts(apiResponse);
+                setIncomesBankAccountsLoading(false);
+            }
+        }
+    }
+
+    const fetchIncomesSources = async () => {
+        if(botIdCookie !== "") {
+            const apiResponse = await getIncomesSources(botIdCookie);
+            if(apiResponse) {
+                setIncomesSources(apiResponse);
+                setIncomesSourcesLoading(false);
             }
         }
     }
@@ -74,8 +122,17 @@ export default function CreateGraphBox() {
                 </button>
                 <h1>New Graph</h1>
                 {/* TODO: add indicator of current step here */}
-                {step === 1 && <CreateGraphStep1 graphOptions={createGraphData} onNext={handleNextStep} onChange={handleDataChange} dataLoading={graphTypeAccessLoading} graphTypeAccess={graphTypeAccess} />}
-                {step === 2 && <CreateGraphStep2 graphOptions={createGraphData} onPrev={handlePrevStep} onNext={handleNextStep} onChange={handleDataChange} />}
+                {/* TODO: if savings, go from step 1 to step 3 directly */}
+                {step === 1 && <CreateGraphStep1 graphOptions={createGraphData} onNext={handleNextStep} onChange={handleDataChange}
+                    graphTypeAccessLoading={graphTypeAccessLoading}
+                    graphTypeAccess={graphTypeAccess} />}
+                {step === 2 && <CreateGraphStep2 graphOptions={createGraphData} onPrev={handlePrevStep} onNext={handleNextStep} onChange={handleDataChange}
+                    expensesCategoriesLoading={expensesCategoriesLoading}
+                    expensesCategories={expensesCategories}
+                    incomesBankAccountsLoading={incomesBankAccountsLoading}
+                    incomesBankAccounts={incomesBankAccounts}
+                    incomesSourcesLoading={incomesSourcesLoading}
+                    incomesSources={incomesSources} />}
                 {step === 3 && <CreateGraphStep3 onPrev={handlePrevStep} onCreateGraph={handleCreateGraph} onChange={handleDataChange} />}
             </div>
         </div>

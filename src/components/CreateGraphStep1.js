@@ -4,7 +4,7 @@ import TrendingUpRoundedIcon from '@mui/icons-material/TrendingUpRounded';
 import AttachMoneyRoundedIcon from '@mui/icons-material/AttachMoneyRounded';
 import SyncLoader from "react-spinners/SyncLoader";
 
-export default function CreateGraphStep1({ graphOptions, onNext, onChange, dataLoading, graphTypeAccess }) {
+export default function CreateGraphStep1({ graphOptions, onNext, onChange, graphTypeAccessLoading, graphTypeAccess }) {
 
     useEffect(() => {
         // If Expenses is not available, it cannot be selected and "INCOMES" will be
@@ -26,7 +26,7 @@ export default function CreateGraphStep1({ graphOptions, onNext, onChange, dataL
     }
 
     const renderGraphTypeButtons = () => {
-        if(dataLoading) {
+        if(graphTypeAccessLoading) {
             return renderGraphTypeButtonsLoading()
         } else {
             return renderGraphTypeButtonsFinishedLoading()
@@ -118,7 +118,7 @@ export default function CreateGraphStep1({ graphOptions, onNext, onChange, dataL
     }
 
     const renderSavingsButton = () => {
-        if(graphTypeAccess === "ALL" || graphTypeAccess === "ONLY_INCOMES") {
+        if(graphTypeAccess === "ALL") {
             return (
                 <button
                     className={graphOptions.graphType === 'SAVINGS' ? 'selected' : 'not_selected'}
@@ -174,10 +174,7 @@ export default function CreateGraphStep1({ graphOptions, onNext, onChange, dataL
                 </div>
             </div>
             <div className="creategraphbox__nextbackrow">
-                {/* <button className="creategraphbox__backbutton">
-                    Back
-                </button> */}
-                <button className="creategraphbox__nextbutton" onClick={onNext}>
+                <button className="creategraphbox__nextbutton" onClick={onNext} disabled={graphTypeAccessLoading}>
                     Next
                 </button>
             </div>

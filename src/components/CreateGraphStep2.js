@@ -1,59 +1,67 @@
 import React, {useState, useEffect } from 'react';
+import TrendingDownRoundedIcon from '@mui/icons-material/TrendingDownRounded';
+import AttachMoneyRoundedIcon from '@mui/icons-material/AttachMoneyRounded';
 
-export default function CreateGraphStep2({ graphOptions, onPrev, onNext, onChange }) {
+export default function CreateGraphStep2({ graphOptions, onPrev, onNext, onChange, expensesCategoriesLoading, expensesCategories, incomesBankAccountsLoading, incomesBankAccounts, incomesSourcesLoading, incomesSources }) {
 
-    const handleSelectedType = (type) => {
+    const handleSelectedOption = (option) => {
         // Update data in parent, to send all together
-        onChange({ graphType: type });
+        onChange({ filterCategories: option });
     }
 
-    const handleSelectedTag = (tag) => {
-        // Update data in parent, to send all together
-        onChange({ graphTag: tag });
+    const renderGraphTypeText = () => {
+        if(graphOptions.graphType === 'EXPENSES') {
+            return (
+                <div className='creategraphsstep2__graphTypeText'>
+                    <h2>Expenses</h2>
+                    <TrendingDownRoundedIcon fontSize='medium'/>
+                </div>
+            )
+        } else {
+            return (
+                <div className='creategraphsstep2__graphTypeText'>
+                    <h2>Incomes</h2>
+                    <AttachMoneyRoundedIcon fontSize='medium'/>
+                </div>
+            )
+        }
+    }
+
+    const renderFilterButtons = () => {
+        if(graphOptions.graphType === 'EXPENSES') {
+            if(expensesCategoriesLoading) {
+                return renderExpensesOptionsLoading()
+            } else {
+                return renderExpensesOptionsFinishedLoading()
+            }
+        } else {
+            if(incomesBankAccountsLoading || incomesSourcesLoading) {
+                return renderIncomesOptionsLoading()
+            } else {
+                return renderIncomesOptionsFinishedLoading()
+            }
+        }
+    }
+
+    const renderExpensesOptionsFinishedLoading = () => {
+        return (
+            <div className='creategraphsstep2__buttons'>
+                <button
+                    className={graphOptions.filterCategories === 'ALL' ? 'selected' : 'not_selected'}
+                    onClick={() => handleSelectedOption({category: 'ALL', type: 'SIMPLE'})}
+                >
+
+                </button>
+            </div>
+        )
     }
 
     return (
         <div className='creategraphbox__contentandlow'>
             <div className='creategraphsstep__content'>
-                <div className='creategraphsstep1__type'>
-                    <button
-                        className={graphOptions.graphType === 'EXPENSES' ? 'selected' : 'not_selected'}
-                        onClick={() => handleSelectedType('EXPENSES')}
-                    >
-                        Button 1: Expenses
-                    </button>
-                    <button
-                        className={graphOptions.graphType === 'INCOMES' ? 'selected' : 'not_selected'}
-                        onClick={() => handleSelectedType('INCOMES')}
-                    >
-                        Button 2: Incomes
-                    </button>
-                    <button
-                        className={graphOptions.graphType === 'SAVINGS' ? 'selected' : 'not_selected'}
-                        onClick={() => handleSelectedType('SAVINGS')}
-                    >
-                        Button 3: Savings
-                    </button>
-                </div>
-                <div className='creategraphsstep1__tag'>
-                    <button
-                        className={graphOptions.graphType === 'DAILY' ? 'selected' : 'not_selected'}
-                        onClick={() => handleSelectedTag('DAILY')}
-                    >
-                        Daily
-                    </button>
-                    <button
-                        className={graphOptions.graphType === 'WEEKLY' ? 'selected' : 'not_selected'}
-                        onClick={() => handleSelectedTag('WEEKLY')}
-                    >
-                        Weekly
-                    </button>
-                    <button
-                        className={graphOptions.graphType === 'MONTHLY' ? 'selected' : 'not_selected'}
-                        onClick={() => handleSelectedTag('MONTHLY')}
-                    >
-                        Monthly
-                    </button>
+                <div className='creategraphsstep2__box'>
+                    {renderGraphTypeText()}
+                    {renderFilterButtons()}
                 </div>
             </div>
             <div className="creategraphbox__nextbackrow">

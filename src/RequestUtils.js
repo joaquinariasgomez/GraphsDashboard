@@ -81,6 +81,39 @@ export async function getGraphTypeAccess(botId) {
     return result;
 }
 
+export async function getExpensesCategories(botId) {
+    const result = await fetch(Config.NotionGraphsAuthURL+"/expenses-categories/botId/"+botId)
+        .then(response => {
+            if(!response.ok) {
+                throw new Error(response.statusText);
+            }
+            return response.json()
+        });
+    return result;
+}
+
+export async function getIncomesBankAccounts(botId) {
+    const result = await fetch(Config.NotionGraphsAuthURL+"/incomes-bankaccounts/botId/"+botId)
+        .then(response => {
+            if(!response.ok) {
+                throw new Error(response.statusText);
+            }
+            return response.json()
+        });
+    return result;
+}
+
+export async function getIncomesSources(botId) {
+    const result = await fetch(Config.NotionGraphsAuthURL+"/incomes-sources/botId/"+botId)
+        .then(response => {
+            if(!response.ok) {
+                throw new Error(response.statusText);
+            }
+            return response.json()
+        });
+    return result;
+}
+
 export async function createSessionsSearch(botId) {
     await fetch(Config.NotionGraphsAuthURL+"/sessions-search/botId/"+botId,
         {
