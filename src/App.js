@@ -24,6 +24,7 @@ import CreateGraphButton from './CreateGraphButton';
 import LandingPageFooter from './LandingPageFooter';
 import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import SyncLoader from "react-spinners/SyncLoader";
 
 function App() {
 
@@ -126,6 +127,31 @@ function App() {
         }
     }
 
+    const manualUpdateDesiredGraph = async (desiredGraphType, botId) => {
+        if(getUserGraphByType(userGraphs, desiredGraphType) != null) {
+            try {
+                const updatedGraphResponse = await reloadDesiredGraphAndReturnUpdatedGraph(botId, desiredGraphType, getUserGraphByType(userGraphs, desiredGraphType));
+                const updatedUserGraphs = userGraphs.map((userGraph) => { // Just update this new userGraph
+                    if(userGraph.id === updatedGraphResponse.id) {
+                        return updatedGraphResponse;
+                    }
+                    return userGraph;
+                });
+                setUserGraphs(updatedUserGraphs);
+            } catch(error) {
+                showAlert(error.message);
+            }   
+        }
+        else {
+            try {
+                const newGraphResponse = await reloadDesiredGraphAndReturnNewGraph(botId, desiredGraphType);
+                setUserGraphs([...userGraphs, newGraphResponse]);
+            } catch(error) {
+                showAlert(error.message);
+            }
+        }
+    }
+
     const fetchUsingNotionTemplates = async () => {
         if(botIdCookie !== "") {
             const apiResponse = await getUsingNotionTemplates(botIdCookie);
@@ -205,6 +231,7 @@ function App() {
                 <CreateGraph
                     botId={botIdCookie}
                     updateStateFunction={fetchUserDesiredGraphs}
+                    createGraphFunction={manualUpdateDesiredGraph}
                 />
             </div>
         )
@@ -374,10 +401,11 @@ function App() {
                         {userDesiredGraph.type}
                     </p>
                     <div className='usergraph__loadinggraph__info'>
-                        <p>
+                        {/* <p>
                             {"This graph will update in "+getRelativeTimeToUpdate(userDesiredGraph.tag)}
-                        </p>
-                        <CachedIcon fontSize="large" style={{ color: '#6d6d6d' }} />
+                        </p> */}
+                        {/* <CachedIcon fontSize="large" style={{ color: '#6d6d6d' }} /> */}
+                        <SyncLoader size={14} style={{ color: '#6d6d6d' }} />
                     </div>
                 </div>
             )

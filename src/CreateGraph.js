@@ -3,7 +3,7 @@ import Select from 'react-select';
 import { createDesiredGraph } from './RequestUtils';
 import { useEffect, useState } from 'react';
 
-export default function CreateGraph({ botId, updateStateFunction }) {
+export default function CreateGraph({ botId, updateStateFunction, createGraphFunction }) {
 
     const [selectedTag, setSelectedTag] = useState('DAILY');
     const [selectedType, setSelectedType] = useState('Expenses');
@@ -66,6 +66,8 @@ export default function CreateGraph({ botId, updateStateFunction }) {
                 if(apiResponse) {
                     updateStateFunction()
                 }
+                // New: Also create graph
+                createGraphFunction(selectedType, botId)
             }}>
                 <p>New graph</p>
                 <AddCircleOutlineSharpIcon />
