@@ -21,7 +21,7 @@ export default function CreateGraphBox() {
             type: 'SUM',    // 'SUM' for all expenses/incomes/savings
                             // 'BY CATEGORY' for groupings by category/bankacount/incomesource
                             // 'SPECIFIC CATEGORY' for specific category/bankaccount/incomesource
-            category: 'ALL' // Specify the category for 'SPECIFIC' type
+            category: 'Select category' // Specify the category for 'SPECIFIC' type
         }
 
     });

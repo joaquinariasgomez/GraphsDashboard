@@ -1123,6 +1123,12 @@ body {
     color: rgb(144, 144, 144);
 }
 
+.createcategoryselect {
+    width: 100%;
+    margin-left: -12px;
+    margin-right: -12px;
+}
+
 .creategraphsstep2__buttons > button.selected {
     border-color: #28282B;
     color: #28282B;

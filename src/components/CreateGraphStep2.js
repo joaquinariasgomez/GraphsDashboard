@@ -6,26 +6,24 @@ import SyncLoader from "react-spinners/SyncLoader";
 
 export default function CreateGraphStep2({ graphOptions, onPrev, onNext, onChange, expensesCategoriesLoading, expensesCategories, incomesBankAccountsLoading, incomesBankAccounts, incomesSourcesLoading, incomesSources }) {
 
-    const typeoptions = [
-        {value: 'Expenses', label: 'Expenses'},
-        {value: 'Expenses by category', label: 'Expenses by category'},
-        {value: 'Expenses in the last 7 days', label: 'Expenses in the last 7 days'},
-        {value: 'Expenses in the last 7 days by category', label: 'Expenses in the last 7 days by category'},
-        {value: 'Expenses in the last 30 days', label: 'Expenses in the last 30 days'},
-        {value: 'Expenses in the last 30 days by category', label: 'Expenses in the last 30 days by category'},
-        {value: 'Incomes', label: 'Incomes'},
-        {value: 'Incomes by category', label: 'Incomes by category'},
-        {value: 'Incomes in 2024 by category', label: 'Incomes in 2024 by category'},
-        {value: 'Savings', label: 'Savings'},
-        {value: 'Savings in 2024', label: 'Savings in 2024'},
-        {value: 'Cumulative savings', label: 'Cumulative savings'},
-        {value: 'Cumulative savings in 2024', label: 'Cumulative savings in 2024'},
-    ]
+    function getSelectOptionsFromExpensesCategories(input) {
+        return input.map(element => {
+            return {value: element, label: element};
+        });
+    }
+
+    function getSelectOptionFromExpensesCategory(input) {
+        return {value: input, label: input};
+    }
 
     const handleSelectedOption = (option) => {
         // Update data in parent, to send all together
         onChange({ filterCategories: option });
     }
+
+    const stopPropagation = (event) => {
+        event.stopPropagation();
+      };
 
     const renderGraphTypeText = () => {
         if(graphOptions.graphType === 'EXPENSES') {
@@ -109,29 +107,30 @@ export default function CreateGraphStep2({ graphOptions, onPrev, onNext, onChang
                 </button>
                 <button
                     className={graphOptions.filterCategories.type === 'SPECIFIC CATEGORY' ? 'selected' : 'not_selected'}
-                    onClick={() => handleSelectedOption({type: 'SPECIFIC CATEGORY', category: ''})}
+                    // onClick={() => handleSelectedOption({type: 'SPECIFIC CATEGORY', category: ''})}
                 >
                     {/* TODO: Add graph here */}
                     <p>Specific category</p>
-                    {/* TODO: Add slider to select here */}
-                    <Select
-                        className='selectgraphtag'
-                        defaultValue={expensesCategories[0]}
-                        theme={(theme) => ({
-                            ...theme,
-                            borderRadius: 5,
-                            colors: {
-                                ...theme.colors,
-                                primary25: 'lightgray',
-                                primary50: 'gray',
-                                primary: 'black'
-                            }
-                        })}
-                        options={expensesCategories}
-                        // onChange={function (newType) {
-                        //     setSelectedType(newType.value)
-                        // }}
-                    />
+                    <div className='createcategoryselect' onClick={stopPropagation}>
+                        <Select
+                            className='selectgraphtag'
+                            defaultValue={getSelectOptionFromExpensesCategory(graphOptions.filterCategories.category)}
+                            theme={(theme) => ({
+                                ...theme,
+                                borderRadius: 5,
+                                colors: {
+                                    ...theme.colors,
+                                    primary25: 'lightgray',
+                                    primary50: 'gray',
+                                    primary: 'black'
+                                }
+                            })}
+                            options={getSelectOptionsFromExpensesCategories(expensesCategories)}
+                            onChange={function (selectedCategory) {
+                                handleSelectedOption({type: 'SPECIFIC CATEGORY', category: selectedCategory.value})
+                            }}
+                        />
+                    </div>
                 </button>
             </div>
         )
