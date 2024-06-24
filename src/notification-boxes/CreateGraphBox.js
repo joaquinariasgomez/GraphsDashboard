@@ -18,9 +18,10 @@ export default function CreateGraphBox() {
         graphType: 'EXPENSES',
         graphTag: 'DAILY',
         filterCategories: {  // 'SUM',    // 'SUM', 'BY CATEGORY', 'BY BANKACCOUNT', 'BY INCOMESOURCE', 
-            type: 'SIMPLE', // 'SIMPLE' for all expenses/incomes/savings or groupings by category/bankacount/incomesource
-                            // 'SPECIFIC' for specific category/bankaccount/incomesource
-            category: 'ALL' // 'SUM'
+            type: 'SUM',    // 'SUM' for all expenses/incomes/savings
+                            // 'BY CATEGORY' for groupings by category/bankacount/incomesource
+                            // 'SPECIFIC CATEGORY' for specific category/bankaccount/incomesource
+            category: 'ALL' // Specify the category for 'SPECIFIC' type
         }
 
     });
