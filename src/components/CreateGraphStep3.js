@@ -1,92 +1,81 @@
 import React, {useEffect, useState } from 'react';
-import TrendingDownRoundedIcon from '@mui/icons-material/TrendingDownRounded';
-import TrendingUpRoundedIcon from '@mui/icons-material/TrendingUpRounded';
-import AttachMoneyRoundedIcon from '@mui/icons-material/AttachMoneyRounded';
+import Select from 'react-select';
 
-export default function CreateGraphStep3({ graphOptions, onPrev, onCreateGraph, onChange }) {
+export default function CreateGraphStep3({ graphOptions, onPrev, onBegin, onCreateGraph, onChange }) {
 
-    // const handleSelectedType = (type) => {
-    //     // Update data in parent, to send all together
-    //     onChange({ graphType: type, filterCategories: {type: 'SUM', category: 'Select category'} });
-    // }
+    const handleSelectedGroupBy = (groupBy) => {
+        onChange({ groupBy: groupBy });
+    }
 
-    // const handleSelectedTag = (tag) => {
-    //     // Update data in parent, to send all together
-    //     onChange({ graphTag: tag });
-    // }
+    const handleSelectedTime = (time) => {
+        onChange({ time: time });
+    }
+
+    const handleSelectedPlot = (plot) => {
+        onChange({ plot: plot });
+    }
+
+    function getSelectOptionFrom(input) {
+        return {value: input, label: input};
+    }
+
+    function getPlotOptions() {
+        if(graphOptions.graphType === 'SAVINGS') {
+            return [
+                {value: 'Savings', label: 'Savings'},
+                {value: 'Cumulative savings', label: 'Cumulative savings'},
+            ]
+        }
+    }
 
     const renderGroupByButtons = () => {
         return (
             <div className='creategraphsstep3__buttons'>
                 <button
-                    className={graphOptions.graphType === 'EXPENSES' ? 'selected' : 'not_selected'}
-                    onClick={() => handleSelectedType('EXPENSES')}
+                    className={graphOptions.groupBy === 'DAY' ? 'selected' : 'not_selected'}
+                    onClick={() => handleSelectedGroupBy('DAY')}
                 >
-                    <TrendingDownRoundedIcon fontSize='large'/>
-                    <p>Expenses</p>
+                    <p>Day</p>
                 </button>
                 <button
-                    className={graphOptions.graphType === 'EXPENSES' ? 'selected' : 'not_selected'}
-                    onClick={() => handleSelectedType('EXPENSES')}
+                    className={graphOptions.groupBy === 'WEEK' ? 'selected' : 'not_selected'}
+                    onClick={() => handleSelectedGroupBy('WEEK')}
                 >
-                    <TrendingDownRoundedIcon fontSize='large'/>
-                    <p>Expenses</p>
+                    <p>Week</p>
                 </button>
                 <button
-                    className={graphOptions.graphType === 'EXPENSES' ? 'selected' : 'not_selected'}
-                    onClick={() => handleSelectedType('EXPENSES')}
+                    className={graphOptions.groupBy === 'MONTH' ? 'selected' : 'not_selected'}
+                    onClick={() => handleSelectedGroupBy('MONTH')}
                 >
-                    <TrendingDownRoundedIcon fontSize='large'/>
-                    <p>Expenses</p>
+                    <p>Month</p>
                 </button>
             </div>
         )
     }
 
-    const renderIncomesButton = () => {
-        if(graphTypeAccess === "ALL" || graphTypeAccess === "ONLY_INCOMES") {
-            return (
+    const renderTimeButtons = () => {
+        return (
+            <div className='creategraphsstep3__buttons'>
                 <button
-                    className={graphOptions.graphType === 'INCOMES' ? 'selected' : 'not_selected'}
-                    onClick={() => handleSelectedType('INCOMES')}
+                    className={graphOptions.time === 'LAST WEEK' ? 'selected' : 'not_selected'}
+                    onClick={() => handleSelectedTime('LAST WEEK')}
                 >
-                    <AttachMoneyRoundedIcon fontSize='large'/>
-                    <p>Incomes</p>
+                    <p>Last week</p>
                 </button>
-            )
-        } else {
-            return (
                 <button
-                    disabled={true} className='not_selected'
+                    className={graphOptions.time === 'LAST MONTH' ? 'selected' : 'not_selected'}
+                    onClick={() => handleSelectedTime('LAST MONTH')}
                 >
-                    <AttachMoneyRoundedIcon fontSize='large'/>
-                    <p>Incomes</p>
+                    <p>Last month</p>
                 </button>
-            )
-        }
-    }
-
-    const renderSavingsButton = () => {
-        if(graphTypeAccess === "ALL") {
-            return (
                 <button
-                    className={graphOptions.graphType === 'SAVINGS' ? 'selected' : 'not_selected'}
-                    onClick={() => handleSelectedType('SAVINGS')}
+                    className={graphOptions.time === 'LAST YEAR' ? 'selected' : 'not_selected'}
+                    onClick={() => handleSelectedTime('LAST YEAR')}
                 >
-                    <TrendingUpRoundedIcon fontSize='large'/>
-                    <p>Savings</p>
+                    <p>Last year</p>
                 </button>
-            )
-        } else {
-            return (
-                <button
-                    disabled={true} className='not_selected'
-                >
-                    <TrendingUpRoundedIcon fontSize='large'/>
-                    <p>Savings</p>
-                </button>
-            )
-        }
+            </div>
+        )
     }
 
     return (
@@ -100,30 +89,46 @@ export default function CreateGraphStep3({ graphOptions, onPrev, onCreateGraph, 
                 <div className='creategraphsstep3__time'>
                     <h2>Time</h2>
                     <p>This is a small description.</p>
-                    <div className='creategraphsstep1__buttons'>
-                        <button
-                            className={graphOptions.graphTag === 'DAILY' ? 'tags selected' : 'tags not_selected'}
-                            onClick={() => handleSelectedTag('DAILY')}
-                        >
-                            <p>Daily</p>
-                        </button>
-                        <button
-                            className={graphOptions.graphTag === 'WEEKLY' ? 'tags selected' : 'tags not_selected'}
-                            onClick={() => handleSelectedTag('WEEKLY')}
-                        >
-                            <p>Weekly</p>
-                        </button>
-                        <button
-                            className={graphOptions.graphTag === 'MONTHLY' ? 'tags selected' : 'tags not_selected'}
-                            onClick={() => handleSelectedTag('MONTHLY')}
-                        >
-                            <p>Monthly</p>
-                        </button>
-                    </div>
+                    {renderTimeButtons()}
                 </div>
+                {
+                    graphOptions.graphType === 'SAVINGS' &&
+                    <div className='creategraphsstep3__plot'>
+                        <h2>Plot</h2>
+                        <p>This is a small description.</p>
+                        <div className='selectplottype'>
+                            <Select
+                                className='selectgraphtag'
+                                defaultValue={getSelectOptionFrom(graphOptions.plot)}
+                                theme={(theme) => ({
+                                    ...theme,
+                                    borderRadius: 5,
+                                    colors: {
+                                        ...theme.colors,
+                                        primary25: 'lightgray',
+                                        primary50: 'gray',
+                                        primary: 'black'
+                                    }
+                                })}
+                                options={getPlotOptions()}
+                                onChange={function (selectedCategory) {
+                                    handleSelectedPlot(selectedCategory.value)
+                                }}
+                            />
+                        </div>
+                    </div>
+                }
             </div>
             <div className="creategraphbox__nextbackrow">
-                <button className="creategraphbox__backbutton" onClick={onPrev}>
+                <button className="creategraphbox__backbutton" onClick={
+                    () => {
+                        if(graphOptions.graphType === 'SAVINGS') {
+                            onBegin()
+                        } else {
+                            onPrev()
+                        }
+                    }
+                }>
                     Back
                 </button>
                 <button className="creategraphbox__nextbutton" onClick={onCreateGraph}>

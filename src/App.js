@@ -100,7 +100,7 @@ function App() {
                 showAlert("Máximo número de usuarios creados para el MVP. Inténtalo e nuevo más tarde y perdona las molestias.");
             }
             else {
-                showAlert("Ha habido un problema con el servicio. Inténtalo de nuevo.");
+                showAlert("There was a problem with the service. Please try again later");
             }
         }
     }

@@ -4,7 +4,7 @@ import TrendingUpRoundedIcon from '@mui/icons-material/TrendingUpRounded';
 import AttachMoneyRoundedIcon from '@mui/icons-material/AttachMoneyRounded';
 import SyncLoader from "react-spinners/SyncLoader";
 
-export default function CreateGraphStep1({ graphOptions, onNext, onChange, graphTypeAccessLoading, graphTypeAccess }) {
+export default function CreateGraphStep1({ graphOptions, onNext, onEnd, onChange, graphTypeAccessLoading, graphTypeAccess }) {
 
     useEffect(() => {
         // If Expenses is not available, it cannot be selected and "INCOMES" will be
@@ -174,7 +174,15 @@ export default function CreateGraphStep1({ graphOptions, onNext, onChange, graph
                 </div>
             </div>
             <div className="creategraphbox__nextbackrow">
-                <button className="creategraphbox__nextbutton" onClick={onNext} disabled={graphTypeAccessLoading}>
+                <button className="creategraphbox__nextbutton" onClick={
+                    () => {
+                        if(graphOptions.graphType === 'SAVINGS') {
+                            onEnd() // Go to last step for savings
+                        } else {
+                            onNext()
+                        }
+                    }
+                } disabled={graphTypeAccessLoading}>
                     Next
                 </button>
             </div>

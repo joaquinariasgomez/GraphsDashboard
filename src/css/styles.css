@@ -906,10 +906,11 @@ body {
     align-items: center;
     /* width: 700px; */
     max-width: calc(95vw - 20px);
-    max-height: calc(95vh - 40px);
+    max-height: 95vh;
     border-radius: 10px;
     background-color: white;
     animation: zoom_100 0.2s ease forwards;
+    /* overflow-y: auto; */
     z-index: 998;
 }
 
@@ -951,6 +952,7 @@ body {
     align-items: center;
     width: 100%;
     margin-top: 68px;
+    overflow-y: auto;
 }
 
 .creategraphsstep__content {
@@ -1068,6 +1070,129 @@ body {
 }
 
 .creategraphsstep1__buttons > button > p {
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.creategraphsstep3__groupby {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: first;
+    background-color: rgb(240, 240, 240);
+    border-radius: 10px;
+}
+
+.creategraphsstep3__groupby > h2 {
+    font-size: 22px;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.creategraphsstep3__groupby > p {
+    margin-left: 20px;
+    margin-top: 0;
+    color: rgb(105, 105, 105);
+}
+
+.creategraphsstep3__time {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: first;
+    background-color: rgb(240, 240, 240);
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+.creategraphsstep3__time > h2 {
+    font-size: 22px;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.creategraphsstep3__time > p {
+    margin-left: 20px;
+    margin-top: 0;
+    color: rgb(105, 105, 105);
+}
+
+.creategraphsstep3__plot {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: first;
+    background-color: rgb(240, 240, 240);
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+.creategraphsstep3__plot > h2 {
+    font-size: 22px;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.creategraphsstep3__plot > p {
+    margin-left: 20px;
+    margin-top: 0;
+    color: rgb(105, 105, 105);
+}
+
+.selectplottype {
+    margin: 20px;
+    margin-top: 12px;
+}
+
+.creategraphsstep3__buttons {
+    margin: 20px;
+    margin-top: 12px;
+    width: calc(165px * 3 + 40px * 2);  /* Spacing between each button: 40px */
+    max-width: calc(100% - 40px);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.creategraphsstep3__buttons > button {
+    width: 165px;
+    border-style: solid;
+    border-radius: 10px;
+    border-width: 3px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-color: white;
+    background-color: white;
+    color: rgb(144, 144, 144);
+}
+
+.creategraphsstep3__buttons > button.selected {
+    border-color: #28282B;
+    color: #28282B;
+    transition: color 0.25s ease;
+}
+
+.creategraphsstep3__buttons > button:hover {
+    cursor: pointer;
+    background-color: rgb(250, 250, 250);
+    border-color: rgb(250, 250, 250);
+}
+
+.creategraphsstep3__buttons > button:active {
+    background-color: rgb(222, 222, 222);
+    border-color: rgb(222, 222, 222);;
+}
+
+.creategraphsstep3__buttons > button.selected:hover {
+    border-color: #28282B;
+}
+
+.creategraphsstep3__buttons > button > p {
     font-size: 16px;
     font-weight: 600;
     margin-top: 10px;

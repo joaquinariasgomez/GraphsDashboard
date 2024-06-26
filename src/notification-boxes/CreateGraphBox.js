@@ -23,11 +23,9 @@ export default function CreateGraphBox() {
                             // 'SPECIFIC CATEGORY' for specific category/bankaccount/incomesource
             category: 'Select category' // Specify the category for 'SPECIFIC' type
         },
-        plotOptions: {
-            groupBy: 'DAY',
-            time: 'LAST WEEK',
-            plot: 'Select plot' // This will be a customization for certain graphs
-        }
+        groupBy: 'DAY',
+        time: 'LAST WEEK',
+        plot: 'Select plot' // This will be a customization for certain graphs
     });
     const [graphTypeAccessLoading, setGraphTypeAccessLoading] = useState(true);
     const [graphTypeAccess, setGraphTypeAccess] = useState("");
@@ -104,6 +102,14 @@ export default function CreateGraphBox() {
         setStep(step + 1);
     }
 
+    const handleOnEndStep = () => {
+        setStep(step + 2);
+    }
+
+    const handleOnBeginStep = () => {
+        setStep(step - 2);
+    }
+
     const handlePrevStep = () => {
         setStep(step - 1);
     }
@@ -126,9 +132,7 @@ export default function CreateGraphBox() {
                     <CloseRoundedIcon fontSize="medium" />
                 </button>
                 <h1>New Graph</h1>
-                {/* TODO: add indicator of current step here */}
-                {/* TODO: if savings, go from step 1 to step 3 directly */}
-                {step === 1 && <CreateGraphStep1 graphOptions={createGraphData} onNext={handleNextStep} onChange={handleDataChange}
+                {step === 1 && <CreateGraphStep1 graphOptions={createGraphData} onNext={handleNextStep} onEnd={handleOnEndStep} onChange={handleDataChange}
                     graphTypeAccessLoading={graphTypeAccessLoading}
                     graphTypeAccess={graphTypeAccess} />}
                 {step === 2 && <CreateGraphStep2 graphOptions={createGraphData} onPrev={handlePrevStep} onNext={handleNextStep} onChange={handleDataChange}
@@ -138,7 +142,7 @@ export default function CreateGraphBox() {
                     incomesBankAccounts={incomesBankAccounts}
                     incomesSourcesLoading={incomesSourcesLoading}
                     incomesSources={incomesSources} />}
-                {step === 3 && <CreateGraphStep3 graphOptions={createGraphData} onPrev={handlePrevStep} onCreateGraph={handleCreateGraph} onChange={handleDataChange} />}
+                {step === 3 && <CreateGraphStep3 graphOptions={createGraphData} onPrev={handlePrevStep} onBegin={handleOnBeginStep} onCreateGraph={handleCreateGraph} onChange={handleDataChange} />}
             </div>
         </div>
     );

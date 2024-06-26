@@ -276,7 +276,7 @@ export default function CreateGraphStep2({ graphOptions, onPrev, onNext, onChang
                 <button className="creategraphbox__backbutton" onClick={onPrev}>
                     Back
                 </button>
-                <button className="creategraphbox__nextbutton" onClick={onNext}>
+                <button className="creategraphbox__nextbutton" onClick={onNext} disabled={expensesCategoriesLoading || incomesBankAccountsLoading || incomesSourcesLoading}>
                     Next
                 </button>
             </div>
