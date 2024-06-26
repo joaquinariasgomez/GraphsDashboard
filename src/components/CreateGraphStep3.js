@@ -1,71 +1,125 @@
-import React, {useState, useEffect } from 'react';
+import React, {useEffect, useState } from 'react';
+import TrendingDownRoundedIcon from '@mui/icons-material/TrendingDownRounded';
+import TrendingUpRoundedIcon from '@mui/icons-material/TrendingUpRounded';
+import AttachMoneyRoundedIcon from '@mui/icons-material/AttachMoneyRounded';
 
-export default function CreateGraphStep3({ onPrev, onCreateGraph, onChange }) {
+export default function CreateGraphStep3({ graphOptions, onPrev, onCreateGraph, onChange }) {
 
-    // State to manage form data
-    const [graphOptions, setGraphOptions] = useState({
-        graphType: 'EXPENSES',
-        graphTag: 'DAILY'
-    });
+    // const handleSelectedType = (type) => {
+    //     // Update data in parent, to send all together
+    //     onChange({ graphType: type, filterCategories: {type: 'SUM', category: 'Select category'} });
+    // }
 
-    useEffect(() => {
-        console.log("graphOptions data: ", graphOptions);
-    }, [graphOptions]);
+    // const handleSelectedTag = (tag) => {
+    //     // Update data in parent, to send all together
+    //     onChange({ graphTag: tag });
+    // }
 
-    const handleSelectedType = (type) => {
-        setGraphOptions({ ...graphOptions, graphType: type});
-        // Update data in parent, to send all together
-        onChange({ graphType: type });
+    const renderGroupByButtons = () => {
+        return (
+            <div className='creategraphsstep3__buttons'>
+                <button
+                    className={graphOptions.graphType === 'EXPENSES' ? 'selected' : 'not_selected'}
+                    onClick={() => handleSelectedType('EXPENSES')}
+                >
+                    <TrendingDownRoundedIcon fontSize='large'/>
+                    <p>Expenses</p>
+                </button>
+                <button
+                    className={graphOptions.graphType === 'EXPENSES' ? 'selected' : 'not_selected'}
+                    onClick={() => handleSelectedType('EXPENSES')}
+                >
+                    <TrendingDownRoundedIcon fontSize='large'/>
+                    <p>Expenses</p>
+                </button>
+                <button
+                    className={graphOptions.graphType === 'EXPENSES' ? 'selected' : 'not_selected'}
+                    onClick={() => handleSelectedType('EXPENSES')}
+                >
+                    <TrendingDownRoundedIcon fontSize='large'/>
+                    <p>Expenses</p>
+                </button>
+            </div>
+        )
     }
 
-    const handleSelectedTag = (tag) => {
-        setGraphOptions({ ...graphOptions, graphTag: tag});
-        // Update data in parent, to send all together
-        onChange({ graphTag: tag });
+    const renderIncomesButton = () => {
+        if(graphTypeAccess === "ALL" || graphTypeAccess === "ONLY_INCOMES") {
+            return (
+                <button
+                    className={graphOptions.graphType === 'INCOMES' ? 'selected' : 'not_selected'}
+                    onClick={() => handleSelectedType('INCOMES')}
+                >
+                    <AttachMoneyRoundedIcon fontSize='large'/>
+                    <p>Incomes</p>
+                </button>
+            )
+        } else {
+            return (
+                <button
+                    disabled={true} className='not_selected'
+                >
+                    <AttachMoneyRoundedIcon fontSize='large'/>
+                    <p>Incomes</p>
+                </button>
+            )
+        }
+    }
+
+    const renderSavingsButton = () => {
+        if(graphTypeAccess === "ALL") {
+            return (
+                <button
+                    className={graphOptions.graphType === 'SAVINGS' ? 'selected' : 'not_selected'}
+                    onClick={() => handleSelectedType('SAVINGS')}
+                >
+                    <TrendingUpRoundedIcon fontSize='large'/>
+                    <p>Savings</p>
+                </button>
+            )
+        } else {
+            return (
+                <button
+                    disabled={true} className='not_selected'
+                >
+                    <TrendingUpRoundedIcon fontSize='large'/>
+                    <p>Savings</p>
+                </button>
+            )
+        }
     }
 
     return (
         <div className='creategraphbox__contentandlow'>
             <div className='creategraphsstep__content'>
-                <div className='creategraphsstep1__type'>
-                    <button
-                        className={graphOptions.graphType === 'EXPENSES' ? 'selected' : 'not_selected'}
-                        onClick={() => handleSelectedType('EXPENSES')}
-                    >
-                        Button 1: Expenses
-                    </button>
-                    <button
-                        className={graphOptions.graphType === 'INCOMES' ? 'selected' : 'not_selected'}
-                        onClick={() => handleSelectedType('INCOMES')}
-                    >
-                        Button 2: Incomes
-                    </button>
-                    <button
-                        className={graphOptions.graphType === 'SAVINGS' ? 'selected' : 'not_selected'}
-                        onClick={() => handleSelectedType('SAVINGS')}
-                    >
-                        Button 3: Savings
-                    </button>
+                <div className='creategraphsstep3__groupby'>
+                    <h2>Group by</h2>
+                    <p>This is a small description.</p>
+                    {renderGroupByButtons()}
                 </div>
-                <div className='creategraphsstep1__tag'>
-                    <button
-                        className={graphOptions.graphType === 'DAILY' ? 'selected' : 'not_selected'}
-                        onClick={() => handleSelectedTag('DAILY')}
-                    >
-                        Daily
-                    </button>
-                    <button
-                        className={graphOptions.graphType === 'WEEKLY' ? 'selected' : 'not_selected'}
-                        onClick={() => handleSelectedTag('WEEKLY')}
-                    >
-                        Weekly
-                    </button>
-                    <button
-                        className={graphOptions.graphType === 'MONTHLY' ? 'selected' : 'not_selected'}
-                        onClick={() => handleSelectedTag('MONTHLY')}
-                    >
-                        Monthly
-                    </button>
+                <div className='creategraphsstep3__time'>
+                    <h2>Time</h2>
+                    <p>This is a small description.</p>
+                    <div className='creategraphsstep1__buttons'>
+                        <button
+                            className={graphOptions.graphTag === 'DAILY' ? 'tags selected' : 'tags not_selected'}
+                            onClick={() => handleSelectedTag('DAILY')}
+                        >
+                            <p>Daily</p>
+                        </button>
+                        <button
+                            className={graphOptions.graphTag === 'WEEKLY' ? 'tags selected' : 'tags not_selected'}
+                            onClick={() => handleSelectedTag('WEEKLY')}
+                        >
+                            <p>Weekly</p>
+                        </button>
+                        <button
+                            className={graphOptions.graphTag === 'MONTHLY' ? 'tags selected' : 'tags not_selected'}
+                            onClick={() => handleSelectedTag('MONTHLY')}
+                        >
+                            <p>Monthly</p>
+                        </button>
+                    </div>
                 </div>
             </div>
             <div className="creategraphbox__nextbackrow">

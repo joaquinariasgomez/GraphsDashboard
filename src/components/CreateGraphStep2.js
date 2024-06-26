@@ -6,13 +6,13 @@ import SyncLoader from "react-spinners/SyncLoader";
 
 export default function CreateGraphStep2({ graphOptions, onPrev, onNext, onChange, expensesCategoriesLoading, expensesCategories, incomesBankAccountsLoading, incomesBankAccounts, incomesSourcesLoading, incomesSources }) {
 
-    function getSelectOptionsFromExpensesCategories(input) {
+    function getSelectOptionsFrom(input) {
         return input.map(element => {
             return {value: element, label: element};
         });
     }
 
-    function getSelectOptionFromExpensesCategory(input) {
+    function getSelectOptionFrom(input) {
         return {value: input, label: input};
     }
 
@@ -52,9 +52,9 @@ export default function CreateGraphStep2({ graphOptions, onPrev, onNext, onChang
             }
         } else {
             if(incomesBankAccountsLoading || incomesSourcesLoading) {
-                // return renderIncomesOptionsLoading()
+                return renderIncomesOptionsLoading()
             } else {
-                // return renderIncomesOptionsFinishedLoading()
+                return renderIncomesOptionsFinishedLoading()
             }
         }
     }
@@ -81,7 +81,6 @@ export default function CreateGraphStep2({ graphOptions, onPrev, onNext, onChang
                 >
                     {/* TODO: Add graph here */}
                     <p>Specific category</p>
-                    {/* TODO: Add slider to select here */}
                     <SyncLoader size={10}/>
                 </button>
             </div>
@@ -93,28 +92,27 @@ export default function CreateGraphStep2({ graphOptions, onPrev, onNext, onChang
             <div className='creategraphsstep2__buttons'>
                 <button
                     className={graphOptions.filterCategories.type === 'SUM' ? 'selected' : 'not_selected'}
-                    onClick={() => handleSelectedOption({type: 'SUM', category: ''})}
+                    onClick={() => handleSelectedOption({type: 'SUM', category: 'Select category'})}
                 >
                     {/* TODO: Add graph here */}
                     <p>All expenses</p>
                 </button>
                 <button
                     className={graphOptions.filterCategories.type === 'BY CATEGORY' ? 'selected' : 'not_selected'}
-                    onClick={() => handleSelectedOption({type: 'BY CATEGORY', category: ''})}
+                    onClick={() => handleSelectedOption({type: 'BY CATEGORY', category: 'Select category'})}
                 >
                     {/* TODO: Add graph here */}
                     <p>Grouped by category</p>
                 </button>
                 <button
-                    className={graphOptions.filterCategories.type === 'SPECIFIC CATEGORY' ? 'selected' : 'not_selected'}
-                    // onClick={() => handleSelectedOption({type: 'SPECIFIC CATEGORY', category: ''})}
+                    className={graphOptions.filterCategories.type === 'SPECIFIC CATEGORY' ? 'withselect selected' : 'withselect not_selected'}
                 >
                     {/* TODO: Add graph here */}
-                    <p>Specific category</p>
+                    <p className='withselect'>Specific category</p>
                     <div className='createcategoryselect' onClick={stopPropagation}>
                         <Select
                             className='selectgraphtag'
-                            defaultValue={getSelectOptionFromExpensesCategory(graphOptions.filterCategories.category)}
+                            defaultValue={getSelectOptionFrom(graphOptions.filterCategories.category)}
                             theme={(theme) => ({
                                 ...theme,
                                 borderRadius: 5,
@@ -125,13 +123,143 @@ export default function CreateGraphStep2({ graphOptions, onPrev, onNext, onChang
                                     primary: 'black'
                                 }
                             })}
-                            options={getSelectOptionsFromExpensesCategories(expensesCategories)}
+                            options={getSelectOptionsFrom(expensesCategories)}
                             onChange={function (selectedCategory) {
                                 handleSelectedOption({type: 'SPECIFIC CATEGORY', category: selectedCategory.value})
                             }}
                         />
                     </div>
                 </button>
+            </div>
+        )
+    }
+
+    const renderIncomesOptionsLoading = () => {
+        return (
+            <div className='creategraphsstep2__buttons incomes'>
+                <button
+                    disabled={true} className='not_selected'
+                >
+                    {/* TODO: Add graph here */}
+                    <p>All incomes</p>
+                    <SyncLoader size={10}/>
+                </button>
+                <div className='creategraphsstep2__verticalbuttons'>
+                    <button
+                        disabled={true} className='not_selected'
+                    >
+                        {/* TODO: Add graph here */}
+                        <p>Grouped by bank account</p>
+                        <SyncLoader size={10}/>
+                    </button>
+                    <button
+                        disabled={true} className='not_selected'
+                    >
+                        {/* TODO: Add graph here */}
+                        <p>Grouped by income source</p>
+                        <SyncLoader size={10}/>
+                    </button>
+                </div>
+                <div className='creategraphsstep2__verticalbuttons'>
+                    <button
+                        disabled={true} className='not_selected'
+                    >
+                        {/* TODO: Add graph here */}
+                        <p>Specific bank account</p>
+                        <SyncLoader size={10}/>
+                    </button>
+                    <button
+                        disabled={true} className='not_selected'
+                    >
+                        {/* TODO: Add graph here */}
+                        <p>Specific income source</p>
+                        <SyncLoader size={10}/>
+                    </button>
+                </div>
+            </div>
+        )
+    }
+
+    const renderIncomesOptionsFinishedLoading = () => {
+        return (
+            <div className='creategraphsstep2__buttons incomes'>
+                <button
+                    className={graphOptions.filterCategories.type === 'SUM' ? 'selected' : 'not_selected'}
+                    onClick={() => handleSelectedOption({type: 'SUM', category: ''})}
+                >
+                    {/* TODO: Add graph here */}
+                    <p>All incomes</p>
+                </button>
+                <div className='creategraphsstep2__verticalbuttons'>
+                    <button
+                        className={graphOptions.filterCategories.type === 'BY BANKACCOUNT' ? 'selected' : 'not_selected'}
+                        onClick={() => handleSelectedOption({type: 'BY BANKACCOUNT', category: 'Select category'})}
+                    >
+                        {/* TODO: Add graph here */}
+                        <p>Grouped by bank account</p>
+                    </button>
+                    <button
+                        className={graphOptions.filterCategories.type === 'BY INCOMESOURCE' ? 'selected' : 'not_selected'}
+                        onClick={() => handleSelectedOption({type: 'BY INCOMESOURCE', category: 'Select category'})}
+                    >
+                        {/* TODO: Add graph here */}
+                        <p>Grouped by income source</p>
+                    </button>
+                </div>
+                <div className='creategraphsstep2__verticalbuttons'>
+                    <button
+                        className={graphOptions.filterCategories.type === 'SPECIFIC BANKACCOUNT' ? 'withselect selected' : 'withselect not_selected'}
+                    >
+                        {/* TODO: Add graph here */}
+                        <p className='withselect'>Specific bank account</p>
+                        <div className='createcategoryselect' onClick={stopPropagation}>
+                            <Select
+                                className='selectgraphtag'
+                                defaultValue={getSelectOptionFrom(graphOptions.filterCategories.category)}
+                                theme={(theme) => ({
+                                    ...theme,
+                                    borderRadius: 5,
+                                    colors: {
+                                        ...theme.colors,
+                                        primary25: 'lightgray',
+                                        primary50: 'gray',
+                                        primary: 'black'
+                                    }
+                                })}
+                                options={getSelectOptionsFrom(incomesBankAccounts)}
+                                onChange={function (selectedCategory) {
+                                    handleSelectedOption({type: 'SPECIFIC BANKACCOUNT', category: selectedCategory.value})
+                                }}
+                            />
+                        </div>
+                    </button>
+                    <button
+                        className={graphOptions.filterCategories.type === 'SPECIFIC INCOMESOURCE' ? 'withselect selected' : 'withselect not_selected'}
+                    >
+                        {/* TODO: Add graph here */}
+                        <p className='withselect'>Specific income source</p>
+                        <div className='createcategoryselect' onClick={stopPropagation}>
+                            <Select
+                                className='selectgraphtag'
+                                defaultValue={getSelectOptionFrom(graphOptions.filterCategories.category)}
+                                theme={(theme) => ({
+                                    ...theme,
+                                    borderRadius: 5,
+                                    colors: {
+                                        ...theme.colors,
+                                        primary25: 'lightgray',
+                                        primary50: 'gray',
+                                        primary: 'black'
+                                    }
+                                })}
+                                options={getSelectOptionsFrom(incomesSources)}
+                                onChange={function (selectedCategory) {
+                                    handleSelectedOption({type: 'SPECIFIC INCOMESOURCE', category: selectedCategory.value})
+                                }}
+                            />
+                        </div>
+                    </button>
+                </div>
             </div>
         )
     }

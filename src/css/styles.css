@@ -1107,6 +1107,62 @@ body {
     justify-content: space-between;
 }
 
+.creategraphsstep2__buttons.incomes {
+    align-items: stretch;
+}
+
+.creategraphsstep2__verticalbuttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: calc(145px * 2 + 40px);  /* Spacing between each button: 40px */
+}
+
+.creategraphsstep2__verticalbuttons > button {
+    width: 165px;
+    height: 145px;
+    padding: 20px;
+    border-style: solid;
+    border-radius: 10px;
+    border-width: 3px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-color: white;
+    background-color: white;
+    color: rgb(144, 144, 144);
+}
+
+.creategraphsstep2__verticalbuttons > button.selected {
+    border-color: #28282B;
+    color: #28282B;
+    transition: color 0.25s ease;
+}
+
+.creategraphsstep2__verticalbuttons > button:hover {
+    cursor: pointer;
+    background-color: rgb(250, 250, 250);
+    border-color: rgb(250, 250, 250);
+}
+
+.creategraphsstep2__verticalbuttons > button:active {
+    background-color: rgb(222, 222, 222);
+    border-color: rgb(222, 222, 222);;
+}
+
+.creategraphsstep2__verticalbuttons > button.selected:hover {
+    border-color: #28282B;
+}
+
+.creategraphsstep2__verticalbuttons > button > p {
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
 .creategraphsstep2__buttons > button {
     width: 165px;
     height: 145px;
@@ -1123,10 +1179,22 @@ body {
     color: rgb(144, 144, 144);
 }
 
+.creategraphsstep2__buttons > button.withselect {
+    padding-top: 20px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.creategraphsstep2__verticalbuttons > button.withselect {
+    padding-top: 20px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
 .createcategoryselect {
     width: 100%;
-    margin-left: -12px;
-    margin-right: -12px;
 }
 
 .creategraphsstep2__buttons > button.selected {
@@ -1155,6 +1223,16 @@ body {
     font-weight: 600;
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+.creategraphsstep2__buttons > button > p.withselect {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.creategraphsstep2__verticalbuttons > button > p.withselect {
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .creategraphbox__backbutton {

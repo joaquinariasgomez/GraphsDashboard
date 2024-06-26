@@ -22,8 +22,12 @@ export default function CreateGraphBox() {
                             // 'BY CATEGORY' for groupings by category/bankacount/incomesource
                             // 'SPECIFIC CATEGORY' for specific category/bankaccount/incomesource
             category: 'Select category' // Specify the category for 'SPECIFIC' type
+        },
+        plotOptions: {
+            groupBy: 'DAY',
+            time: 'LAST WEEK',
+            plot: 'Select plot' // This will be a customization for certain graphs
         }
-
     });
     const [graphTypeAccessLoading, setGraphTypeAccessLoading] = useState(true);
     const [graphTypeAccess, setGraphTypeAccess] = useState("");
@@ -134,7 +138,7 @@ export default function CreateGraphBox() {
                     incomesBankAccounts={incomesBankAccounts}
                     incomesSourcesLoading={incomesSourcesLoading}
                     incomesSources={incomesSources} />}
-                {step === 3 && <CreateGraphStep3 onPrev={handlePrevStep} onCreateGraph={handleCreateGraph} onChange={handleDataChange} />}
+                {step === 3 && <CreateGraphStep3 graphOptions={createGraphData} onPrev={handlePrevStep} onCreateGraph={handleCreateGraph} onChange={handleDataChange} />}
             </div>
         </div>
     );

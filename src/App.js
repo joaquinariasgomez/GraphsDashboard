@@ -127,28 +127,12 @@ function App() {
         }
     }
 
-    const manualUpdateDesiredGraph = async (desiredGraphType, botId) => {
-        if(getUserGraphByType(userGraphs, desiredGraphType) != null) {
-            try {
-                const updatedGraphResponse = await reloadDesiredGraphAndReturnUpdatedGraph(botId, desiredGraphType, getUserGraphByType(userGraphs, desiredGraphType));
-                const updatedUserGraphs = userGraphs.map((userGraph) => { // Just update this new userGraph
-                    if(userGraph.id === updatedGraphResponse.id) {
-                        return updatedGraphResponse;
-                    }
-                    return userGraph;
-                });
-                setUserGraphs(updatedUserGraphs);
-            } catch(error) {
-                showAlert(error.message);
-            }   
-        }
-        else {
-            try {
-                const newGraphResponse = await reloadDesiredGraphAndReturnNewGraph(botId, desiredGraphType);
-                setUserGraphs([...userGraphs, newGraphResponse]);
-            } catch(error) {
-                showAlert(error.message);
-            }
+    const manualCreateGraph = async (desiredGraphType, botId) => {
+        try {
+            const newGraphResponse = await reloadDesiredGraphAndReturnNewGraph(botId, desiredGraphType);
+            setUserGraphs([...userGraphs, newGraphResponse]);
+        } catch(error) {
+            showAlert(error.message);
         }
     }
 
@@ -231,7 +215,7 @@ function App() {
                 <CreateGraph
                     botId={botIdCookie}
                     updateStateFunction={fetchUserDesiredGraphs}
-                    createGraphFunction={manualUpdateDesiredGraph}
+                    createGraphFunction={manualCreateGraph}
                 />
             </div>
         )
