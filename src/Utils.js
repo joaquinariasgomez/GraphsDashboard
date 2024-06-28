@@ -74,9 +74,9 @@ export function getRelativeTimeToUpdate(userDesiredGraphTag) {
     }
 }
 
-export function getUserGraphByType(userGraphs, type) {
+export function getUserGraphByDesiredGraphId(userGraphs, desiredGraphId) {
     for(const userGraph of userGraphs) {
-        if(userGraph.type === type) {
+        if(userGraph.desiredGraphId === desiredGraphId) {
             return userGraph
         }
     }

@@ -24,8 +24,8 @@ export async function getGraphById(graphId) {
     return result;
 }
 
-export async function getGraphByUserIdAndType(botId, type) {
-    const result = await fetch(Config.BackendGraphsURL+"/specific?botId="+botId+"&type="+type)
+export async function getGraphByUserIdAndDesiredGraphId(botId, desiredGraphId) {
+    const result = await fetch(Config.BackendGraphsURL+"/specific?botId="+botId+"&desiredGraphId="+desiredGraphId)
         .then(response => {
             if(!response.ok) {
                 throw new Error(response.statusText);
@@ -35,8 +35,8 @@ export async function getGraphByUserIdAndType(botId, type) {
     return result;
 }
 
-export async function deleteGraphByUserIdAndType(botId, type) {
-    await fetch(Config.BackendGraphsURL+"/specific?botId="+botId+"&type="+type,
+export async function deleteGraphByUserIdAndDesiredGraphId(botId, desiredGraphId) {
+    await fetch(Config.BackendGraphsURL+"/specific?botId="+botId+"&desiredGraphId="+desiredGraphId,
         {
             method: 'DELETE'
         })
@@ -178,8 +178,8 @@ export async function updateDesiredGraph(desiredGraphId, desiredGraphBody) {
     return result;
 }
 
-export async function reloadDesiredGraph(botId, type) {
-    await fetch(Config.OnDemandGraphsURL+"/specific?botId="+botId+"&type="+type,
+export async function reloadDesiredGraph(botId, desiredGraphId) {
+    await fetch(Config.OnDemandGraphsURL+"/specific?botId="+botId+"&desiredGraphId="+desiredGraphId,
         {
             method: 'POST'
         })
@@ -190,8 +190,8 @@ export async function reloadDesiredGraph(botId, type) {
         });
 }
 
-export async function reloadDesiredGraphAndReturnUpdatedGraph(botId, type, userGraph) {
-    reloadDesiredGraph(botId, type);
+export async function reloadDesiredGraphAndReturnUpdatedGraph(botId, desiredGraphId, userGraph) {
+    reloadDesiredGraph(botId, desiredGraphId);
     // Ahora, hacer peticiones tipo exponential backoff al back hasta que lastUpdated haya cambiado
     const refLastUpdated = userGraph.lastUpdated;
     let updatedGraphResponse = await getGraphById(userGraph.id);
@@ -217,10 +217,10 @@ export async function reloadDesiredGraphAndReturnUpdatedGraph(botId, type, userG
     return updatedGraphResponse;
 }
 
-export async function reloadDesiredGraphAndReturnNewGraph(botId, type) {
-    reloadDesiredGraph(botId, type);
+export async function reloadDesiredGraphAndReturnNewGraph(botId, desiredGraphId) {
+    reloadDesiredGraph(botId, desiredGraphId);
     // Ahora, hacer peticiones tipo exponential backoff al back hasta que lastUpdated haya cambiado
-    let newGraphResponse = await getGraphByUserIdAndType(botId, type);
+    let newGraphResponse = await getGraphByUserIdAndDesiredGraphId(botId, desiredGraphId);
     let time = 50;
     let total_time_waited = time;
     const MAX_WAIT_TIME = 20000;    // 20 seconds
@@ -236,7 +236,7 @@ export async function reloadDesiredGraphAndReturnNewGraph(botId, type) {
             time = 1000;    // One second as maximum wait time
         }
         total_time_waited = total_time_waited + time;
-        newGraphResponse = await getGraphByUserIdAndType(botId, type);
+        newGraphResponse = await getGraphByUserIdAndDesiredGraphId(botId, desiredGraphId);
     }
     return newGraphResponse;
 }

@@ -1,7 +1,13 @@
 import React, {useEffect, useState } from 'react';
 import Select from 'react-select';
+import { createDesiredGraph } from '../RequestUtils';
+import { actionTypes } from '../context/globalReducer';
+import { useGlobalStateValue } from '../context/GlobalStateProvider';
 
-export default function CreateGraphStep3({ graphOptions, onPrev, onBegin, onCreateGraph, onChange }) {
+export default function CreateGraphStep3({ graphOptions, onPrev, onBegin, onChange }) {
+
+    // Context
+    const [{botIdCookie}, dispatch] = useGlobalStateValue();
 
     const handleSelectedGroupBy = (groupBy) => {
         onChange({ groupBy: groupBy });
@@ -17,6 +23,33 @@ export default function CreateGraphStep3({ graphOptions, onPrev, onBegin, onCrea
 
     function getSelectOptionFrom(input) {
         return {value: input, label: input};
+    }
+
+    const closeCreateGraphBox = () => {
+        dispatch({
+            type: actionTypes.SET_SHOW_CREATE_GRAPH_BOX,
+            value: false
+        })
+    }
+
+    async function handleCreateGraph() {
+        // 1. Check that everything is setup okay
+
+        // 2. Send POST request to backend
+        const apiResponse = await createDesiredGraph(
+            JSON.stringify(
+                {
+                    userId: "", // Will be filled up by backend
+                    botId: botIdCookie,
+                    graphOptions: graphOptions
+                }
+            )
+        )
+        if(apiResponse) {
+            console.log("Success. Time to update state function")
+
+            closeCreateGraphBox()
+        }
     }
 
     function getPlotOptions() {
@@ -131,7 +164,7 @@ export default function CreateGraphStep3({ graphOptions, onPrev, onBegin, onCrea
                 }>
                     Back
                 </button>
-                <button className="creategraphbox__nextbutton" onClick={onCreateGraph}>
+                <button className="creategraphbox__nextbutton" onClick={handleCreateGraph}>
                     Create Graph
                 </button>
             </div>

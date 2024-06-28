@@ -3,8 +3,8 @@ import { Chart } from "chart.js/auto";
 import DeleteIcon from '@mui/icons-material/Delete';
 import CachedIcon from '@mui/icons-material/Cached';
 import AddIcon from '@mui/icons-material/Add';
-import { connectToNotion, deleteDesiredGraph, deleteGraphByUserIdAndType, getAllDesiredGraphsByUserId, getAllGraphsByUserId, reloadDesiredGraphAndReturnNewGraph, reloadDesiredGraphAndReturnUpdatedGraph, loginToNotionWithCode, getUsingNotionTemplates, createSessionsSearch } from './RequestUtils';
-import { delay, getRelativeTimeToUpdate, getRelativeTimestamp, getUserGraphByType } from './Utils';
+import { connectToNotion, deleteDesiredGraph, deleteGraphByUserIdAndDesiredGraphId, getAllDesiredGraphsByUserId, getAllGraphsByUserId, reloadDesiredGraphAndReturnNewGraph, reloadDesiredGraphAndReturnUpdatedGraph, loginToNotionWithCode, getUsingNotionTemplates, createSessionsSearch } from './RequestUtils';
+import { delay, getRelativeTimeToUpdate, getRelativeTimestamp, getUserGraphByDesiredGraphId } from './Utils';
 import EmptyGraphsDashboard from './EmptyGraphsDashboard';
 import LoadingGraphsScreen from './LoadingGraphsScreen';
 import GraphFactory from './charts/GraphFactory';
@@ -174,16 +174,17 @@ function App() {
                                 <SelectGraphTag
                                     desiredGraphId={userDesiredGraph.id}
                                     botId={userDesiredGraph.botId}
-                                    graphType={userDesiredGraph.type}
+                                    graphOptions={userDesiredGraph.graphOptions}
                                     defaultTag={userDesiredGraph.tag}
                                     updateStateFunction={fetchUserDesiredGraphs}
                                 />
                             </div>
                             <button className='usergraph__reload' title='Update' onClick={async function () {
                                 // setGraphIsUpdating(true)
-                                if(getUserGraphByType(userGraphs, userDesiredGraph.type) != null) {
+                                if(getUserGraphByDesiredGraphId(userGraphs, userDesiredGraph.id) != null) {
+                                    console.log("DEBUG JOAQUIN esto no deberia pasar")
                                     try {
-                                        const updatedGraphResponse = await reloadDesiredGraphAndReturnUpdatedGraph(userDesiredGraph.botId, userDesiredGraph.type, getUserGraphByType(userGraphs, userDesiredGraph.type));
+                                        const updatedGraphResponse = await reloadDesiredGraphAndReturnUpdatedGraph(userDesiredGraph.botId, userDesiredGraph.id, getUserGraphByDesiredGraphId(userGraphs, userDesiredGraph.id));
                                         const updatedUserGraphs = userGraphs.map((userGraph) => { // Just update this new userGraph
                                             if(userGraph.id === updatedGraphResponse.id) {
                                                 return updatedGraphResponse;
@@ -194,10 +195,9 @@ function App() {
                                     } catch(error) {
                                         showAlert(error.message);
                                     }   
-                                }
-                                else {
+                                } else {
                                     try {
-                                        const newGraphResponse = await reloadDesiredGraphAndReturnNewGraph(userDesiredGraph.botId, userDesiredGraph.type);
+                                        const newGraphResponse = await reloadDesiredGraphAndReturnNewGraph(userDesiredGraph.botId, userDesiredGraph.id);
                                         setUserGraphs([...userGraphs, newGraphResponse]);
                                     } catch(error) {
                                         showAlert(error.message);
@@ -344,21 +344,21 @@ function App() {
     const deleteDesiredGraphAndState = (userDesiredGraph) => {
         const userDesiredGraphId = userDesiredGraph.id
         deleteDesiredGraph(userDesiredGraphId)
-        deleteGraphByUserIdAndType(userDesiredGraph.botId, userDesiredGraph.type)
+        deleteGraphByUserIdAndDesiredGraphId(userDesiredGraph.botId, userDesiredGraphId)
 
         // Delete userDesiredGraph and userGraph for that type that is being deleted
         const updatedUserDesiredGraphs = userDesiredGraphs.filter((userDesiredGraph) => userDesiredGraph.id !== userDesiredGraphId);
         setUserDesiredGraphs(updatedUserDesiredGraphs);
-        const updatedUserGraphs = userGraphs.filter((userGraph) => userGraph.type !== userDesiredGraph.type);
+        const updatedUserGraphs = userGraphs.filter((userGraph) => userGraph.id !== userDesiredGraph.id);
         setUserGraphs(updatedUserGraphs);
     }
 
     const renderTimestamp = (userDesiredGraph) => {
-        if(getUserGraphByType(userGraphs, userDesiredGraph.type) != null) {
+        if(getUserGraphByDesiredGraphId(userGraphs, userDesiredGraph.id) != null) {
             return (
                 <div className='usergraph__middleinfo'>
                     <p className='usergraph__timestamp__first' title='Last update'>
-                        {getRelativeTimestamp(getUserGraphByType(userGraphs, userDesiredGraph.type).lastUpdated)+" ago ・"}
+                        {getRelativeTimestamp(getUserGraphByDesiredGraphId(userGraphs, userDesiredGraph.id).lastUpdated)+" ago ・"}
                     </p>
                     <p className='usergraph__timestamp__second' title='Next update'>
                         {"In "+getRelativeTimeToUpdate(userDesiredGraph.tag)}
@@ -369,11 +369,12 @@ function App() {
     }
 
     const renderGraph = (userDesiredGraph) => {
-        if(getUserGraphByType(userGraphs, userDesiredGraph.type) != null) {
+        {/* TODO: use the userDesiredGraph info and parameters to plot the graph -> pass it to GraphFactory */}
+        if(getUserGraphByDesiredGraphId(userGraphs, userDesiredGraph.id) != null) {
             return (
                 <div className='usergraph__graphcontainer'>
                     <GraphFactory
-                        graphData={getUserGraphByType(userGraphs, userDesiredGraph.type)}
+                        graphData={getUserGraphByDesiredGraphId(userGraphs, userDesiredGraph.id)}
                     />
                 </div>
             )

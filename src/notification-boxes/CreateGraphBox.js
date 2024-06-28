@@ -5,7 +5,7 @@ import CreateGraphStep1 from "../components/CreateGraphStep1";
 import CreateGraphStep2 from "../components/CreateGraphStep2";
 import CreateGraphStep3 from "../components/CreateGraphStep3";
 import { useEffect, useState } from "react";
-import { getExpensesCategories, getGraphTypeAccess, getIncomesBankAccounts, getIncomesSources } from "../RequestUtils";
+import { createDesiredGraph, getExpensesCategories, getGraphTypeAccess, getIncomesBankAccounts, getIncomesSources } from "../RequestUtils";
 
 export default function CreateGraphBox() {
 
@@ -118,11 +118,6 @@ export default function CreateGraphBox() {
         setCreateGraphData({ ...createGraphData, ...data});
     }
 
-    const handleCreateGraph = () => {
-        // 1. Check that everything is setup okay
-        // 2. Send POST request to backend
-    }
-
     return (
         <div className='creategraphbox__backdrop' onClick={closeBox}>
             <div className="creategraphbox__container" onClick={e => {e.stopPropagation(); }}>
@@ -142,7 +137,7 @@ export default function CreateGraphBox() {
                     incomesBankAccounts={incomesBankAccounts}
                     incomesSourcesLoading={incomesSourcesLoading}
                     incomesSources={incomesSources} />}
-                {step === 3 && <CreateGraphStep3 graphOptions={createGraphData} onPrev={handlePrevStep} onBegin={handleOnBeginStep} onCreateGraph={handleCreateGraph} onChange={handleDataChange} />}
+                {step === 3 && <CreateGraphStep3 graphOptions={createGraphData} onPrev={handlePrevStep} onBegin={handleOnBeginStep} onChange={handleDataChange} />}
             </div>
         </div>
     );
