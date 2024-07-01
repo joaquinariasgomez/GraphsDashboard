@@ -182,7 +182,6 @@ function App() {
                             <button className='usergraph__reload' title='Update' onClick={async function () {
                                 // setGraphIsUpdating(true)
                                 if(getUserGraphByDesiredGraphId(userGraphs, userDesiredGraph.id) != null) {
-                                    console.log("DEBUG JOAQUIN esto no deberia pasar")
                                     try {
                                         const updatedGraphResponse = await reloadDesiredGraphAndReturnUpdatedGraph(userDesiredGraph.botId, userDesiredGraph.id, getUserGraphByDesiredGraphId(userGraphs, userDesiredGraph.id));
                                         const updatedUserGraphs = userGraphs.map((userGraph) => { // Just update this new userGraph
