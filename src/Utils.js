@@ -85,3 +85,8 @@ export function getUserGraphByDesiredGraphId(userGraphs, desiredGraphId) {
 export function delay(time) {
     return new Promise(resolve => setTimeout(resolve, time));
 }
+
+export function getGraphTitleFromGraphOptions(graphOptions) {
+    return (graphOptions.graphType).charAt(0).toUpperCase() + (graphOptions.graphType).slice(1).toLowerCase()
+    + " - " + (graphOptions.time).charAt(0).toUpperCase() + (graphOptions.time).slice(1).toLowerCase()
+}

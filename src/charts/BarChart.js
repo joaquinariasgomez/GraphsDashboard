@@ -1,5 +1,6 @@
 import React from "react";
 import { Bar } from "react-chartjs-2";
+import { getGraphTitleFromGraphOptions } from "../Utils";
 
 function getTagsFromGraphData(graphData) {
     return graphData.data.map(row => row.tag);
@@ -9,7 +10,7 @@ function getValuesFromGraphData(graphData) {
     return graphData.data.map(row => row.value);
 }
 
-export default function BarChart({ graphData }) {
+export default function BarChart({ graphData, desiredGraphOptions }) {
     const data = {
         labels: getTagsFromGraphData(graphData),
         datasets: [
@@ -31,7 +32,7 @@ export default function BarChart({ graphData }) {
             },
             title: {
                 display: true,
-                text: graphData.type
+                text: getGraphTitleFromGraphOptions(desiredGraphOptions)
             }
         }
     }

@@ -1,5 +1,6 @@
 import React from "react";
 import { Line } from "react-chartjs-2";
+import { getGraphTitleFromGraphOptions } from "../Utils";
 
 function getTagsFromGraphData(graphData) {
     return graphData.data.map(row => row.tag);
@@ -13,7 +14,7 @@ function getValues2FromGraphData(graphData) {
     return graphData.data.map(row => row.value2);
 }
 
-export default function MultiLineChart({ graphData }) {
+export default function MultiLineChart({ graphData, desiredGraphOptions }) {
     const data = {
         labels: getTagsFromGraphData(graphData),
         datasets: [
@@ -41,7 +42,7 @@ export default function MultiLineChart({ graphData }) {
             },
             title: {
                 display: true,
-                text: graphData.type
+                text: getGraphTitleFromGraphOptions(desiredGraphOptions)
             },
         },
         interaction: {

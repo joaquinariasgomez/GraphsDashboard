@@ -1,5 +1,6 @@
 import React from "react";
 import { Line } from "react-chartjs-2";
+import { getGraphTitleFromGraphOptions } from "../Utils";
 
 function getTagsFromGraphData(graphData) {
     return graphData.data.map(row => row.tag);
@@ -9,7 +10,7 @@ function getValuesFromGraphData(graphData) {
     return graphData.data.map(row => row.value);
 }
 
-export default function AreaChart({ graphData }) {
+export default function AreaChart({ graphData, desiredGraphOptions }) {
     const data = {
         labels: getTagsFromGraphData(graphData),
         datasets: [
@@ -32,7 +33,7 @@ export default function AreaChart({ graphData }) {
             },
             title: {
                 display: true,
-                text: graphData.type
+                text: getGraphTitleFromGraphOptions(desiredGraphOptions)
             }
         },
         interaction: {

@@ -4,7 +4,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import CachedIcon from '@mui/icons-material/Cached';
 import AddIcon from '@mui/icons-material/Add';
 import { connectToNotion, deleteDesiredGraph, deleteGraphByUserIdAndDesiredGraphId, getAllDesiredGraphsByUserId, getAllGraphsByUserId, reloadDesiredGraphAndReturnNewGraph, reloadDesiredGraphAndReturnUpdatedGraph, loginToNotionWithCode, getUsingNotionTemplates, createSessionsSearch } from './RequestUtils';
-import { delay, getRelativeTimeToUpdate, getRelativeTimestamp, getUserGraphByDesiredGraphId } from './Utils';
+import { delay, getGraphTitleFromGraphOptions, getRelativeTimeToUpdate, getRelativeTimestamp, getUserGraphByDesiredGraphId } from './Utils';
 import EmptyGraphsDashboard from './EmptyGraphsDashboard';
 import LoadingGraphsScreen from './LoadingGraphsScreen';
 import GraphFactory from './charts/GraphFactory';
@@ -175,7 +175,7 @@ function App() {
                                     desiredGraphId={userDesiredGraph.id}
                                     botId={userDesiredGraph.botId}
                                     graphOptions={userDesiredGraph.graphOptions}
-                                    defaultTag={userDesiredGraph.tag}
+                                    defaultTag={userDesiredGraph.graphOptions.graphTag}
                                     updateStateFunction={fetchUserDesiredGraphs}
                                 />
                             </div>
@@ -361,7 +361,7 @@ function App() {
                         {getRelativeTimestamp(getUserGraphByDesiredGraphId(userGraphs, userDesiredGraph.id).lastUpdated)+" ago ・"}
                     </p>
                     <p className='usergraph__timestamp__second' title='Next update'>
-                        {"In "+getRelativeTimeToUpdate(userDesiredGraph.tag)}
+                        {"In "+getRelativeTimeToUpdate(userDesiredGraph.graphOptions.graphTag)}
                     </p>
                 </div>
             )
@@ -369,12 +369,12 @@ function App() {
     }
 
     const renderGraph = (userDesiredGraph) => {
-        {/* TODO: use the userDesiredGraph info and parameters to plot the graph -> pass it to GraphFactory */}
         if(getUserGraphByDesiredGraphId(userGraphs, userDesiredGraph.id) != null) {
             return (
                 <div className='usergraph__graphcontainer'>
                     <GraphFactory
                         graphData={getUserGraphByDesiredGraphId(userGraphs, userDesiredGraph.id)}
+                        desiredGraphOptions={userDesiredGraph.graphOptions}
                     />
                 </div>
             )
@@ -383,13 +383,9 @@ function App() {
             return (
                 <div className='usergraph__loadinggraph'>
                     <p className='usergraph__loadinggraph__type'>
-                        {userDesiredGraph.type}
+                        {getGraphTitleFromGraphOptions(userDesiredGraph.graphOptions)}
                     </p>
                     <div className='usergraph__loadinggraph__info'>
-                        {/* <p>
-                            {"This graph will update in "+getRelativeTimeToUpdate(userDesiredGraph.tag)}
-                        </p> */}
-                        {/* <CachedIcon fontSize="large" style={{ color: '#6d6d6d' }} /> */}
                         <SyncLoader size={14} style={{ color: '#6d6d6d' }} />
                     </div>
                 </div>

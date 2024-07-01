@@ -1,5 +1,6 @@
 import React from "react";
 import { Bar } from "react-chartjs-2";
+import { getGraphTitleFromGraphOptions } from "../Utils";
 
 function getUniqueTagsFromGraphData(graphData) {
     const tags = graphData.data.map(row => row.tag);
@@ -43,7 +44,7 @@ function getDatasetsFromGraphData(graphData) {
     return datasets;
 }
 
-export default function StackedBarChart({ graphData }) {
+export default function StackedBarChart({ graphData, desiredGraphOptions }) {
     const data = {
         labels: getUniqueTagsFromGraphData(graphData),
         datasets: getDatasetsFromGraphData(graphData)
@@ -60,7 +61,7 @@ export default function StackedBarChart({ graphData }) {
             },
             title: {
                 display: true,
-                text: graphData.type
+                text: getGraphTitleFromGraphOptions(desiredGraphOptions)
             }
         },
         scales: {
