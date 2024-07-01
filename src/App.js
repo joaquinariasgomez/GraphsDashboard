@@ -212,11 +212,11 @@ function App() {
                         {renderGraph(userDesiredGraph)}
                     </div>
                 ))}
-                <CreateGraph
+                {/* <CreateGraph
                     botId={botIdCookie}
                     updateStateFunction={fetchUserDesiredGraphs}
                     createGraphFunction={manualCreateGraph}
-                />
+                /> */}
             </div>
         )
     }
