@@ -87,6 +87,12 @@ export function delay(time) {
 }
 
 export function getGraphTitleFromGraphOptions(graphOptions) {
-    return (graphOptions.graphType).charAt(0).toUpperCase() + (graphOptions.graphType).slice(1).toLowerCase()
-    + " - " + (graphOptions.time).charAt(0).toUpperCase() + (graphOptions.time).slice(1).toLowerCase()
+    let response = (graphOptions.graphType).charAt(0).toUpperCase() + (graphOptions.graphType).slice(1).toLowerCase()
+    + " - " + (graphOptions.time).charAt(0).toUpperCase() + (graphOptions.time).slice(1).toLowerCase();
+
+    if(graphOptions.filterCategories.type.startsWith("SPECIFIC")) {
+        response = graphOptions.filterCategories.category+" "+response;
+    }
+
+    return response;
 }

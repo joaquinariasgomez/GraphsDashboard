@@ -164,7 +164,7 @@ export default function CreateGraphStep3({ graphOptions, onPrev, onBegin, onChan
                 }>
                     Back
                 </button>
-                <button className="creategraphbox__nextbutton" onClick={handleCreateGraph}>
+                <button className="creategraphbox__nextbutton" onClick={handleCreateGraph} disabled={graphOptions.graphType === 'SAVINGS' && graphOptions.plot === 'Select plot'}>
                     Create Graph
                 </button>
             </div>
