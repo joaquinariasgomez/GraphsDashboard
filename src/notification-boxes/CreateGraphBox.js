@@ -39,9 +39,9 @@ export default function CreateGraphBox() {
     const [incomesSourcesLoading, setIncomesSourcesLoading] = useState(true);
     const [incomesSources, setIncomesSources] = useState([]);
     
-    useEffect(() => {
-        console.log("createGraphData data: ", createGraphData);
-    }, [createGraphData]);
+    // useEffect(() => {
+    //     console.log("createGraphData data: ", createGraphData);
+    // }, [createGraphData]);
 
     // Do all the necessary requests at the beginning of the form
     useEffect(() => {
