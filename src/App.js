@@ -277,7 +277,7 @@ function App() {
                                     We provide you beautiful templates already configured to add your expenses and incomes.
                                 </p>
                                 <p>
-                                    You can <a href='https://joaquinariasgomez.notion.site/Control-de-Gastos-e-Ingresos-60684847132e414188ac80e55001340d' target="_blank">get here</a> your Expense and Income Tracker Notion templates for free.
+                                    You can <a href='https://www.notion.so/templates/control-de-gastos-e-ingresos' target="_blank">get here</a> your Expense and Income Tracker Notion templates for free.
                                 </p>
                                 <p>
                                     After loging in, your dashboard will be saved with your favorite graphs.
@@ -299,8 +299,8 @@ function App() {
                                     To do that:
                                 </p>
                                 <ol>
-                                    <li>Go to <a href='https://joaquinariasgomez.notion.site/Control-de-Gastos-e-Ingresos-60684847132e414188ac80e55001340d' target="_blank">my Notion Template page</a>.</li>
-                                    <li>Duplicate the template into your workspace with <ContentCopyIcon fontSize='small'/> button.</li>
+                                    <li>Go to <a href='https://www.notion.so/templates/control-de-gastos-e-ingresos' target="_blank">my Notion Template page</a>.</li>
+                                    <li>Click <b>Get template</b> button.</li>
                                     <li><a href={authorization_url}>Login with Notion</a> and connect your new (or existing) template to the Notion Graphs integration.</li>
                                 </ol>
                             </div>
@@ -327,11 +327,11 @@ function App() {
             return (
                 <div className='gettemplatewizard__container'>
                     <WarningAmberRoundedIcon fontSize='large' className='wizardwarningicon'/>
-                    <h2>You are not using my <a href='https://joaquinariasgomez.notion.site/Control-de-Gastos-e-Ingresos-60684847132e414188ac80e55001340d' target="_blank">Notion Template</a> yet!</h2>
+                    <h2>You are not using my <a href='https://www.notion.so/templates/control-de-gastos-e-ingresos' target="_blank">Notion Template</a> yet!</h2>
                     <h3>Download instructions</h3>
                     <ol>
-                        <li>Go to <a href='https://joaquinariasgomez.notion.site/Control-de-Gastos-e-Ingresos-60684847132e414188ac80e55001340d' target="_blank">my Notion Template page</a>.</li>
-                        <li>Duplicate the template into your workspace with <ContentCopyIcon fontSize='small'/> button.</li>
+                        <li>Go to <a href='https://www.notion.so/templates/control-de-gastos-e-ingresos' target="_blank">my Notion Template page</a>.</li>
+                        <li>Click <b>Get template</b> button.</li>
                         <li><a href={authorization_url}>Login with Notion</a> and connect your new (or existing) template to the Notion Graphs integration.</li>
                     </ol>
                     <p>If you did everything, try reloading!</p>

@@ -117,19 +117,19 @@ export default function CreateGraphStep3({ graphOptions, onPrev, onBegin, onChan
             <div className='creategraphsstep__content'>
                 <div className='creategraphsstep3__groupby'>
                     <h2>Group by</h2>
-                    <p>This is a small description.</p>
+                    <p>Group your data by day, week or month.</p>
                     {renderGroupByButtons()}
                 </div>
                 <div className='creategraphsstep3__time'>
                     <h2>Time</h2>
-                    <p>This is a small description.</p>
+                    <p>Since when you want to see your data.</p>
                     {renderTimeButtons()}
                 </div>
                 {
                     graphOptions.graphType === 'SAVINGS' &&
                     <div className='creategraphsstep3__plot'>
                         <h2>Plot</h2>
-                        <p>This is a small description.</p>
+                        <p>Choose the type of plot you want to see.</p>
                         <div className='selectplottype'>
                             <Select
                                 className='selectgraphtag'
