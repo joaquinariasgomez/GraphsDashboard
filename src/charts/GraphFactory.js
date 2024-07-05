@@ -125,7 +125,7 @@ export default function GraphFactory({ graphData, desiredGraphOptions }) {
                 />
             );
         }
-        if(desiredGraphOptions.filterCategories.type === "SUM") {
+        if(desiredGraphOptions.filterCategories.type === "SUM" && (desiredGraphOptions.graphType === "EXPENSES" || desiredGraphOptions.graphType === "INCOMES")) {
             return (
                 <BarChart
                     graphData={graphData}

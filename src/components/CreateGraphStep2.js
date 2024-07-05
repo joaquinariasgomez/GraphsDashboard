@@ -3,6 +3,7 @@ import TrendingDownRoundedIcon from '@mui/icons-material/TrendingDownRounded';
 import AttachMoneyRoundedIcon from '@mui/icons-material/AttachMoneyRounded';
 import Select from 'react-select';
 import SyncLoader from "react-spinners/SyncLoader";
+import { customStyleForSelectPlacement } from '../Utils';
 
 export default function CreateGraphStep2({ graphOptions, onPrev, onNext, onChange, expensesCategoriesLoading, expensesCategories, incomesBankAccountsLoading, incomesBankAccounts, incomesSourcesLoading, incomesSources }) {
 
@@ -124,6 +125,10 @@ export default function CreateGraphStep2({ graphOptions, onPrev, onNext, onChang
                                 }
                             })}
                             options={getSelectOptionsFrom(expensesCategories)}
+                            menuPlacement="auto" // Adjust placement to avoid overflow
+                            menuPosition="fixed" // Use fixed positioning to handle overflow better
+                            styles={customStyleForSelectPlacement}
+                            menuPortalTarget={document.body}
                             onChange={function (selectedCategory) {
                                 handleSelectedOption({type: 'SPECIFIC CATEGORY', category: selectedCategory.value})
                             }}
@@ -227,6 +232,10 @@ export default function CreateGraphStep2({ graphOptions, onPrev, onNext, onChang
                                     }
                                 })}
                                 options={getSelectOptionsFrom(incomesBankAccounts)}
+                                menuPlacement="auto" // Adjust placement to avoid overflow
+                                menuPosition="fixed" // Use fixed positioning to handle overflow better
+                                styles={customStyleForSelectPlacement}
+                                menuPortalTarget={document.body}
                                 onChange={function (selectedCategory) {
                                     handleSelectedOption({type: 'SPECIFIC BANKACCOUNT', category: selectedCategory.value})
                                 }}
@@ -253,6 +262,10 @@ export default function CreateGraphStep2({ graphOptions, onPrev, onNext, onChang
                                     }
                                 })}
                                 options={getSelectOptionsFrom(incomesSources)}
+                                menuPlacement="auto" // Adjust placement to avoid overflow
+                                menuPosition="fixed" // Use fixed positioning to handle overflow better
+                                styles={customStyleForSelectPlacement}
+                                menuPortalTarget={document.body}
                                 onChange={function (selectedCategory) {
                                     handleSelectedOption({type: 'SPECIFIC INCOMESOURCE', category: selectedCategory.value})
                                 }}

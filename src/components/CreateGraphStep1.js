@@ -17,7 +17,11 @@ export default function CreateGraphStep1({ graphOptions, onNext, onEnd, onChange
 
     const handleSelectedType = (type) => {
         // Update data in parent, to send all together
-        onChange({ graphType: type, filterCategories: {type: 'SUM', category: 'Select category'} });
+        if(type === "SAVINGS") {
+            onChange({ graphType: type, plot: 'Savings' });
+        } else {
+            onChange({ graphType: type, filterCategories: {type: 'SUM', category: 'Select category'} });
+        }
     }
 
     const handleSelectedTag = (tag) => {

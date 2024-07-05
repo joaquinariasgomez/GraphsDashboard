@@ -3,6 +3,7 @@ import Select from 'react-select';
 import { createDesiredGraph } from '../RequestUtils';
 import { actionTypes } from '../context/globalReducer';
 import { useGlobalStateValue } from '../context/GlobalStateProvider';
+import { customStyleForSelectPlacement } from '../Utils';
 
 export default function CreateGraphStep3({ graphOptions, onPrev, onBegin, onChange }) {
 
@@ -144,6 +145,10 @@ export default function CreateGraphStep3({ graphOptions, onPrev, onBegin, onChan
                                     }
                                 })}
                                 options={getPlotOptions()}
+                                menuPlacement="auto" // Adjust placement to avoid overflow
+                                menuPosition="fixed" // Use fixed positioning to handle overflow better
+                                styles={customStyleForSelectPlacement}
+                                menuPortalTarget={document.body}
                                 onChange={function (selectedCategory) {
                                     handleSelectedPlot(selectedCategory.value)
                                 }}
