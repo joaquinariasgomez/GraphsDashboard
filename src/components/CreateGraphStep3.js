@@ -1,6 +1,6 @@
 import React, {useEffect, useState } from 'react';
 import Select from 'react-select';
-import { createDesiredGraph } from '../RequestUtils';
+import { createDesiredGraph, getAllDesiredGraphsByUserId, reloadDesiredGraphAndReturnNewGraph } from '../RequestUtils';
 import { actionTypes } from '../context/globalReducer';
 import { useGlobalStateValue } from '../context/GlobalStateProvider';
 import { customStyleForSelectPlacement } from '../Utils';
@@ -8,7 +8,7 @@ import { customStyleForSelectPlacement } from '../Utils';
 export default function CreateGraphStep3({ graphOptions, onPrev, onBegin, onChange }) {
 
     // Context
-    const [{botIdCookie}, dispatch] = useGlobalStateValue();
+    const [{botIdCookie, userGraphs, userDesiredGraphs}, dispatch] = useGlobalStateValue();
 
     const handleSelectedGroupBy = (groupBy) => {
         onChange({ groupBy: groupBy });
@@ -47,9 +47,16 @@ export default function CreateGraphStep3({ graphOptions, onPrev, onBegin, onChan
             )
         )
         if(apiResponse) {
-            console.log("Success. Time to update state function")
-
             closeCreateGraphBox()
+            dispatch({  // Update current desired graphs with the new addition (aka apiResponse)
+                type: actionTypes.SET_USER_DESIRED_GRAPHS,
+                value: [...userDesiredGraphs, apiResponse]
+            })
+            const newGraphResponse = await reloadDesiredGraphAndReturnNewGraph(botIdCookie, apiResponse.id);
+            dispatch({
+                type: actionTypes.SET_USER_GRAPHS,
+                value: [...userGraphs, newGraphResponse]
+            })
         }
     }
 

@@ -27,10 +27,6 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import SyncLoader from "react-spinners/SyncLoader";
 
 function App() {
-
-    const [userGraphs, setUserGraphs] = useState([]);
-    const [userDesiredGraphs, setUserDesiredGraphs] = useState([]);
-
     const [usingNotionTemplates, setUsingNotionTemplates] = useState(true);
 
     const [cookieValue, setBotIdCookie, deleteBotIdCookie] = useCookie("bot_id");   // Value from actual cookie from browser application
@@ -42,7 +38,7 @@ function App() {
     const authorization_url = process.env.REACT_APP_NOTION_AUTH_URL;
 
     // Context
-    const [{botIdCookie, session}, dispatch] = useGlobalStateValue();
+    const [{botIdCookie, userGraphs, userDesiredGraphs, session}, dispatch] = useGlobalStateValue();
 
     const navigate = useNavigate();
 
@@ -111,7 +107,11 @@ function App() {
         if(botIdCookie !== "") {
             const apiResponse = await getAllGraphsByUserId(botIdCookie);
             if(apiResponse) {
-                setUserGraphs(apiResponse);
+                //setUserGraphs(apiResponse);
+                dispatch({
+                    type: actionTypes.SET_USER_GRAPHS,
+                    value: apiResponse
+                })
             }
         }
     }
@@ -122,19 +122,27 @@ function App() {
         if(botIdCookie !== "") {
             const apiResponse = await getAllDesiredGraphsByUserId(botIdCookie);
             if(apiResponse) {
-                setUserDesiredGraphs(apiResponse);
+                //setUserDesiredGraphs(apiResponse);
+                dispatch({
+                    type: actionTypes.SET_USER_DESIRED_GRAPHS,
+                    value: apiResponse
+                })
             }
         }
     }
 
-    const manualCreateGraph = async (desiredGraphType, botId) => {
-        try {
-            const newGraphResponse = await reloadDesiredGraphAndReturnNewGraph(botId, desiredGraphType);
-            setUserGraphs([...userGraphs, newGraphResponse]);
-        } catch(error) {
-            showAlert(error.message);
-        }
-    }
+    // const manualCreateGraph = async (desiredGraphType, botId) => {
+    //     try {
+    //         const newGraphResponse = await reloadDesiredGraphAndReturnNewGraph(botId, desiredGraphType);
+    //         //setUserGraphs([...userGraphs, newGraphResponse]);
+    //         dispatch({
+    //             type: actionTypes.SET_USER_GRAPHS,
+    //             value: [...userGraphs, newGraphResponse]
+    //         })
+    //     } catch(error) {
+    //         showAlert(error.message);
+    //     }
+    // }
 
     const fetchUsingNotionTemplates = async () => {
         if(botIdCookie !== "") {
@@ -190,14 +198,22 @@ function App() {
                                             }
                                             return userGraph;
                                         });
-                                        setUserGraphs(updatedUserGraphs);
+                                        //setUserGraphs(updatedUserGraphs);
+                                        dispatch({
+                                            type: actionTypes.SET_USER_GRAPHS,
+                                            value: updatedUserGraphs
+                                        })
                                     } catch(error) {
                                         showAlert(error.message);
                                     }   
                                 } else {
                                     try {
                                         const newGraphResponse = await reloadDesiredGraphAndReturnNewGraph(userDesiredGraph.botId, userDesiredGraph.id);
-                                        setUserGraphs([...userGraphs, newGraphResponse]);
+                                        //setUserGraphs([...userGraphs, newGraphResponse]);
+                                        dispatch({
+                                            type: actionTypes.SET_USER_GRAPHS,
+                                            value: [...userGraphs, newGraphResponse]
+                                        })
                                     } catch(error) {
                                         showAlert(error.message);
                                     }
@@ -347,9 +363,17 @@ function App() {
 
         // Delete userDesiredGraph and userGraph for that type that is being deleted
         const updatedUserDesiredGraphs = userDesiredGraphs.filter((userDesiredGraph) => userDesiredGraph.id !== userDesiredGraphId);
-        setUserDesiredGraphs(updatedUserDesiredGraphs);
+        //setUserDesiredGraphs(updatedUserDesiredGraphs);
+        dispatch({
+            type: actionTypes.SET_USER_DESIRED_GRAPHS,
+            value: updatedUserDesiredGraphs
+        })
         const updatedUserGraphs = userGraphs.filter((userGraph) => userGraph.id !== userDesiredGraph.id);
-        setUserGraphs(updatedUserGraphs);
+        //setUserGraphs(updatedUserGraphs);
+        dispatch({
+            type: actionTypes.SET_USER_GRAPHS,
+            value: updatedUserGraphs
+        })
     }
 
     const renderTimestamp = (userDesiredGraph) => {

@@ -9,7 +9,9 @@ export const initialState = {
     showTermsBox: false,
     showCreateGraphBox: false,
     alertBoxMessage: '',
-    alertBoxType: null
+    alertBoxType: null,
+    userGraphs: [],
+    userDesiredGraphs: []
 };
 
 export const actionTypes = {
@@ -22,7 +24,9 @@ export const actionTypes = {
     SET_SHOW_TERMS_BOX: "SET_SHOW_TERMS_BOX",
     SET_SHOW_CREATE_GRAPH_BOX: "SET_SHOW_CREATE_GRAPH_BOX",
     SET_ALERT_BOX_MESSAGE: "SET_ALERT_BOX_MESSAGE",
-    SET_ALERT_BOX_TYPE: "SET_ALERT_BOX_TYPE"
+    SET_ALERT_BOX_TYPE: "SET_ALERT_BOX_TYPE",
+    SET_USER_GRAPHS: "SET_USER_GRAPHS",
+    SET_USER_DESIRED_GRAPHS: "SET_USER_DESIRED_GRAPHS"
 };
 
 const globalReducer = (state, action) => {
@@ -85,6 +89,18 @@ const globalReducer = (state, action) => {
             return {
                 ...state,
                 alertBoxType: action.value,
+            };
+
+        case actionTypes.SET_USER_GRAPHS:
+            return {
+                ...state,
+                userGraphs: action.value,
+            };
+
+        case actionTypes.SET_USER_DESIRED_GRAPHS:
+            return {
+                ...state,
+                userDesiredGraphs: action.value,
             };
 
         default:
