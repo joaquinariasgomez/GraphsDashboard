@@ -25,6 +25,8 @@ export default function CreateGraphBox() {
         },
         groupBy: 'DAY',
         time: 'LAST WEEK',
+        customStartDate: '',
+        customEndDate: '',
         plot: 'Select plot' // This will be a customization for certain graphs
     });
     const [graphTypeAccessLoading, setGraphTypeAccessLoading] = useState(true);
@@ -39,9 +41,9 @@ export default function CreateGraphBox() {
     const [incomesSourcesLoading, setIncomesSourcesLoading] = useState(true);
     const [incomesSources, setIncomesSources] = useState([]);
     
-    // useEffect(() => {
-    //     console.log("createGraphData data: ", createGraphData);
-    // }, [createGraphData]);
+    useEffect(() => {
+        console.log("createGraphData data: ", createGraphData);
+    }, [createGraphData]);
 
     // Do all the necessary requests at the beginning of the form
     useEffect(() => {
