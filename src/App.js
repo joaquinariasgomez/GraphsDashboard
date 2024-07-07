@@ -13,7 +13,6 @@ import UserCircle from './UserCircle';
 import ClipLoader from "react-spinners/ClipLoader";
 import { useNavigate } from "react-router-dom";
 import SelectGraphTag from './SelectGraphTag';
-import CreateGraph from './CreateGraph';
 import { useCookie } from './useCookie';
 import { useSessionStorage } from './useSessionStorage';
 import { useGlobalStateValue } from './context/GlobalStateProvider';
@@ -227,11 +226,6 @@ function App() {
                         {renderGraph(userDesiredGraph)}
                     </div>
                 ))}
-                {/* <CreateGraph
-                    botId={botIdCookie}
-                    updateStateFunction={fetchUserDesiredGraphs}
-                    createGraphFunction={manualCreateGraph}
-                /> */}
             </div>
         )
     }

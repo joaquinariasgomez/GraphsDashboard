@@ -145,9 +145,7 @@ export async function createDesiredGraph(desiredGraphBody) {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: desiredGraphBody,
-        referrer: "",
-        keepalive: false
+        body: desiredGraphBody
     })
     .then(response => {
         if(!response.ok) {
@@ -165,9 +163,7 @@ export async function updateDesiredGraph(desiredGraphId, desiredGraphBody) {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: desiredGraphBody,
-        referrer: "",
-        keepalive: false
+        body: desiredGraphBody
     })
     .then(response => {
         if(!response.ok) {
@@ -256,6 +252,42 @@ export async function loginToNotionWithCode(code) {
         return response.json()
     });
     return result;
+}
+
+export async function createStripeCheckoutSession(botId) {
+    await fetch(Config.BackendStripeURL+"/checkout-session?botId="+botId,
+        {
+            method: 'POST',
+            // redirect: 'manual'
+        })
+        .then(response => {
+            console.log(response.status);
+            if(response.status == "303") {
+                console.log("Response is 303")
+                console.log("response headers: ",response.headers);
+                console.log("response status: ",response.status);
+                const location = response.headers.get('Location');
+                console.log("Location: ", location);
+                // if (location) {
+                //     window.location.href = location; // Perform the manual redirect
+                // }
+                // window.location.href = response.url;
+            }
+            if(response.redirected) {
+                console.log("Response is redirect")
+                console.log("response headers: ",response.headers);
+                console.log("response status: ",response.status);
+                const location = response.headers.get('Location');
+                console.log("Location: ", location);
+                // if (location) {
+                //     window.location.href = location; // Perform the manual redirect
+                // }
+                // window.location.href = response.url;
+            }
+            if(!response.ok) {
+                throw new Error(response.statusText);
+            }
+        });
 }
 
 // TODO: read docs about headers here: https://javascript.info/fetch-api

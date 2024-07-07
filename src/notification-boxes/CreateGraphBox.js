@@ -5,7 +5,7 @@ import CreateGraphStep1 from "../components/CreateGraphStep1";
 import CreateGraphStep2 from "../components/CreateGraphStep2";
 import CreateGraphStep3 from "../components/CreateGraphStep3";
 import { useEffect, useState } from "react";
-import { createDesiredGraph, getExpensesCategories, getGraphTypeAccess, getIncomesBankAccounts, getIncomesSources } from "../RequestUtils";
+import { getExpensesCategories, getGraphTypeAccess, getIncomesBankAccounts, getIncomesSources } from "../RequestUtils";
 
 export default function CreateGraphBox() {
 
