@@ -18,9 +18,11 @@ export default function CreateGraphStep3({ graphOptions, onPrev, onBegin, onChan
     const [endDate, setEndDate] = useState(null);
     const onDatePickerChange = (dates) => {
         const [start, end] = dates;
+        const startFormatted = (start !== null) ? start.toISOString().split('T')[0] : null;
+        const endFormatted = (end !== null) ? end.toISOString().split('T')[0] : null;
         setStartDate(start);
         setEndDate(end);
-        onChange({ customStartDate: startDate, customEndDate: endDate })
+        onChange({ customStartDate: startFormatted, customEndDate: endFormatted })
     };
 
     const handleSelectedGroupBy = (groupBy) => {
@@ -213,7 +215,14 @@ export default function CreateGraphStep3({ graphOptions, onPrev, onBegin, onChan
                 }>
                     Back
                 </button>
-                <button className="creategraphbox__nextbutton" onClick={handleCreateGraph} disabled={graphOptions.graphType === 'SAVINGS' && graphOptions.plot === 'Select plot'}>
+                <button className="creategraphbox__nextbutton" onClick={handleCreateGraph}
+                disabled={
+                    (graphOptions.graphType === 'SAVINGS' && graphOptions.plot === 'Select plot')
+                    || (graphOptions.time === 'CUSTOM' && 
+                        (graphOptions.customEndDate === null || graphOptions.customEndDate === ""
+                            || graphOptions.customStartDate === null || graphOptions.customStartDate === "")
+                    )
+                }>
                     Create Graph
                 </button>
             </div>
