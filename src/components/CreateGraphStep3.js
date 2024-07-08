@@ -4,11 +4,26 @@ import { createDesiredGraph, getAllDesiredGraphsByUserId, reloadDesiredGraphAndR
 import { actionTypes } from '../context/globalReducer';
 import { useGlobalStateValue } from '../context/GlobalStateProvider';
 import { customStyleForSelectPlacement } from '../Utils';
+import { DateRange } from '@mui/icons-material';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 
 export default function CreateGraphStep3({ graphOptions, onPrev, onBegin, onChange }) {
 
     // Context
     const [{botIdCookie, userGraphs, userDesiredGraphs}, dispatch] = useGlobalStateValue();
+
+    // Date picker
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(null);
+    const onDatePickerChange = (dates) => {
+        const [start, end] = dates;
+        const startFormatted = (start !== null) ? start.toISOString().split('T')[0] : null;
+        const endFormatted = (end !== null) ? end.toISOString().split('T')[0] : null;
+        setStartDate(start);
+        setEndDate(end);
+        onChange({ customStartDate: startFormatted, customEndDate: endFormatted })
+    };
 
     const handleSelectedGroupBy = (groupBy) => {
         onChange({ groupBy: groupBy });
@@ -69,6 +84,21 @@ export default function CreateGraphStep3({ graphOptions, onPrev, onBegin, onChan
         }
     }
 
+    const renderDatePicker = () => {
+        return (
+            <div className='customdatepicker'>
+                <DatePicker
+                selected={startDate}
+                onChange={onDatePickerChange}
+                startDate={startDate}
+                endDate={endDate}
+                selectsRange
+                inline
+                />
+            </div>
+        );
+    }
+
     const renderGroupByButtons = () => {
         return (
             <div className='creategraphsstep3__buttons'>
@@ -96,26 +126,35 @@ export default function CreateGraphStep3({ graphOptions, onPrev, onBegin, onChan
 
     const renderTimeButtons = () => {
         return (
-            <div className='creategraphsstep3__buttons'>
-                <button
-                    className={graphOptions.time === 'LAST WEEK' ? 'selected' : 'not_selected'}
-                    onClick={() => handleSelectedTime('LAST WEEK')}
-                >
-                    <p>Last week</p>
-                </button>
-                <button
-                    className={graphOptions.time === 'LAST MONTH' ? 'selected' : 'not_selected'}
-                    onClick={() => handleSelectedTime('LAST MONTH')}
-                >
-                    <p>Last month</p>
-                </button>
-                <button
-                    className={graphOptions.time === 'LAST YEAR' ? 'selected' : 'not_selected'}
-                    onClick={() => handleSelectedTime('LAST YEAR')}
-                >
-                    <p>Last year</p>
-                </button>
-            </div>
+            <>
+                <div className='creategraphsstep3__buttons'>
+                    <button
+                        className={graphOptions.time === 'LAST WEEK' ? 'selected time' : 'not_selected time'}
+                        onClick={() => handleSelectedTime('LAST WEEK')}
+                    >
+                        <p>Last week</p>
+                    </button>
+                    <button
+                        className={graphOptions.time === 'LAST MONTH' ? 'selected time' : 'not_selected time'}
+                        onClick={() => handleSelectedTime('LAST MONTH')}
+                    >
+                        <p>Last month</p>
+                    </button>
+                    <button
+                        className={graphOptions.time === 'LAST YEAR' ? 'selected time' : 'not_selected time'}
+                        onClick={() => handleSelectedTime('LAST YEAR')}
+                    >
+                        <p>Last year</p>
+                    </button>
+                    <button
+                        className={graphOptions.time === 'CUSTOM' ? 'selected time' : 'not_selected time'}
+                        onClick={() => handleSelectedTime('CUSTOM')}
+                    >
+                        <p>Custom date</p>
+                    </button>
+                </div>
+                {graphOptions.time === 'CUSTOM' && renderDatePicker()}
+            </>
         )
     }
 
@@ -176,7 +215,14 @@ export default function CreateGraphStep3({ graphOptions, onPrev, onBegin, onChan
                 }>
                     Back
                 </button>
-                <button className="creategraphbox__nextbutton" onClick={handleCreateGraph} disabled={graphOptions.graphType === 'SAVINGS' && graphOptions.plot === 'Select plot'}>
+                <button className="creategraphbox__nextbutton" onClick={handleCreateGraph}
+                disabled={
+                    (graphOptions.graphType === 'SAVINGS' && graphOptions.plot === 'Select plot')
+                    || (graphOptions.time === 'CUSTOM' && 
+                        (graphOptions.customEndDate === null || graphOptions.customEndDate === ""
+                            || graphOptions.customStartDate === null || graphOptions.customStartDate === "")
+                    )
+                }>
                     Create Graph
                 </button>
             </div>

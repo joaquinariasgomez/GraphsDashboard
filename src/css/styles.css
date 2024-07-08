@@ -1168,6 +1168,18 @@ body {
     color: rgb(144, 144, 144);
 }
 
+.creategraphsstep3__buttons > button.time {
+    width: 130px;
+}
+
+.customdatepicker {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
 .creategraphsstep3__buttons > button.selected {
     border-color: #28282B;
     color: #28282B;
