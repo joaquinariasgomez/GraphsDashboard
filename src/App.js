@@ -106,7 +106,6 @@ function App() {
         if(botIdCookie !== "") {
             const apiResponse = await getAllGraphsByUserId(botIdCookie);
             if(apiResponse) {
-                //setUserGraphs(apiResponse);
                 dispatch({
                     type: actionTypes.SET_USER_GRAPHS,
                     value: apiResponse
@@ -121,7 +120,6 @@ function App() {
         if(botIdCookie !== "") {
             const apiResponse = await getAllDesiredGraphsByUserId(botIdCookie);
             if(apiResponse) {
-                //setUserDesiredGraphs(apiResponse);
                 dispatch({
                     type: actionTypes.SET_USER_DESIRED_GRAPHS,
                     value: apiResponse
@@ -197,7 +195,6 @@ function App() {
                                             }
                                             return userGraph;
                                         });
-                                        //setUserGraphs(updatedUserGraphs);
                                         dispatch({
                                             type: actionTypes.SET_USER_GRAPHS,
                                             value: updatedUserGraphs
@@ -208,7 +205,6 @@ function App() {
                                 } else {
                                     try {
                                         const newGraphResponse = await reloadDesiredGraphAndReturnNewGraph(userDesiredGraph.botId, userDesiredGraph.id);
-                                        //setUserGraphs([...userGraphs, newGraphResponse]);
                                         dispatch({
                                             type: actionTypes.SET_USER_GRAPHS,
                                             value: [...userGraphs, newGraphResponse]
@@ -357,13 +353,11 @@ function App() {
 
         // Delete userDesiredGraph and userGraph for that type that is being deleted
         const updatedUserDesiredGraphs = userDesiredGraphs.filter((userDesiredGraph) => userDesiredGraph.id !== userDesiredGraphId);
-        //setUserDesiredGraphs(updatedUserDesiredGraphs);
         dispatch({
             type: actionTypes.SET_USER_DESIRED_GRAPHS,
             value: updatedUserDesiredGraphs
         })
         const updatedUserGraphs = userGraphs.filter((userGraph) => userGraph.id !== userDesiredGraph.id);
-        //setUserGraphs(updatedUserGraphs);
         dispatch({
             type: actionTypes.SET_USER_GRAPHS,
             value: updatedUserGraphs
@@ -385,18 +379,44 @@ function App() {
         }
     }
 
-    const renderGraph = (userDesiredGraph) => {
-        if(getUserGraphByDesiredGraphId(userGraphs, userDesiredGraph.id) != null) {
+    const getErrorMessageFromGraph = (errorMsg) => {
+        if(errorMsg === "AUTHENTICATION_ERROR") {
             return (
-                <div className='usergraph__graphcontainer'>
-                    <GraphFactory
-                        graphData={getUserGraphByDesiredGraphId(userGraphs, userDesiredGraph.id)}
-                        desiredGraphOptions={userDesiredGraph.graphOptions}
-                    />
-                </div>
+                <p>Please login again to update your credentials</p>
+            )
+        } else if(errorMsg === "GENERIC_ERROR") {
+            return (
+                <p>There has been an error creating this graph. Please try again</p>
             )
         }
-        else {
+    }
+
+    const renderGraph = (userDesiredGraph) => {
+        const userGraph = getUserGraphByDesiredGraphId(userGraphs, userDesiredGraph.id)
+        if(userGraph != null) {
+            if(userGraph.error != null) {
+                return (
+                    <div className='usergraph__loadinggraph'>
+                        <p className='usergraph__loadinggraph__type'>
+                            {getGraphTitleFromGraphOptions(userDesiredGraph.graphOptions)}
+                        </p>
+                        <div className='usergraph__loadinggraph__info'>
+                            <WarningAmberRoundedIcon fontSize='large' style={{ color: '#6d6d6d' }}/>
+                            {getErrorMessageFromGraph(userGraph.error)}
+                        </div>
+                    </div>
+                )
+            } else {
+                return (
+                    <div className='usergraph__graphcontainer'>
+                        <GraphFactory
+                            graphData={getUserGraphByDesiredGraphId(userGraphs, userDesiredGraph.id)}
+                            desiredGraphOptions={userDesiredGraph.graphOptions}
+                        />
+                    </div>
+                )
+            }
+        } else {
             return (
                 <div className='usergraph__loadinggraph'>
                     <p className='usergraph__loadinggraph__type'>

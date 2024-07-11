@@ -12,6 +12,8 @@ export default function CreateGraphStep1({ graphOptions, onNext, onEnd, onChange
             handleSelectedType("INCOMES");
         } else if(graphTypeAccess === "ONLY_EXPENSES" && graphOptions.graphType === "INCOMES") {
             handleSelectedType("EXPENSES");
+        } else if(graphTypeAccess === "NONE") {
+            handleSelectedType("NONE");
         }
     }, [graphTypeAccess]);
 
@@ -186,7 +188,7 @@ export default function CreateGraphStep1({ graphOptions, onNext, onEnd, onChange
                             onNext()
                         }
                     }
-                } disabled={graphTypeAccessLoading}>
+                } disabled={graphTypeAccessLoading || graphOptions.graphType === "NONE"}>
                     Next
                 </button>
             </div>

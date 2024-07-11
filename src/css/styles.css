@@ -342,14 +342,15 @@ body {
 
 .usergraph__loadinggraph__info {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
 }
 
 .usergraph__loadinggraph__info > p {
     font-weight: bold;
     color: rgb(109, 109, 109);
-    margin-right: 10px;
+    /* margin-right: 10px; */
+    text-align: center;
 }
 
 .usergraph__createbutton {
