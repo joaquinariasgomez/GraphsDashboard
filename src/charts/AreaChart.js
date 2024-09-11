@@ -24,6 +24,7 @@ export default function AreaChart({ graphData, desiredGraphOptions }) {
 
     const options = {
         animation: true,
+        maintainAspectRatio: false,
         plugins: {
             legend: {
                 display: false
