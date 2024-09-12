@@ -27,6 +27,7 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import SyncLoader from "react-spinners/SyncLoader";
 import OpenInFullIcon from '@mui/icons-material/OpenInFull';
 import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen';
+import UserFeedback from './UserFeedback';
 
 function App() {
     const [usingNotionTemplates, setUsingNotionTemplates] = useState(true);
@@ -227,7 +228,7 @@ function App() {
                             <button className='usergraph__openfull' title='Expand' onClick={function() {
                                 expandGraph(userDesiredGraph.id)
                             }}>
-                                {(isGraphExpanded && expandedGraphId == userDesiredGraph.id) ? <CloseFullscreenIcon style={{ color: '#808080' }} /> : <OpenInFullIcon style={{ color: '#808080' }} /> }
+                                {(isGraphExpanded && expandedGraphId == userDesiredGraph.id) ? <CloseFullscreenIcon style={{ color: '#a8a8a8' }} /> : <OpenInFullIcon style={{ color: '#a8a8a8' }} /> }
                             </button>
                         </div>
                         {renderGraph(userDesiredGraph)}
@@ -249,6 +250,7 @@ function App() {
             }
             else {  // User has session
                 return (
+                    // <div className={`header_and_body ${isGraphExpanded ? "obscured" : ""}`}>
                     <div className='header_and_body'>
                         <div className='header'>
                             <CreateGraphButton />
@@ -257,6 +259,7 @@ function App() {
                         </div>
                         {renderGetTemplateWizard()}
                         {renderUserGraphs()}
+                        <UserFeedback />
                     </div>
                 )
             }

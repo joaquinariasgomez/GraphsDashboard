@@ -34,6 +34,11 @@ body {
     width: 100%;
 }
 
+/* .header_and_body.obscured {
+    background-color: rgba(0, 0, 0, 0.4);
+    animation: opacity-bng 1s ease;
+} */
+
 /* === Header === */
 .header {
     display: flex;
@@ -173,6 +178,18 @@ body {
     /* position: relative; */
 }
 
+.userfeedback__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    /* width: 80vw; */
+    /* max-width: 700px; */
+    border-radius: 10px;
+    background-color: #28282B;
+}
+
 .gettemplatewizard__container {
     margin-top: 10px;
     margin-bottom: 30px;
@@ -222,12 +239,18 @@ body {
     box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.25);
     position: relative;
     border: 1px solid red;
-    transition: width 0.5s ease, height 0.5s ease;
+    /* width: calc(var(--card-width) - 30 * 2 - 2); */
+    transform: scale(1);
+    transition: transform 0.5s ease;
 }
 
 .usergraph__item.expanded {
-    width: 120%;
-    height: 120%;
+    /* width: 700px;
+    height: 400px; */
+    /* height: 120%; */
+    z-index: 1;
+    background-color: white;
+    transform: scale(1.5);
 }
 
 .first_line {
