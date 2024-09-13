@@ -183,11 +183,156 @@ body {
     flex-direction: column;
     align-items: center;
     margin-bottom: 30px;
-    padding: 20px;
+    position: relative;
+    /* width: 100vw; This will probably be just for mobile */ 
+    padding: 40px 60px;
     /* width: 80vw; */
     /* max-width: 700px; */
     border-radius: 10px;
+    background-color: rgb(240, 240, 240);
+}
+
+.userfeedback__title {
+    display: flex;
+    flex-direction: column;
+    align-items: first;
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.userfeedback__title > h1 {
+    font-size: 32px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.userfeedback__title > p {
+    color: rgb(105, 105, 105);
+    font-weight: 600;
+    margin-top: 0px;
+    margin-bottom: 10px;
+}
+
+.userfeedback__question1 {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    /* border: 1px solid red; */
+}
+
+.userfeedback__question1 > h2 {
+    font-size: 22px;
+    margin-right: 30px;
+}
+
+.userfeedback__buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: calc(75px * 2 + 20px);
+}
+
+.userfeedback__buttons > button {
+    width: 75px;
+    height: 50px;
+    padding: 0px;
+    border-style: solid;
+    border-radius: 10px;
+    border-width: 3px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-color: white;
+    background-color: white;
+    color: rgb(144, 144, 144);
+}
+
+.userfeedback__buttons > button > p {
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.userfeedback__buttons > button.selected {
+    border-color: #28282B;
+    color: #28282B;
+    transition: color 0.25s ease;
+}
+
+.userfeedback__buttons > button:hover {
+    cursor: pointer;
+    background-color: rgb(250, 250, 250);
+    border-color: rgb(250, 250, 250);
+}
+
+.userfeedback__buttons > button:active {
+    background-color: rgb(222, 222, 222);
+    border-color: rgb(222, 222, 222);
+}
+
+.userfeedback__buttons > button.selected:hover {
+    border-color: #28282B;
+}
+
+.userfeedback__icon {
+    position: absolute;
+    right: 60px;
+    top: 40px;
+}
+
+.userfeedback__question2 {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: first;
+    /* border: 1px solid red; */
+}
+
+.userfeedback__question2 > h2 {
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+
+.userfeedback__textarea {
+    resize: none;
+    height: 100px;
+    border-radius: 10px;
+    border-width: 1px;
+    font-size: 14px;
+    padding: 10px;
+    margin-bottom: 25px;
+}
+
+.userfeedback__textarea:focus {
+    outline: none;
+}
+
+.userfeedback__container > button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0;
+    height: 44px;
+    border-style: solid;
+    border-radius: 12px;
+    border-width: 3px;
+    border-color: #28282B;
+    font-weight: 600;
+    font-size: 15px;
+    color: white;
     background-color: #28282B;
+    padding-left: 17px;
+    padding-right: 17px;
+}
+
+.userfeedback__container > button:hover {
+    cursor: pointer;
+    animation: changecolor 0.25s ease forwards;
 }
 
 .gettemplatewizard__container {
@@ -1108,7 +1253,7 @@ body {
 
 .creategraphsstep1__buttons > button:active {
     background-color: rgb(222, 222, 222);
-    border-color: rgb(222, 222, 222);;
+    border-color: rgb(222, 222, 222);
 }
 
 .creategraphsstep1__buttons > button.selected:hover {
