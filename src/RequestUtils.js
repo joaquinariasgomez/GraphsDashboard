@@ -272,4 +272,15 @@ export async function createUserFeedback(botId, feedbackBody) {
     return result;
 }
 
+export async function getUserFeedback(botId) {
+    const result = await fetch(Config.NotionGraphsFeedbackURL+"/"+botId)
+        .then(response => {
+            if(!response.ok) {
+                throw new Error(response.statusText);
+            }
+            return response.json()
+        });
+    return result;
+}
+
 // TODO: read docs about headers here: https://javascript.info/fetch-api

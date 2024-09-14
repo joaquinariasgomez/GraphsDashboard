@@ -211,6 +211,8 @@ body {
     font-weight: 600;
     margin-top: 0px;
     margin-bottom: 10px;
+    /* font-size: 18px; */
+    font-style: italic;
 }
 
 .userfeedback__question1 {
@@ -219,7 +221,6 @@ body {
     width: 100%;
     align-items: center;
     justify-content: space-between;
-    /* border: 1px solid red; */
 }
 
 .userfeedback__question1 > h2 {
@@ -290,11 +291,17 @@ body {
     flex-direction: column;
     width: 100%;
     align-items: first;
-    /* border: 1px solid red; */
 }
 
 .userfeedback__question2 > h2 {
     font-size: 22px;
+    margin-bottom: 20px;
+}
+
+.userfeedback__question2 > p {
+    color: rgb(105, 105, 105);
+    font-weight: 600;
+    margin-top: 0px;
     margin-bottom: 20px;
 }
 
