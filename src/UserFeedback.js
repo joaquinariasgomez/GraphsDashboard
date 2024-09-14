@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { useGlobalStateValue } from "./context/GlobalStateProvider";
 import FeedbackTwoToneIcon from '@mui/icons-material/FeedbackTwoTone';
+import { createUserFeedback } from "./RequestUtils";
 
 export default function UserFeedback({}) {
 
     // Context
-    const [{}, dispatch] = useGlobalStateValue();
+    const [{botIdCookie}, dispatch] = useGlobalStateValue();
     const [feedbackText, setFeedbackText] = useState("");
     const [userHadIssues, setUserHadIssues] = useState(false);
 
@@ -17,11 +18,27 @@ export default function UserFeedback({}) {
         setUserHadIssues(option);
     }
 
+    async function handleCreateFeedback() {
+        const apiResponse = await createUserFeedback(
+            botIdCookie,
+            JSON.stringify(
+                {
+                    hadTroubleWithGraphs: userHadIssues,
+                    moreFeedback: feedbackText
+                }
+            )
+        )
+        if(apiResponse) {
+            console.log("We got response!")
+
+        }
+    }
+
     return (
         <div className='userfeedback__container'>
             <FeedbackTwoToneIcon fontSize="large" className="userfeedback__icon" />
             <div className="userfeedback__title">
-                <h1>Rate our product</h1>
+                <h1>Rate our product!</h1>
                 <p>We would love your feedback.</p>
             </div>
             <div className="userfeedback__question1">
@@ -55,6 +72,7 @@ export default function UserFeedback({}) {
             <button
                 className="userfeedback__sendbutton"
                 disabled={feedbackText === ""}
+                onClick={handleCreateFeedback}
             >
                 <p>Send feedback</p>
             </button>

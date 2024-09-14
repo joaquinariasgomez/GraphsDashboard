@@ -312,7 +312,7 @@ body {
     outline: none;
 }
 
-.userfeedback__container > button {
+.userfeedback__sendbutton {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -330,9 +330,16 @@ body {
     padding-right: 17px;
 }
 
-.userfeedback__container > button:hover {
+.userfeedback__sendbutton:hover {
     cursor: pointer;
     animation: changecolor 0.25s ease forwards;
+}
+
+.userfeedback__sendbutton:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+    color: #28282B;
+    background-color: white;
 }
 
 .gettemplatewizard__container {
@@ -1583,6 +1590,13 @@ body {
     animation: changecolor_oposite 0.25s ease forwards;
 }
 
+.creategraphbox__backbutton:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+    color: #28282B;
+    background-color: white;
+}
+
 .creategraphbox__nextbutton {
     margin: 0;
     height: 44px;
@@ -1601,6 +1615,13 @@ body {
 .creategraphbox__nextbutton:hover {
     cursor: pointer;
     animation: changecolor 0.25s ease forwards;
+}
+
+.creategraphbox__nextbutton:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+    color: #28282B;
+    background-color: white;
 }
 
 /* ===== GET PRO BOX ===== */

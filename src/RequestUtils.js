@@ -145,9 +145,7 @@ export async function createDesiredGraph(desiredGraphBody) {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: desiredGraphBody,
-        referrer: "",
-        keepalive: false
+        body: desiredGraphBody
     })
     .then(response => {
         if(!response.ok) {
@@ -165,9 +163,7 @@ export async function updateDesiredGraph(desiredGraphId, desiredGraphBody) {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: desiredGraphBody,
-        referrer: "",
-        keepalive: false
+        body: desiredGraphBody
     })
     .then(response => {
         if(!response.ok) {
@@ -252,6 +248,24 @@ export async function loginToNotionWithCode(code) {
     .then(response => {
         if(!response.ok) {
             throw new Error(response.status);
+        }
+        return response.json()
+    });
+    return result;
+}
+
+export async function createUserFeedback(botId, feedbackBody) {
+    const result = await fetch(Config.NotionGraphsFeedbackURL+"/"+botId, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: feedbackBody
+    })
+    .then(response => {
+        if(!response.ok) {
+            throw new Error(response.statusText);
         }
         return response.json()
     });
