@@ -34,6 +34,10 @@ export default function UserFeedback({}) {
         }
     }
 
+    const handleBackToSendFeedback = () => {
+        setUserAlreadySentFeedback(false)
+    }
+
     async function handleCreateFeedback() {
         const apiResponse = await createUserFeedback(
             botIdCookie,
@@ -76,7 +80,7 @@ export default function UserFeedback({}) {
                 </div>
                 <div className="userfeedback__question2">
                     <h2>More information</h2>
-                    <p>Improvements ideas, issues that you had, everything is welcome!</p>
+                    <p>Improvement ideas, issues that you had, everything is welcome!</p>
                     <textarea
                         className="userfeedback__textarea"
                         placeholder="Write your thoughts here..."
@@ -102,42 +106,13 @@ export default function UserFeedback({}) {
                 <FeedbackTwoToneIcon fontSize="large" className="userfeedback__icon" />
                 <div className="userfeedback__title">
                     <h1>Rate our product!</h1>
-                    <p>We would love your feedback.</p>
-                </div>
-                <div className="userfeedback__question1">
-                    <h2>Have you had any issues creating graphs?</h2>
-                    <div className="userfeedback__buttons">
-                        <button
-                            className={userHadIssues === false ? 'selected' : 'not_selected'}
-                            onClick={() => handleSelectedButton(false)}
-                        >
-                            <p>No</p>
-                        </button>
-                        <button
-                            className={userHadIssues === true ? 'selected' : 'not_selected'}
-                            onClick={() => handleSelectedButton(true)}
-                        >
-                            <p>Yes</p>
-                        </button>
-                    </div>
-                </div>
-                <div className="userfeedback__question2">
-                    <h2>More information</h2>
-                    <p>Improvements ideas, issues that you had, everything is welcome!</p>
-                    <textarea
-                        className="userfeedback__textarea"
-                        placeholder="Write your thoughts here..."
-                        onChange={updateUserFeedback}
-                        value={feedbackText}
-                    />
-
+                    <h2>Thanks for sending your feedback!</h2>
                 </div>
                 <button
-                    className="userfeedback__sendbutton"
-                    disabled={feedbackText === ""}
-                    onClick={handleCreateFeedback}
+                    className="userfeedback__changeresponsebutton"
+                    onClick={handleBackToSendFeedback}
                 >
-                    <p>Send feedback</p>
+                    <p>Change my response</p>
                 </button>
             </div>
         )

@@ -224,11 +224,11 @@ function App() {
                                 <CachedIcon />
                                 {/* {(graphIsUpdating) ? <ClipLoader size={20}/> : <CachedIcon />} */}
                             </button>
-                            <button className='usergraph__openfull' title='Expand' onClick={function() {
+                            {/* <button className='usergraph__openfull' title='Expand' onClick={function() {
                                 expandGraph(userDesiredGraph.id)
                             }}>
                                 {(isGraphExpanded && expandedGraphId == userDesiredGraph.id) ? <CloseFullscreenIcon style={{ color: '#a8a8a8' }} /> : <OpenInFullIcon style={{ color: '#a8a8a8' }} /> }
-                            </button>
+                            </button> */}
                         </div>
                         {renderGraph(userDesiredGraph)}
                     </div>
