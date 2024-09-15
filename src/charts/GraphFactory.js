@@ -149,10 +149,5 @@ export default function GraphFactory({ graphData, desiredGraphOptions }) {
         // );
     }
 
-    return (
-        <div>
-            {/* {renderGraphOld()} */}
-            {renderGraph()}
-        </div>
-    )
+    return renderGraph()
 }

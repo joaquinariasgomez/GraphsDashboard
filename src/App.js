@@ -24,9 +24,15 @@ import LandingPageFooter from './LandingPageFooter';
 import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import SyncLoader from "react-spinners/SyncLoader";
+import OpenInFullIcon from '@mui/icons-material/OpenInFull';
+import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen';
+import UserFeedback from './UserFeedback';
 
 function App() {
     const [usingNotionTemplates, setUsingNotionTemplates] = useState(true);
+
+    const [isGraphExpanded, setIsGraphExpanded] = useState(false);
+    const [expandedGraphId, setExpandedGraphId] = useState(null);
 
     const [cookieValue, setBotIdCookie, deleteBotIdCookie] = useCookie("bot_id");   // Value from actual cookie from browser application
     const [sessionValue, setSessionStorage, deleteSessionStorage] = useSessionStorage("bot_id");
@@ -167,7 +173,7 @@ function App() {
         return (
             <div className='usergraphsgrid__container'>
                 {userDesiredGraphs.map(userDesiredGraph => (
-                    <div className='usergraph__item' key={userDesiredGraph.id}>
+                    <div className={`usergraph__item ${isGraphExpanded && expandedGraphId == userDesiredGraph.id ? "expanded" : ""}`} key={userDesiredGraph.id}>
                         <div className='usergraph__firstrow'>
                             <button className='usergraph__delete' title='Delete' onClick={function () {
                                 deleteDesiredGraphAndState(userDesiredGraph)
@@ -218,6 +224,11 @@ function App() {
                                 <CachedIcon />
                                 {/* {(graphIsUpdating) ? <ClipLoader size={20}/> : <CachedIcon />} */}
                             </button>
+                            {/* <button className='usergraph__openfull' title='Expand' onClick={function() {
+                                expandGraph(userDesiredGraph.id)
+                            }}>
+                                {(isGraphExpanded && expandedGraphId == userDesiredGraph.id) ? <CloseFullscreenIcon style={{ color: '#a8a8a8' }} /> : <OpenInFullIcon style={{ color: '#a8a8a8' }} /> }
+                            </button> */}
                         </div>
                         {renderGraph(userDesiredGraph)}
                     </div>
@@ -238,6 +249,7 @@ function App() {
             }
             else {  // User has session
                 return (
+                    // <div className={`header_and_body ${isGraphExpanded ? "obscured" : ""}`}>
                     <div className='header_and_body'>
                         <div className='header'>
                             <CreateGraphButton />
@@ -246,6 +258,7 @@ function App() {
                         </div>
                         {renderGetTemplateWizard()}
                         {renderUserGraphs()}
+                        <UserFeedback />
                     </div>
                 )
             }
@@ -362,6 +375,16 @@ function App() {
             type: actionTypes.SET_USER_GRAPHS,
             value: updatedUserGraphs
         })
+    }
+
+    const expandGraph = (userDesiredGraphId) => {
+        if(isGraphExpanded) {
+            setIsGraphExpanded(false)
+            setExpandedGraphId(null)
+        } else {
+            setIsGraphExpanded(true)
+            setExpandedGraphId(userDesiredGraphId)
+        }
     }
 
     const renderTimestamp = (userDesiredGraph) => {

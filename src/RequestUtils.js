@@ -290,4 +290,33 @@ export async function createStripeCheckoutSession(botId) {
         });
 }
 
+export async function createUserFeedback(botId, feedbackBody) {
+    const result = await fetch(Config.NotionGraphsFeedbackURL+"/"+botId, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: feedbackBody
+    })
+    .then(response => {
+        if(!response.ok) {
+            throw new Error(response.statusText);
+        }
+        return response.json()
+    });
+    return result;
+}
+
+export async function getUserFeedback(botId) {
+    const result = await fetch(Config.NotionGraphsFeedbackURL+"/"+botId)
+        .then(response => {
+            if(!response.ok) {
+                throw new Error(response.statusText);
+            }
+            return response.json()
+        });
+    return result;
+}
+
 // TODO: read docs about headers here: https://javascript.info/fetch-api
