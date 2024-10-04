@@ -3,7 +3,7 @@ import { Chart } from "chart.js/auto";
 import DeleteIcon from '@mui/icons-material/Delete';
 import CachedIcon from '@mui/icons-material/Cached';
 import AddIcon from '@mui/icons-material/Add';
-import { connectToNotion, deleteDesiredGraph, deleteGraphByUserIdAndDesiredGraphId, getAllDesiredGraphsByUserId, getAllGraphsByUserId, reloadDesiredGraphAndReturnNewGraph, reloadDesiredGraphAndReturnUpdatedGraph, loginToNotionWithCode, getUsingNotionTemplates, createSessionsSearch } from './RequestUtils';
+import { connectToNotion, deleteDesiredGraph, deleteGraphByUserIdAndDesiredGraphId, getAllDesiredGraphsByUserId, getAllGraphsByUserId, reloadDesiredGraphAndReturnNewGraph, reloadDesiredGraphAndReturnUpdatedGraph, loginToNotionWithCode, getUsingNotionTemplates, createSessionsSearch, hasBillingSubscription } from './RequestUtils';
 import { delay, getGraphTitleFromGraphOptions, getRelativeTimeToUpdate, getRelativeTimestamp, getUserGraphByDesiredGraphId } from './Utils';
 import EmptyGraphsDashboard from './EmptyGraphsDashboard';
 import LoadingGraphsScreen from './LoadingGraphsScreen';
@@ -47,13 +47,26 @@ function App() {
 
     const navigate = useNavigate();
 
-
     useEffect(() => {
         const params = new URL(window.document.location).searchParams;
         const notionCode = params.get("code");
         if (!notionCode) return;
         navigate("/GraphsDashboard");
         getLoginDataFromNotion(notionCode);
+    }, []);
+
+    useEffect(() => {   // Check success or failure from Stripe
+        const query = new URLSearchParams(window.location.search);
+        if (query.get("success")) {
+            console.log("Order placed! You will receive an email confirmation.");
+            // TODO: manage redirect to success page here
+        }
+
+        if (query.get("canceled")) {
+            console.log("Order canceled -- continue to shop around and checkout when you're ready.");
+            // TODO: manage redirect to failure page here
+        }
+        navigate("/GraphsDashboard");
     }, []);
 
     useEffect(() => {
@@ -84,6 +97,10 @@ function App() {
 
     useEffect(() => {
         fetchUsingNotionTemplates();
+    }, [botIdCookie]);
+
+    useEffect(() => {
+        checkHasNotionGraphsProSubscription();
     }, [botIdCookie]);
 
     const getLoginDataFromNotion = async (code) => {
@@ -134,23 +151,22 @@ function App() {
         }
     }
 
-    // const manualCreateGraph = async (desiredGraphType, botId) => {
-    //     try {
-    //         const newGraphResponse = await reloadDesiredGraphAndReturnNewGraph(botId, desiredGraphType);
-    //         //setUserGraphs([...userGraphs, newGraphResponse]);
-    //         dispatch({
-    //             type: actionTypes.SET_USER_GRAPHS,
-    //             value: [...userGraphs, newGraphResponse]
-    //         })
-    //     } catch(error) {
-    //         showAlert(error.message);
-    //     }
-    // }
-
     const fetchUsingNotionTemplates = async () => {
         if(botIdCookie !== "") {
             const apiResponse = await getUsingNotionTemplates(botIdCookie);
             setUsingNotionTemplates(apiResponse);
+        }
+    }
+
+    const checkHasNotionGraphsProSubscription = async () => {
+        if(botIdCookie !== "") {
+            console.log("DEBUG JOAQUIN about to check...");
+            const apiResponse = await hasBillingSubscription(
+                botIdCookie,
+                "NOTION_GRAPHS_PRO"
+            );
+            console.log(apiResponse);
+            //setUsingNotionTemplates(apiResponse);
         }
     }
 

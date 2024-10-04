@@ -254,40 +254,34 @@ export async function loginToNotionWithCode(code) {
     return result;
 }
 
-export async function createStripeCheckoutSession(botId) {
-    await fetch(Config.BackendStripeURL+"/checkout-session?botId="+botId,
+export async function createStripeCheckoutSession(botId, stripeBody) {
+    const result = await fetch(Config.BackendStripeURL+"/checkout-session?botId="+botId,
         {
             method: 'POST',
-            // redirect: 'manual'
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: stripeBody
         })
         .then(response => {
-            console.log(response.status);
-            if(response.status == "303") {
-                console.log("Response is 303")
-                console.log("response headers: ",response.headers);
-                console.log("response status: ",response.status);
-                const location = response.headers.get('Location');
-                console.log("Location: ", location);
-                // if (location) {
-                //     window.location.href = location; // Perform the manual redirect
-                // }
-                // window.location.href = response.url;
+            if(!response.ok) {
+                throw new Error(response.status);
             }
-            if(response.redirected) {
-                console.log("Response is redirect")
-                console.log("response headers: ",response.headers);
-                console.log("response status: ",response.status);
-                const location = response.headers.get('Location');
-                console.log("Location: ", location);
-                // if (location) {
-                //     window.location.href = location; // Perform the manual redirect
-                // }
-                // window.location.href = response.url;
-            }
+            return response.json()
+        });
+    return result;
+}
+
+export async function hasBillingSubscription(botId, productName) {
+    const result = await fetch(Config.BackendBillingURL+"/hasSubscription/"+botId+"?productName="+productName)
+        .then(response => {
             if(!response.ok) {
                 throw new Error(response.statusText);
             }
+            return response.json()
         });
+    return result;
 }
 
 export async function createUserFeedback(botId, feedbackBody) {
