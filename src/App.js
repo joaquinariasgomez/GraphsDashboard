@@ -43,7 +43,7 @@ function App() {
     const authorization_url = process.env.REACT_APP_NOTION_AUTH_URL;
 
     // Context
-    const [{botIdCookie, userGraphs, userDesiredGraphs, session}, dispatch] = useGlobalStateValue();
+    const [{botIdCookie, userGraphs, userDesiredGraphs, isSubscribedToNotionGraphsPro, session}, dispatch] = useGlobalStateValue();
 
     const navigate = useNavigate();
 
@@ -160,13 +160,14 @@ function App() {
 
     const checkHasNotionGraphsProSubscription = async () => {
         if(botIdCookie !== "") {
-            console.log("DEBUG JOAQUIN about to check...");
             const apiResponse = await hasBillingSubscription(
                 botIdCookie,
                 "NOTION_GRAPHS_PRO"
             );
-            console.log(apiResponse);
-            //setUsingNotionTemplates(apiResponse);
+            dispatch({
+                type: actionTypes.SET_IS_SUBSCRIBED_TO_NOTION_GRAPHS_PRO,
+                value: apiResponse
+            })
         }
     }
 

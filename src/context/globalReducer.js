@@ -11,7 +11,8 @@ export const initialState = {
     alertBoxMessage: '',
     alertBoxType: null,
     userGraphs: [],
-    userDesiredGraphs: []
+    userDesiredGraphs: [],
+    isSubscribedToNotionGraphsPro: false
 };
 
 export const actionTypes = {
@@ -26,7 +27,8 @@ export const actionTypes = {
     SET_ALERT_BOX_MESSAGE: "SET_ALERT_BOX_MESSAGE",
     SET_ALERT_BOX_TYPE: "SET_ALERT_BOX_TYPE",
     SET_USER_GRAPHS: "SET_USER_GRAPHS",
-    SET_USER_DESIRED_GRAPHS: "SET_USER_DESIRED_GRAPHS"
+    SET_USER_DESIRED_GRAPHS: "SET_USER_DESIRED_GRAPHS",
+    SET_IS_SUBSCRIBED_TO_NOTION_GRAPHS_PRO: "SET_IS_SUBSCRIBED_TO_NOTION_GRAPHS_PRO"
 };
 
 const globalReducer = (state, action) => {
@@ -101,6 +103,12 @@ const globalReducer = (state, action) => {
             return {
                 ...state,
                 userDesiredGraphs: action.value,
+            };
+
+        case actionTypes.SET_IS_SUBSCRIBED_TO_NOTION_GRAPHS_PRO:
+            return {
+                ...state,
+                isSubscribedToNotionGraphsPro: action.value,
             };
 
         default:

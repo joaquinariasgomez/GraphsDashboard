@@ -56,9 +56,9 @@ export default function GetProBox() {
                     <ul>
                         <li>Unlimited amount of graphs.</li>
                         <li>Complete access to old data.</li>
+                        <li>Exclusive new graphs.</li>
                         <li>Priority email support.</li>
                         <li>New option to update graphs hourly (COMING SOON).</li>
-                        <li>New "burndown chart" (COMING SOON).</li>
                         <li>Show averages and statistical regressions on your graphs (COMING SOON).</li>
                     </ul>
                 </div>

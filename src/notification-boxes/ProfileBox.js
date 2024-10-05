@@ -9,7 +9,7 @@ export default function ProfileBox() {
     const [sessionValue, setSessionStorage, deleteSessionStorage] = useSessionStorage("bot_id");
 
     // Context
-    const [{session}, dispatch] = useGlobalStateValue();
+    const [{session, isSubscribedToNotionGraphsPro}, dispatch] = useGlobalStateValue();
 
     const closeBox = () => {
         dispatch({
@@ -32,6 +32,11 @@ export default function ProfileBox() {
                         Random button 2
                     </button>
                 </div> */}
+                {isSubscribedToNotionGraphsPro &&
+                <div className="profilebox__options__row">
+                    <h2>You are subscribed to Pro 🔥</h2>
+                    {/* TODO: Add manage subscription button */}
+                </div>}
                 <div className="profilebox__options__row">
                     <button className="profilebox__cancelbutton" onClick={function() {
                         closeBox();
