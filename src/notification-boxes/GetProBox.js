@@ -4,11 +4,14 @@ import { useGlobalStateValue } from "../context/GlobalStateProvider";
 import { actionTypes } from "../context/globalReducer";
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
+import ClipLoader from "react-spinners/ClipLoader";
+import ConfettiExplosion from 'react-confetti-explosion';
 
 export default function GetProBox() {
 
     // Context
-    const [{botIdCookie}, dispatch] = useGlobalStateValue();
+    const [{botIdCookie, isSubscribedToNotionGraphsPro}, dispatch] = useGlobalStateValue();
+    const [isLoadingStripePage, setIsLoadingStripePage] = useState(false);
 
     const closeBox = () => {
         dispatch({
@@ -18,7 +21,7 @@ export default function GetProBox() {
     }
 
     async function handleStripeCheckout() {
-        // TODO: while waiting, put a spinner in Get Pro button
+        setIsLoadingStripePage(true);
         const apiResponse = await createStripeCheckoutSession(
             botIdCookie,
             JSON.stringify(
@@ -28,10 +31,66 @@ export default function GetProBox() {
                 }
             )
         );
+        setIsLoadingStripePage(false);
         if(apiResponse) {
-            //console.log("Respuesta de Stripe: ", apiResponse);
             window.location.href = apiResponse.checkoutUrl;
         }
+    }
+
+    const renderBodyAndButtonForNonProUser = () => {
+        return (
+            <>
+                <div className="getprobox__body__row nonprouser">
+                    <h2>What you get with Free account</h2>
+                    <ul>
+                        <li>You can create up to three graphs.</li>
+                        <li>Restricted access to old data.</li>
+                    </ul>
+                    <h2>What you get with Pro account</h2>
+                    {renderProAdvantages()}
+                </div>
+                <div className="getprobox__options__row">
+                    {!isLoadingStripePage ?
+                    <button className="getprobox__getprobutton" onClick={handleStripeCheckout}>
+                        Get Pro
+                    </button> : 
+                    <button className="getprobox__getprobutton" onClick={handleStripeCheckout}>
+                        <ClipLoader size={20}/>
+                    </button>}
+                </div>
+            </>
+        )
+    }
+
+    const renderBodyAndButtonForProUser = () => {
+        return (
+            <>
+                <ConfettiExplosion
+                    force={0.8}
+                    duration={3000}
+                    particleCount={250}
+                    width={1600}
+                />
+                <div className="getprobox__body__row">
+                    <h2>You are subscribed to Pro 🔥</h2>
+                    <h3>This is what you have</h3>
+                    {renderProAdvantages()}
+                </div>
+            </>
+        )
+    }
+
+    const renderProAdvantages = () => {
+        return (
+            <ul>
+                <li>Unlimited amount of graphs.</li>
+                <li>Complete access to old data.</li>
+                <li>Exclusive new graphs.</li>
+                <li>Priority email support.</li>
+                <li>New option to update graphs hourly <b><i>Coming soon</i></b>.</li>
+                <li>Show averages and statistical regressions <b><i>Coming soon</i></b>.</li>
+            </ul>
+        )
     }
 
     return (
@@ -46,27 +105,8 @@ export default function GetProBox() {
                     <LocalFireDepartmentIcon fontSize="large" style={{ color: '#fffff' }} />
                     <h1>Pro</h1>
                 </div>
-                <div className="getprobox__body__row">
-                    <h2>What you get with Free account</h2>
-                    <ul>
-                        <li>You can create up to three graphs.</li>
-                        <li>Restricted access to old data.</li>
-                    </ul>
-                    <h2>What you get with Pro account</h2>
-                    <ul>
-                        <li>Unlimited amount of graphs.</li>
-                        <li>Complete access to old data.</li>
-                        <li>Exclusive new graphs.</li>
-                        <li>Priority email support.</li>
-                        <li>New option to update graphs hourly (COMING SOON).</li>
-                        <li>Show averages and statistical regressions on your graphs (COMING SOON).</li>
-                    </ul>
-                </div>
-                <div className="getprobox__options__row">
-                    <button className="getprobox__getprobutton" onClick={handleStripeCheckout}>
-                        Get Pro
-                    </button>
-                </div>
+                {!isSubscribedToNotionGraphsPro ?
+                renderBodyAndButtonForNonProUser() : renderBodyAndButtonForProUser()}
             </div>
         </div>
     );

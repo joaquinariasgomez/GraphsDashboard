@@ -5,7 +5,7 @@ import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 export default function GetProButton({  }) {
 
     // Context
-    const [{}, dispatch] = useGlobalStateValue();
+    const [{isSubscribedToNotionGraphsPro}, dispatch] = useGlobalStateValue();
 
     const showProBox = () => {
         dispatch({
@@ -15,17 +15,20 @@ export default function GetProButton({  }) {
     }
 
     const renderGetProButton = () => {
-        if(true) { // If user didnt buy pro yet
+        if(!isSubscribedToNotionGraphsPro) { // If user didnt buy pro yet
             return (
                 <div className='getpro__notbought'>
                     <LocalFireDepartmentIcon style={{ color: '#fffff' }} />
-                    <h2>Pro</h2>
+                    <h2>Get Pro</h2>
                 </div>
             )
         }
         else {
             return (
-                <></>
+                <div className='getpro__bought'>
+                    <LocalFireDepartmentIcon style={{ color: '#fffff' }} />
+                    <h2>Pro</h2>
+                </div>
             )
         }
     }

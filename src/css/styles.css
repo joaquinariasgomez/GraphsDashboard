@@ -59,7 +59,7 @@ body {
     /* position: absolute; */
     /* right: 150px; */
     /* top: 25px; */
-    width: 100px;
+    /* width: 100px; */
     height: 50px;
     border-radius: 15px;
     border-style: solid;
@@ -79,6 +79,7 @@ body {
 }
 
 .getpro__notbought {
+    width: 120px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -86,6 +87,19 @@ body {
 }
 
 .getpro__notbought > h2 {
+    margin-left: 4px;
+    font-size: 18px;
+}
+
+.getpro__bought {
+    width: 85px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.getpro__bought > h2 {
     margin-left: 4px;
     font-size: 20px;
 }
@@ -1695,7 +1709,6 @@ body {
 }
 
 .getprobox__body__row {
-    /* width: 100%; */
     padding-top: 0px;
     padding-right: 20px;
     padding-left: 20px;
@@ -1703,13 +1716,23 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /* align-items: center; */
+}
+
+.nonprouser {
     border-bottom: 1px solid lightgray;
 }
 
 .getprobox__body__row > h2 {
     text-align: center;
     margin-bottom: 10px;
+}
+
+.getprobox__body__row > h3 {
+    text-align: center;
+    color: rgb(105, 105, 105);
+    font-weight: 600;
+    margin-top: 15px;
+    margin-bottom: 5px;
 }
 
 .getprobox__body__row > ul {
