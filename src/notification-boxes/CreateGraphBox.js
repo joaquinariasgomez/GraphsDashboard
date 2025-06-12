@@ -10,24 +10,26 @@ import { createDesiredGraph, getExpensesCategories, getGraphTypeAccess, getIncom
 export default function CreateGraphBox() {
 
     // Context
-    const [{botIdCookie}, dispatch] = useGlobalStateValue();
+    const [{ botIdCookie }, dispatch] = useGlobalStateValue();
 
     // State to manage form data
     const [step, setStep] = useState(1);
     const [createGraphData, setCreateGraphData] = useState({
         graphType: 'EXPENSES',
         graphTag: 'DAILY',
-        filterCategories: {  // 'SUM',    // 'SUM', 'BY CATEGORY', 'BY BANKACCOUNT', 'BY INCOMESOURCE', 
+        filterCategories: {  // 'SUM',    // 'SUM', 'BY CATEGORY', 'BY BANKACCOUNT', 'BY INCOMESOURCE', 'BURNDOWN'
             type: 'SUM',    // 'SUM' for all expenses/incomes/savings
-                            // 'BY CATEGORY' for groupings by category/bankacount/incomesource
-                            // 'SPECIFIC CATEGORY' for specific category/bankaccount/incomesource
+            // 'BY CATEGORY' for groupings by category/bankacount/incomesource
+            // 'SPECIFIC CATEGORY' for specific category/bankaccount/incomesource
+            // 'BURNDOWN' for a new expenses graph type which shows it as a burndown
             category: 'Select category' // Specify the category for 'SPECIFIC' type
         },
         groupBy: 'DAY',
         time: 'LAST WEEK',
         customStartDate: '',
         customEndDate: '',
-        plot: 'Select plot' // This will be a customization for certain graphs
+        plot: 'Select plot', // This will be a customization for certain graphs
+        referenceType: 'TOTAL'   // This will be used by Burndown expense subtype. Will be either: 'TOTAL' or 'LAST YEAR'
     });
     const [graphTypeAccessLoading, setGraphTypeAccessLoading] = useState(true);
     const [graphTypeAccess, setGraphTypeAccess] = useState("");
@@ -40,7 +42,7 @@ export default function CreateGraphBox() {
 
     const [incomesSourcesLoading, setIncomesSourcesLoading] = useState(true);
     const [incomesSources, setIncomesSources] = useState([]);
-    
+
     useEffect(() => {
         console.log("createGraphData data: ", createGraphData);
     }, [createGraphData]);
@@ -61,9 +63,9 @@ export default function CreateGraphBox() {
     }
 
     const fetchGraphTypeAccess = async () => {
-        if(botIdCookie !== "") {
+        if (botIdCookie !== "") {
             const apiResponse = await getGraphTypeAccess(botIdCookie);
-            if(apiResponse) {
+            if (apiResponse) {
                 setGraphTypeAccess(apiResponse);
                 setGraphTypeAccessLoading(false);
             }
@@ -71,9 +73,9 @@ export default function CreateGraphBox() {
     }
 
     const fetchExpensesCategories = async () => {
-        if(botIdCookie !== "") {
+        if (botIdCookie !== "") {
             const apiResponse = await getExpensesCategories(botIdCookie);
-            if(apiResponse) {
+            if (apiResponse) {
                 setExpensesCategories(apiResponse);
                 setExpensesCategoriesLoading(false);
             }
@@ -81,9 +83,9 @@ export default function CreateGraphBox() {
     }
 
     const fetchIncomesBankAccounts = async () => {
-        if(botIdCookie !== "") {
+        if (botIdCookie !== "") {
             const apiResponse = await getIncomesBankAccounts(botIdCookie);
-            if(apiResponse) {
+            if (apiResponse) {
                 setIncomesBankAccounts(apiResponse);
                 setIncomesBankAccountsLoading(false);
             }
@@ -91,9 +93,9 @@ export default function CreateGraphBox() {
     }
 
     const fetchIncomesSources = async () => {
-        if(botIdCookie !== "") {
+        if (botIdCookie !== "") {
             const apiResponse = await getIncomesSources(botIdCookie);
-            if(apiResponse) {
+            if (apiResponse) {
                 setIncomesSources(apiResponse);
                 setIncomesSourcesLoading(false);
             }
@@ -117,14 +119,14 @@ export default function CreateGraphBox() {
     }
 
     const handleDataChange = (data) => {
-        setCreateGraphData({ ...createGraphData, ...data});
+        setCreateGraphData({ ...createGraphData, ...data });
     }
 
     return (
         <div className='creategraphbox__backdrop' onClick={closeBox}>
-            <div className="creategraphbox__container" onClick={e => {e.stopPropagation(); }}>
-                <button className="creategraphbox__cancelbutton" onClick={function() {
-                        closeBox();
+            <div className="creategraphbox__container" onClick={e => { e.stopPropagation(); }}>
+                <button className="creategraphbox__cancelbutton" onClick={function () {
+                    closeBox();
                 }}>
                     <CloseRoundedIcon fontSize="medium" />
                 </button>

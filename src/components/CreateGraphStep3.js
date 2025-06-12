@@ -1,4 +1,4 @@
-import React, {useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
 import { createDesiredGraph, getAllDesiredGraphsByUserId, reloadDesiredGraphAndReturnNewGraph } from '../RequestUtils';
 import { actionTypes } from '../context/globalReducer';
@@ -11,7 +11,7 @@ import "react-datepicker/dist/react-datepicker.css";
 export default function CreateGraphStep3({ graphOptions, onPrev, onBegin, onChange }) {
 
     // Context
-    const [{botIdCookie, userGraphs, userDesiredGraphs}, dispatch] = useGlobalStateValue();
+    const [{ botIdCookie, userGraphs, userDesiredGraphs }, dispatch] = useGlobalStateValue();
 
     // Date picker
     const [startDate, setStartDate] = useState(new Date());
@@ -29,6 +29,10 @@ export default function CreateGraphStep3({ graphOptions, onPrev, onBegin, onChan
         onChange({ groupBy: groupBy });
     }
 
+    const handleSelectedReferenceType = (referenceType) => {
+        onChange({ referenceType: referenceType });
+    }
+
     const handleSelectedTime = (time) => {
         onChange({ time: time });
     }
@@ -38,7 +42,7 @@ export default function CreateGraphStep3({ graphOptions, onPrev, onBegin, onChan
     }
 
     function getSelectOptionFrom(input) {
-        return {value: input, label: input};
+        return { value: input, label: input };
     }
 
     const closeCreateGraphBox = () => {
@@ -61,7 +65,7 @@ export default function CreateGraphStep3({ graphOptions, onPrev, onBegin, onChan
                 }
             )
         )
-        if(apiResponse) {
+        if (apiResponse) {
             closeCreateGraphBox()
             dispatch({  // Update current desired graphs with the new addition (aka apiResponse)
                 type: actionTypes.SET_USER_DESIRED_GRAPHS,
@@ -76,10 +80,10 @@ export default function CreateGraphStep3({ graphOptions, onPrev, onBegin, onChan
     }
 
     function getPlotOptions() {
-        if(graphOptions.graphType === 'SAVINGS') {
+        if (graphOptions.graphType === 'SAVINGS') {
             return [
-                {value: 'Savings', label: 'Savings'},
-                {value: 'Cumulative savings', label: 'Cumulative savings'},
+                { value: 'Savings', label: 'Savings' },
+                { value: 'Cumulative savings', label: 'Cumulative savings' },
             ]
         }
     }
@@ -88,12 +92,12 @@ export default function CreateGraphStep3({ graphOptions, onPrev, onBegin, onChan
         return (
             <div className='customdatepicker'>
                 <DatePicker
-                selected={startDate}
-                onChange={onDatePickerChange}
-                startDate={startDate}
-                endDate={endDate}
-                selectsRange
-                inline
+                    selected={startDate}
+                    onChange={onDatePickerChange}
+                    startDate={startDate}
+                    endDate={endDate}
+                    selectsRange
+                    inline
                 />
             </div>
         );
@@ -119,6 +123,25 @@ export default function CreateGraphStep3({ graphOptions, onPrev, onBegin, onChan
                     onClick={() => handleSelectedGroupBy('MONTH')}
                 >
                     <p>Month</p>
+                </button>
+            </div>
+        )
+    }
+
+    const renderReferenceButtons = () => {
+        return (
+            <div className='creategraphsstep3__buttons'>
+                <button
+                    className={graphOptions.referenceType === 'TOTAL' ? 'selected' : 'not_selected'}
+                    onClick={() => handleSelectedReferenceType('TOTAL')}
+                >
+                    <p>Total average</p>
+                </button>
+                <button
+                    className={graphOptions.referenceType === 'LAST YEAR' ? 'selected' : 'not_selected'}
+                    onClick={() => handleSelectedReferenceType('LAST YEAR')}
+                >
+                    <p>Last year average</p>
                 </button>
             </div>
         )
@@ -158,9 +181,35 @@ export default function CreateGraphStep3({ graphOptions, onPrev, onBegin, onChan
         )
     }
 
-    return (
-        <div className='creategraphbox__contentandlow'>
-            <div className='creategraphsstep__content'>
+    const renderStepThreeContent = () => {
+        if (graphOptions.graphType === 'EXPENSES' && graphOptions.filterCategories.type === 'BURNDOWN') {
+            return renderBurndownOptions();
+        } else {
+            return renderExpensesOrIncomesOptions();
+        }
+    }
+
+    const renderBurndownOptions = () => {
+        return (
+            <>
+                <div className='creategraphsstep3__groupby'>
+                    <h2>Reference average</h2>
+                    <p>Select the reference that you want to compare to.</p>
+                    {renderReferenceButtons()}
+                </div>
+                // TODO: do this second part
+                <div className='creategraphsstep3__time'>
+                    <h2>Time</h2>
+                    <p>Since when you want to see your data.</p>
+                    {renderTimeButtons()}
+                </div>
+            </>
+        )
+    }
+
+    const renderExpensesOrIncomesOptions = () => {
+        return (
+            <>
                 <div className='creategraphsstep3__groupby'>
                     <h2>Group by</h2>
                     <p>Group your data by day, week or month.</p>
@@ -202,11 +251,19 @@ export default function CreateGraphStep3({ graphOptions, onPrev, onBegin, onChan
                         </div>
                     </div>
                 }
+            </>
+        )
+    }
+
+    return (
+        <div className='creategraphbox__contentandlow'>
+            <div className='creategraphsstep__content'>
+                {renderStepThreeContent()}
             </div>
             <div className="creategraphbox__nextbackrow">
                 <button className="creategraphbox__backbutton" onClick={
                     () => {
-                        if(graphOptions.graphType === 'SAVINGS') {
+                        if (graphOptions.graphType === 'SAVINGS') {
                             onBegin()
                         } else {
                             onPrev()
@@ -216,16 +273,16 @@ export default function CreateGraphStep3({ graphOptions, onPrev, onBegin, onChan
                     Back
                 </button>
                 <button className="creategraphbox__nextbutton" onClick={handleCreateGraph}
-                disabled={
-                    (graphOptions.graphType === 'SAVINGS' && graphOptions.plot === 'Select plot')
-                    || (graphOptions.time === 'CUSTOM' && 
-                        (graphOptions.customEndDate === null || graphOptions.customEndDate === ""
-                            || graphOptions.customStartDate === null || graphOptions.customStartDate === "")
-                    )
-                }>
+                    disabled={
+                        (graphOptions.graphType === 'SAVINGS' && graphOptions.plot === 'Select plot')
+                        || (graphOptions.time === 'CUSTOM' &&
+                            (graphOptions.customEndDate === null || graphOptions.customEndDate === ""
+                                || graphOptions.customStartDate === null || graphOptions.customStartDate === "")
+                        )
+                    }>
                     Create Graph
                 </button>
             </div>
-        </div>  
+        </div>
     );
 }

@@ -1,4 +1,4 @@
-import React, {useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import TrendingDownRoundedIcon from '@mui/icons-material/TrendingDownRounded';
 import AttachMoneyRoundedIcon from '@mui/icons-material/AttachMoneyRounded';
 import Select from 'react-select';
@@ -9,12 +9,12 @@ export default function CreateGraphStep2({ graphOptions, onPrev, onNext, onChang
 
     function getSelectOptionsFrom(input) {
         return input.map(element => {
-            return {value: element, label: element};
+            return { value: element, label: element };
         });
     }
 
     function getSelectOptionFrom(input) {
-        return {value: input, label: input};
+        return { value: input, label: input };
     }
 
     const handleSelectedOption = (option) => {
@@ -24,35 +24,35 @@ export default function CreateGraphStep2({ graphOptions, onPrev, onNext, onChang
 
     const stopPropagation = (event) => {
         event.stopPropagation();
-      };
+    };
 
     const renderGraphTypeText = () => {
-        if(graphOptions.graphType === 'EXPENSES') {
+        if (graphOptions.graphType === 'EXPENSES') {
             return (
                 <div className='creategraphsstep2__graphTypeText'>
                     <h2>Expenses</h2>
-                    <TrendingDownRoundedIcon fontSize='medium'/>
+                    <TrendingDownRoundedIcon fontSize='medium' />
                 </div>
             )
         } else {
             return (
                 <div className='creategraphsstep2__graphTypeText'>
                     <h2>Incomes</h2>
-                    <AttachMoneyRoundedIcon fontSize='medium'/>
+                    <AttachMoneyRoundedIcon fontSize='medium' />
                 </div>
             )
         }
     }
 
     const renderFilterButtons = () => {
-        if(graphOptions.graphType === 'EXPENSES') {
-            if(expensesCategoriesLoading) {
+        if (graphOptions.graphType === 'EXPENSES') {
+            if (expensesCategoriesLoading) {
                 return renderExpensesOptionsLoading()
             } else {
                 return renderExpensesOptionsFinishedLoading()
             }
         } else {
-            if(incomesBankAccountsLoading || incomesSourcesLoading) {
+            if (incomesBankAccountsLoading || incomesSourcesLoading) {
                 return renderIncomesOptionsLoading()
             } else {
                 return renderIncomesOptionsFinishedLoading()
@@ -62,79 +62,99 @@ export default function CreateGraphStep2({ graphOptions, onPrev, onNext, onChang
 
     const renderExpensesOptionsLoading = () => {
         return (
-            <div className='creategraphsstep2__buttons'>
-                <button
-                    disabled={true} className='not_selected'
-                >
-                    {/* TODO: Add graph here */}
-                    <p>All expenses</p>
-                    <SyncLoader size={10}/>
-                </button>
-                <button
-                    disabled={true} className='not_selected'
-                >
-                    {/* TODO: Add graph here */}
-                    <p>Grouped by category</p>
-                    <SyncLoader size={10}/>
-                </button>
-                <button
-                    disabled={true} className='not_selected'
-                >
-                    {/* TODO: Add graph here */}
-                    <p>Specific category</p>
-                    <SyncLoader size={10}/>
-                </button>
+            <div className='creategraphsstep2__buttons expenses'>
+                <div className='creategraphsstep2__verticalbuttons'>
+                    <button
+                        disabled={true} className='not_selected'
+                    >
+                        {/* TODO: Add graph here */}
+                        <p>All expenses</p>
+                        <SyncLoader size={10} />
+                    </button>
+                    <button
+                        disabled={true} className='not_selected'
+                    >
+                        <p>Burndown</p>
+                        <SyncLoader size={10} />
+                    </button>
+                </div>
+                <div className='creategraphsstep2__verticalbuttons'>
+                    <button
+                        disabled={true} className='not_selected'
+                    >
+                        {/* TODO: Add graph here */}
+                        <p>Grouped by category</p>
+                        <SyncLoader size={10} />
+                    </button>
+                    <button
+                        disabled={true} className='not_selected'
+                    >
+                        {/* TODO: Add graph here */}
+                        <p>Specific category</p>
+                        <SyncLoader size={10} />
+                    </button>
+                </div>
             </div>
         )
     }
 
     const renderExpensesOptionsFinishedLoading = () => {
         return (
-            <div className='creategraphsstep2__buttons'>
-                <button
-                    className={graphOptions.filterCategories.type === 'SUM' ? 'selected' : 'not_selected'}
-                    onClick={() => handleSelectedOption({type: 'SUM', category: 'Select category'})}
-                >
-                    {/* TODO: Add graph here */}
-                    <p>All expenses</p>
-                </button>
-                <button
-                    className={graphOptions.filterCategories.type === 'BY CATEGORY' ? 'selected' : 'not_selected'}
-                    onClick={() => handleSelectedOption({type: 'BY CATEGORY', category: 'Select category'})}
-                >
-                    {/* TODO: Add graph here */}
-                    <p>Grouped by category</p>
-                </button>
-                <button
-                    className={graphOptions.filterCategories.type === 'SPECIFIC CATEGORY' ? 'withselect selected' : 'withselect not_selected'}
-                >
-                    {/* TODO: Add graph here */}
-                    <p className='withselect'>Specific category</p>
-                    <div className='createcategoryselect' onClick={stopPropagation}>
-                        <Select
-                            className='selectgraphtag'
-                            defaultValue={getSelectOptionFrom(graphOptions.filterCategories.category)}
-                            theme={(theme) => ({
-                                ...theme,
-                                borderRadius: 5,
-                                colors: {
-                                    ...theme.colors,
-                                    primary25: 'lightgray',
-                                    primary50: 'gray',
-                                    primary: 'black'
-                                }
-                            })}
-                            options={getSelectOptionsFrom(expensesCategories)}
-                            menuPlacement="auto" // Adjust placement to avoid overflow
-                            menuPosition="fixed" // Use fixed positioning to handle overflow better
-                            styles={customStyleForSelectPlacement}
-                            menuPortalTarget={document.body}
-                            onChange={function (selectedCategory) {
-                                handleSelectedOption({type: 'SPECIFIC CATEGORY', category: selectedCategory.value})
-                            }}
-                        />
-                    </div>
-                </button>
+            <div className='creategraphsstep2__buttons expenses'>
+                <div className='creategraphsstep2__verticalbuttons'>
+                    <button
+                        className={graphOptions.filterCategories.type === 'SUM' ? 'selected' : 'not_selected'}
+                        onClick={() => handleSelectedOption({ type: 'SUM', category: 'Select category' })}
+                    >
+                        {/* TODO: Add graph here */}
+                        <p>All expenses</p>
+                    </button>
+                    <button
+                        className={graphOptions.filterCategories.type === 'BURNDOWN' ? 'selected' : 'not_selected'}
+                        onClick={() => handleSelectedOption({ type: 'BURNDOWN', category: 'Select category' })}
+                    >
+                        <p>Burndown</p>
+                    </button>
+                </div>
+                <div className='creategraphsstep2__verticalbuttons'>
+                    <button
+                        className={graphOptions.filterCategories.type === 'BY CATEGORY' ? 'selected' : 'not_selected'}
+                        onClick={() => handleSelectedOption({ type: 'BY CATEGORY', category: 'Select category' })}
+                    >
+                        {/* TODO: Add graph here */}
+                        <p>Grouped by category</p>
+                    </button>
+                    <button
+                        className={graphOptions.filterCategories.type === 'SPECIFIC CATEGORY' ? 'withselect selected' : 'withselect not_selected'}
+                    >
+                        {/* TODO: Add graph here */}
+                        <p className='withselect'>Specific category</p>
+                        <div className='createcategoryselect' onClick={stopPropagation}>
+                            <Select
+                                className='selectgraphtag'
+                                defaultValue={getSelectOptionFrom(graphOptions.filterCategories.category)}
+                                theme={(theme) => ({
+                                    ...theme,
+                                    borderRadius: 5,
+                                    colors: {
+                                        ...theme.colors,
+                                        primary25: 'lightgray',
+                                        primary50: 'gray',
+                                        primary: 'black'
+                                    }
+                                })}
+                                options={getSelectOptionsFrom(expensesCategories)}
+                                menuPlacement="auto" // Adjust placement to avoid overflow
+                                menuPosition="fixed" // Use fixed positioning to handle overflow better
+                                styles={customStyleForSelectPlacement}
+                                menuPortalTarget={document.body}
+                                onChange={function (selectedCategory) {
+                                    handleSelectedOption({ type: 'SPECIFIC CATEGORY', category: selectedCategory.value })
+                                }}
+                            />
+                        </div>
+                    </button>
+                </div>
             </div>
         )
     }
@@ -147,7 +167,7 @@ export default function CreateGraphStep2({ graphOptions, onPrev, onNext, onChang
                 >
                     {/* TODO: Add graph here */}
                     <p>All incomes</p>
-                    <SyncLoader size={10}/>
+                    <SyncLoader size={10} />
                 </button>
                 <div className='creategraphsstep2__verticalbuttons'>
                     <button
@@ -155,14 +175,14 @@ export default function CreateGraphStep2({ graphOptions, onPrev, onNext, onChang
                     >
                         {/* TODO: Add graph here */}
                         <p>Grouped by bank account</p>
-                        <SyncLoader size={10}/>
+                        <SyncLoader size={10} />
                     </button>
                     <button
                         disabled={true} className='not_selected'
                     >
                         {/* TODO: Add graph here */}
                         <p>Grouped by income source</p>
-                        <SyncLoader size={10}/>
+                        <SyncLoader size={10} />
                     </button>
                 </div>
                 <div className='creategraphsstep2__verticalbuttons'>
@@ -171,14 +191,14 @@ export default function CreateGraphStep2({ graphOptions, onPrev, onNext, onChang
                     >
                         {/* TODO: Add graph here */}
                         <p>Specific bank account</p>
-                        <SyncLoader size={10}/>
+                        <SyncLoader size={10} />
                     </button>
                     <button
                         disabled={true} className='not_selected'
                     >
                         {/* TODO: Add graph here */}
                         <p>Specific income source</p>
-                        <SyncLoader size={10}/>
+                        <SyncLoader size={10} />
                     </button>
                 </div>
             </div>
@@ -190,7 +210,7 @@ export default function CreateGraphStep2({ graphOptions, onPrev, onNext, onChang
             <div className='creategraphsstep2__buttons incomes'>
                 <button
                     className={graphOptions.filterCategories.type === 'SUM' ? 'selected' : 'not_selected'}
-                    onClick={() => handleSelectedOption({type: 'SUM', category: ''})}
+                    onClick={() => handleSelectedOption({ type: 'SUM', category: '' })}
                 >
                     {/* TODO: Add graph here */}
                     <p>All incomes</p>
@@ -198,14 +218,14 @@ export default function CreateGraphStep2({ graphOptions, onPrev, onNext, onChang
                 <div className='creategraphsstep2__verticalbuttons'>
                     <button
                         className={graphOptions.filterCategories.type === 'BY BANKACCOUNT' ? 'selected' : 'not_selected'}
-                        onClick={() => handleSelectedOption({type: 'BY BANKACCOUNT', category: 'Select category'})}
+                        onClick={() => handleSelectedOption({ type: 'BY BANKACCOUNT', category: 'Select category' })}
                     >
                         {/* TODO: Add graph here */}
                         <p>Grouped by bank account</p>
                     </button>
                     <button
                         className={graphOptions.filterCategories.type === 'BY INCOMESOURCE' ? 'selected' : 'not_selected'}
-                        onClick={() => handleSelectedOption({type: 'BY INCOMESOURCE', category: 'Select category'})}
+                        onClick={() => handleSelectedOption({ type: 'BY INCOMESOURCE', category: 'Select category' })}
                     >
                         {/* TODO: Add graph here */}
                         <p>Grouped by income source</p>
@@ -237,7 +257,7 @@ export default function CreateGraphStep2({ graphOptions, onPrev, onNext, onChang
                                 styles={customStyleForSelectPlacement}
                                 menuPortalTarget={document.body}
                                 onChange={function (selectedCategory) {
-                                    handleSelectedOption({type: 'SPECIFIC BANKACCOUNT', category: selectedCategory.value})
+                                    handleSelectedOption({ type: 'SPECIFIC BANKACCOUNT', category: selectedCategory.value })
                                 }}
                             />
                         </div>
@@ -267,7 +287,7 @@ export default function CreateGraphStep2({ graphOptions, onPrev, onNext, onChang
                                 styles={customStyleForSelectPlacement}
                                 menuPortalTarget={document.body}
                                 onChange={function (selectedCategory) {
-                                    handleSelectedOption({type: 'SPECIFIC INCOMESOURCE', category: selectedCategory.value})
+                                    handleSelectedOption({ type: 'SPECIFIC INCOMESOURCE', category: selectedCategory.value })
                                 }}
                             />
                         </div>
@@ -293,6 +313,6 @@ export default function CreateGraphStep2({ graphOptions, onPrev, onNext, onChang
                     Next
                 </button>
             </div>
-        </div>  
+        </div>
     );
 }
