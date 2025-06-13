@@ -1583,6 +1583,13 @@ body {
     padding-right: 10px;
 }
 
+.creategraphsstep3__buttons>button.withselect {
+    padding-top: 20px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
 .createcategoryselect {
     width: 100%;
 }
@@ -1617,6 +1624,11 @@ body {
 }
 
 .creategraphsstep2__buttons>button>p.withselect {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.creategraphsstep3__buttons>button>p.withselect {
     padding-left: 10px;
     padding-right: 10px;
 }

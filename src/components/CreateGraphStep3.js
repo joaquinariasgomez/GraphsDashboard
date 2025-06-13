@@ -8,7 +8,7 @@ import { DateRange } from '@mui/icons-material';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
-export default function CreateGraphStep3({ graphOptions, onPrev, onBegin, onChange }) {
+export default function CreateGraphStep3({ graphOptions, expensesCategoriesLoading, expensesCategories, onPrev, onBegin, onChange }) {
 
     // Context
     const [{ botIdCookie, userGraphs, userDesiredGraphs }, dispatch] = useGlobalStateValue();
@@ -25,16 +25,35 @@ export default function CreateGraphStep3({ graphOptions, onPrev, onBegin, onChan
         onChange({ customStartDate: startFormatted, customEndDate: endFormatted })
     };
 
+    // Month picker
+    const [selectedMonthDate, setSelectedMonthDate] = useState(new Date());
+    const onMonthPickerChange = (newMonth) => {
+        setSelectedMonthDate(newMonth);
+        const selectedYear = selectedMonthDate.getFullYear();
+        // Get the month (0-11), add 1, and pad with a '0' if it's a single digit
+        const selectedMonth = String(selectedMonthDate.getMonth() + 1).padStart(2, '0');
+        const yearMonthFormatted = `${selectedYear}-${selectedMonth}`; // "2025-06"
+        onChange({ burndownCustomMonth: yearMonthFormatted });
+    }
+
     const handleSelectedGroupBy = (groupBy) => {
         onChange({ groupBy: groupBy });
     }
 
-    const handleSelectedReferenceType = (referenceType) => {
-        onChange({ referenceType: referenceType });
+    const handleSelectedBurndownReference = (reference) => {
+        onChange({ burndownReference: reference });
+    }
+
+    const handleSelectedBurndownTypeAndCategory = (type, category) => {
+        onChange({ burndownType: type, burndownCategory: category });
     }
 
     const handleSelectedTime = (time) => {
         onChange({ time: time });
+    }
+
+    const handleSelectedBurndownTime = (time) => {
+        onChange({ burndownTime: time });
     }
 
     const handleSelectedPlot = (plot) => {
@@ -50,6 +69,20 @@ export default function CreateGraphStep3({ graphOptions, onPrev, onBegin, onChan
             type: actionTypes.SET_SHOW_CREATE_GRAPH_BOX,
             value: false
         })
+    }
+
+    const stopPropagation = (event) => {
+        event.stopPropagation();
+    };
+
+    function getSelectOptionFrom(input) {
+        return { value: input, label: input };
+    }
+
+    function getSelectOptionsFrom(input) {
+        return input.map(element => {
+            return { value: element, label: element };
+        });
     }
 
     async function handleCreateGraph() {
@@ -103,6 +136,23 @@ export default function CreateGraphStep3({ graphOptions, onPrev, onBegin, onChan
         );
     }
 
+    const renderMonthPicker = () => {
+        return (
+            <div className='customdatepicker'>
+                <DatePicker
+                    id='month-picker'
+                    selected={selectedMonthDate}
+                    onChange={onMonthPickerChange}
+                    // This prop is the key to showing the month selector
+                    showMonthYearPicker
+                    // This formats how the date is displayed in the input field
+                    dateFormat="MMMM yyyy"
+                    inline
+                />
+            </div>
+        );
+    }
+
     const renderGroupByButtons = () => {
         return (
             <div className='creategraphsstep3__buttons'>
@@ -128,20 +178,68 @@ export default function CreateGraphStep3({ graphOptions, onPrev, onBegin, onChan
         )
     }
 
-    const renderReferenceButtons = () => {
+    const renderBurndownReferenceButtons = () => {
         return (
             <div className='creategraphsstep3__buttons'>
                 <button
-                    className={graphOptions.referenceType === 'TOTAL' ? 'selected' : 'not_selected'}
-                    onClick={() => handleSelectedReferenceType('TOTAL')}
+                    className={graphOptions.burndownReference === 'TOTAL' ? 'selected' : 'not_selected'}
+                    onClick={() => handleSelectedBurndownReference('TOTAL')}
                 >
                     <p>Total average</p>
                 </button>
                 <button
-                    className={graphOptions.referenceType === 'LAST YEAR' ? 'selected' : 'not_selected'}
-                    onClick={() => handleSelectedReferenceType('LAST YEAR')}
+                    className={graphOptions.burndownReference === 'LAST YEAR' ? 'selected' : 'not_selected'}
+                    onClick={() => handleSelectedBurndownReference('LAST YEAR')}
                 >
                     <p>Last year average</p>
+                </button>
+                <button
+                    className={graphOptions.burndownReference === 'BEST MONTH' ? 'selected' : 'not_selected'}
+                    onClick={() => handleSelectedBurndownReference('BEST MONTH')}
+                >
+                    <p>Best month</p>
+                </button>
+            </div>
+        )
+    }
+
+    const renderBurndownTypeButtons = () => {
+        return (
+            <div className='creategraphsstep3__buttons'>
+                <button
+                    className={graphOptions.burndownType === 'SUM' ? 'selected' : 'not_selected'}
+                    onClick={() => handleSelectedBurndownTypeAndCategory('SUM', 'Select category')}
+                >
+                    <p>All expenses</p>
+                </button>
+                <button
+                    className={graphOptions.burndownType === 'SPECIFIC CATEGORY' ? 'withselect selected' : 'withselect not_selected'}
+                >
+                    <p className='withselect'>Specific category</p>
+                    <div className='createcategoryselect' onClick={stopPropagation}>
+                        <Select
+                            className='selectgraphtag'
+                            defaultValue={getSelectOptionFrom(graphOptions.burndownCategory)}
+                            theme={(theme) => ({
+                                ...theme,
+                                borderRadius: 5,
+                                colors: {
+                                    ...theme.colors,
+                                    primary25: 'lightgray',
+                                    primary50: 'gray',
+                                    primary: 'black'
+                                }
+                            })}
+                            options={getSelectOptionsFrom(expensesCategories)}
+                            menuPlacement="auto" // Adjust placement to avoid overflow
+                            menuPosition="fixed" // Use fixed positioning to handle overflow better
+                            styles={customStyleForSelectPlacement}
+                            menuPortalTarget={document.body}
+                            onChange={function (selectedCategory) {
+                                handleSelectedBurndownTypeAndCategory('SPECIFIC CATEGORY', selectedCategory)
+                            }}
+                        />
+                    </div>
                 </button>
             </div>
         )
@@ -181,6 +279,28 @@ export default function CreateGraphStep3({ graphOptions, onPrev, onBegin, onChan
         )
     }
 
+    const renderBurndownTimeButtons = () => {
+        return (
+            <>
+                <div className='creategraphsstep3__buttons'>
+                    <button
+                        className={graphOptions.burndownTime === 'LAST MONTH' ? 'selected time' : 'not_selected time'}
+                        onClick={() => handleSelectedBurndownTime('LAST MONTH')}
+                    >
+                        <p>Last month</p>
+                    </button>
+                    <button
+                        className={graphOptions.burndownTime === 'CUSTOM MONTH' ? 'selected time' : 'not_selected time'}
+                        onClick={() => handleSelectedBurndownTime('CUSTOM MONTH')}
+                    >
+                        <p>Custom month</p>
+                    </button>
+                </div>
+                {graphOptions.burndownTime === 'CUSTOM MONTH' && renderMonthPicker()}
+            </>
+        )
+    }
+
     const renderStepThreeContent = () => {
         if (graphOptions.graphType === 'EXPENSES' && graphOptions.filterCategories.type === 'BURNDOWN') {
             return renderBurndownOptions();
@@ -195,13 +315,17 @@ export default function CreateGraphStep3({ graphOptions, onPrev, onBegin, onChan
                 <div className='creategraphsstep3__groupby'>
                     <h2>Reference average</h2>
                     <p>Select the reference that you want to compare to.</p>
-                    {renderReferenceButtons()}
+                    {renderBurndownReferenceButtons()}
                 </div>
-                // TODO: do this second part
+                <div className='creategraphsstep3__time'>
+                    <h2>Type</h2>
+                    <p>Select the type of expenses you want to compute.</p>
+                    {renderBurndownTypeButtons()}
+                </div>
                 <div className='creategraphsstep3__time'>
                     <h2>Time</h2>
-                    <p>Since when you want to see your data.</p>
-                    {renderTimeButtons()}
+                    <p>Select the month for which you want to see your data.</p>
+                    {renderBurndownTimeButtons()}
                 </div>
             </>
         )

@@ -22,14 +22,21 @@ export default function CreateGraphBox() {
             // 'BY CATEGORY' for groupings by category/bankacount/incomesource
             // 'SPECIFIC CATEGORY' for specific category/bankaccount/incomesource
             // 'BURNDOWN' for a new expenses graph type which shows it as a burndown
-            category: 'Select category' // Specify the category for 'SPECIFIC' type
+            category: 'Select category' // Specify the category for 'SPECIFIC CATEGORY' type
         },
         groupBy: 'DAY',
         time: 'LAST WEEK',
         customStartDate: '',
         customEndDate: '',
         plot: 'Select plot', // This will be a customization for certain graphs
-        referenceType: 'TOTAL'   // This will be used by Burndown expense subtype. Will be either: 'TOTAL' or 'LAST YEAR'
+        burndownReference: 'TOTAL', // Will be either:
+        // 'TOTAL': calculates the reference using the average of every month registered in the system (using some min date).
+        // 'LAST YEAR': calculates the reference using just the last year expenses data.
+        // 'BEST MONTH': calculates the reference using just the month where I spent the less amount.
+        burndownType: 'SUM', // 'SUM' for all expenses and 'SPECIFIC CATEGORY' for a specific expense category
+        burndownCategory: 'Select category', // Specify the category for 'SPECIFIC CATEGORY' type
+        burndownTime: 'LAST MONTH', // 'LAST MONTH' or 'CUSTOM MONTH'
+        burndownCustomMonth: ''
     });
     const [graphTypeAccessLoading, setGraphTypeAccessLoading] = useState(true);
     const [graphTypeAccess, setGraphTypeAccess] = useState("");
@@ -141,7 +148,8 @@ export default function CreateGraphBox() {
                     incomesBankAccounts={incomesBankAccounts}
                     incomesSourcesLoading={incomesSourcesLoading}
                     incomesSources={incomesSources} />}
-                {step === 3 && <CreateGraphStep3 graphOptions={createGraphData} onPrev={handlePrevStep} onBegin={handleOnBeginStep} onChange={handleDataChange} />}
+                {step === 3 && <CreateGraphStep3 graphOptions={createGraphData} onPrev={handlePrevStep} onBegin={handleOnBeginStep} onChange={handleDataChange}
+                    expensesCategoriesLoading={expensesCategoriesLoading} expensesCategories={expensesCategories} />}
             </div>
         </div>
     );
