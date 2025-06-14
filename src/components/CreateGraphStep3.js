@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 import Select from 'react-select';
 import { createDesiredGraph, getAllDesiredGraphsByUserId, reloadDesiredGraphAndReturnNewGraph } from '../RequestUtils';
 import { actionTypes } from '../context/globalReducer';
@@ -29,9 +29,9 @@ export default function CreateGraphStep3({ graphOptions, expensesCategoriesLoadi
     const [selectedMonthDate, setSelectedMonthDate] = useState(new Date());
     const onMonthPickerChange = (newMonth) => {
         setSelectedMonthDate(newMonth);
-        const selectedYear = selectedMonthDate.getFullYear();
+        const selectedYear = newMonth.getFullYear();
         // Get the month (0-11), add 1, and pad with a '0' if it's a single digit
-        const selectedMonth = String(selectedMonthDate.getMonth() + 1).padStart(2, '0');
+        const selectedMonth = String(newMonth.getMonth() + 1).padStart(2, '0');
         const yearMonthFormatted = `${selectedYear}-${selectedMonth}`; // "2025-06"
         onChange({ burndownCustomMonth: yearMonthFormatted });
     }
@@ -236,7 +236,7 @@ export default function CreateGraphStep3({ graphOptions, expensesCategoriesLoadi
                             styles={customStyleForSelectPlacement}
                             menuPortalTarget={document.body}
                             onChange={function (selectedCategory) {
-                                handleSelectedBurndownTypeAndCategory('SPECIFIC CATEGORY', selectedCategory)
+                                handleSelectedBurndownTypeAndCategory('SPECIFIC CATEGORY', selectedCategory.value)
                             }}
                         />
                     </div>

@@ -2,7 +2,7 @@
 export function getRelativeTimestamp(timestamp) {
     const currentTimestamp = Date.now() / 1000;
     let timePastInSeconds = Number(currentTimestamp) - Number(timestamp / 1000);
-    if(timePastInSeconds < 0) timePastInSeconds = -timePastInSeconds;
+    if (timePastInSeconds < 0) timePastInSeconds = -timePastInSeconds;
 
     if (timePastInSeconds < 60) {
         if (Math.round(timePastInSeconds) > 1) {
@@ -53,7 +53,7 @@ export function getRelativeTimeToUpdate(userDesiredGraphTag) {
             possiblyToday.setHours(8);
             possiblyToday.setMinutes(0);
             possiblyToday.setSeconds(0);
-            if(possiblyToday < new Date()) {    // The hour has already passed and we need to account with tomorrow
+            if (possiblyToday < new Date()) {    // The hour has already passed and we need to account with tomorrow
                 possiblyToday.setDate(possiblyToday.getDate() + 1);
             }
             return getRelativeTimestamp(possiblyToday.getTime());
@@ -66,7 +66,7 @@ export function getRelativeTimeToUpdate(userDesiredGraphTag) {
             return getRelativeTimestamp(monday);
         case "MONTHLY": // Every first day of month at 7:00h UTC
             let now = new Date();
-            let firstDayOfMonth = new Date(now.getFullYear(), now.getMonth()+1, 1);
+            let firstDayOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1);
             firstDayOfMonth.setHours(8);
             firstDayOfMonth.setMinutes(0);
             firstDayOfMonth.setSeconds(0);
@@ -75,8 +75,8 @@ export function getRelativeTimeToUpdate(userDesiredGraphTag) {
 }
 
 export function getUserGraphByDesiredGraphId(userGraphs, desiredGraphId) {
-    for(const userGraph of userGraphs) {
-        if(userGraph.desiredGraphId === desiredGraphId) {
+    for (const userGraph of userGraphs) {
+        if (userGraph.desiredGraphId === desiredGraphId) {
             return userGraph
         }
     }
@@ -86,12 +86,13 @@ export function delay(time) {
     return new Promise(resolve => setTimeout(resolve, time));
 }
 
+// TODO: improve function for burndown options
 export function getGraphTitleFromGraphOptions(graphOptions) {
     let response = (graphOptions.graphType).charAt(0).toUpperCase() + (graphOptions.graphType).slice(1).toLowerCase()
-    + " - " + (graphOptions.time).charAt(0).toUpperCase() + (graphOptions.time).slice(1).toLowerCase();
+        + " - " + (graphOptions.time).charAt(0).toUpperCase() + (graphOptions.time).slice(1).toLowerCase();
 
-    if(graphOptions.filterCategories.type.startsWith("SPECIFIC")) {
-        response = graphOptions.filterCategories.category+" "+response;
+    if (graphOptions.filterCategories.type.startsWith("SPECIFIC")) {
+        response = graphOptions.filterCategories.category + " " + response;
     }
 
     return response;
